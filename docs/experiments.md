@@ -319,3 +319,19 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** historical LG-target entitlement and a generic architecture-binary/platform-loader package model exist; exact NetCast2013 loader, archive and current issuer remain absent from this bounded search. Unity's source describes Union licensing/distribution. Independent archive retrieval succeeded with bounded HTTPS after the web tool failed.
 - **Conclusion/risks:** historical availability is not current entitlement or model compatibility. See native-runtime-artifacts.md; do not install a generic legacy SDK to substitute for the missing target specification.
 - **Next:** acquire a provenance-verifiable exact target specification/bundle only through an authorized available source; continue recovery and performance work independently.
+
+## RECOVERY-ENTRY-001 — update mode versus independent recovery
+
+- **Objective/hypothesis:** distinguish a separate update service set from an independently usable recovery environment.
+- **Environment/procedure:** existing selected initializers; six bounded dynamic-lginit_app captures totaling3,440bytes, two mount tables and technical literals; independent byte/branch/PLT review. Static lginit metadata lacked the requested symbols; no pattern search followed.
+- **Expected/observed:** update-mode configuration attempts the same procmgr path; dynamic phase selection bypasses its initial-preparation block. A32-byte formatting capacity is smaller than its42-byte service-list literal. Mount/exec failure handling does not demonstrate success or safe restoration. Review verified860words/205branches/35imports.
+- **Conclusion/risks:** no independently verified recovery follows. Do not extrapolate this artifact's intended/truncated configuration to physical updater failure or assume static/dynamic initializers behave identically.
+- **Next:** recover a separately justified static entry anchor and then trace only its evidenced phase boundaries. No TV operation or target execution occurred.
+
+## STATIC-ENTRY-001 — symbol-independent initializer anchor
+
+- **Objective/hypothesis:** use the declared ELF entry and demonstrated arguments to identify a narrowly justified startup candidate without a pattern scan.
+- **Environment/procedure:** selected static lginit; one256-byte entry slice, mapped literals and comparison with primary glibc ARM start.S contract; independent review.
+- **Expected/observed:** r0 receives0x82ac before a libc-style startup call;64words, three literals, two BL destinations and stack layout were independently checked.
+- **Conclusion:** candidate main address is LIKELY; neither its body/extent nor startup-callee identity/library version or actual device boot was established.
+- **Risks/next:** avoid importing dynamic-lginit_app boundaries or behavior. Further tracing must use a separate explicit candidate-range budget. No target execution occurred.

@@ -20,6 +20,14 @@
     {
       "id": "architecture",
       "resource": "../../docs/architecture.md"
+    },
+    {
+      "id": "updater-entry",
+      "resource": "../../docs/recovery-entry-contract.md"
+    },
+    {
+      "id": "static-entry",
+      "resource": "../../docs/static-initializer-entry.md"
     }
   ],
   "opencast_evidence": [
@@ -40,3 +48,11 @@ The unresolved [boot chain](/platform/boot.md) and [partition selection](/platfo
 [^recovery]: Recovery status and required protections.
 [^map]: Paired-map limits and open recovery questions.
 [^architecture]: Integration decision gates.
+
+The selected dynamic initializer's update-mode branch still attempts the ordinary process manager and has an apparently truncated service-list assignment. Shared mount code exists, but the static initial phase is not established by that dynamic binary. Neither the full-path literal, separate SWUE image nor continuing mount/error path proves independent recovery.[^updater-entry]
+
+[^updater-entry]: Independently reviewed phase, formatting and shared-dependency evidence; physical recovery remains untested.
+
+The stripped static initializer now has a reviewed ELF-entry anchor: its argument setup supports a main candidate at0x82ac. The candidate body, startup callee identity, function extent and physical boot selection remain unverified; this is an address for further bounded study, not a recovery entry procedure.[^static-entry]
+
+[^static-entry]: Entry-only instruction/literal verification and explicitly inferential libc contract comparison.

@@ -16,3 +16,7 @@ Before any persistent proposal, identify the physical hardware and affected file
 Firmware hashes provide reproducibility and CRC detects archive corruption. Neither validates vendor signatures or supplies a trusted boot/recovery chain. Proprietary graphics/media libraries, watchdogs and power-control dependencies may make the original UI process operationally essential.
 
 The probe server binds to one explicit host IP and accepts only the confirmed TV peer. It serves an asset allowlist, never the workspace. No router forwarding, UPnP mapping, public tunnel or external TV service is required. Stop it with Ctrl-C when the experiment is complete.
+
+## Initializer/update-mode dependency evidence
+
+The reviewed [recovery-entry slice](recovery-entry-contract.md) distinguishes dynamic initializer phases, shared process-manager launch and merely attempted environment/mount setup. Its apparent truncated service-list assignment further prevents treating literal intent as successful update-mode selection. The static initializer entry and real device behavior remain separate questions. A vendor update workflow is still not an independently verified recovery procedure for boot, rootfs or partition-map damage.
