@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenCast — Input Probe</title>
+  <link rel="stylesheet" href="/style.css">
+  <script>var openCastStarted = new Date().getTime();</script>
+</head>
+<body>
+  <div id="shell">
+    <div class="eyebrow">OPENCAST / INPUT-001 / V2</div>
+    <h1>Hello, OpenCast.</h1>
+    <p class="intro">Local input experiment. Back and Home keep their normal browser behavior.</p>
+    <div id="cards">
+      <button type="button" id="card0" class="card selected"><span class="number">01</span><strong>Hello World</strong><span>Count a native button activation</span></button>
+      <button type="button" id="card1" class="card"><span class="number">02</span><strong>Save report</strong><span>Send this session to your local Mac</span></button>
+      <button type="button" id="card2" class="card"><span class="number">03</span><strong>Return instructions</strong><span>Show the normal browser exit path</span></button>
+    </div>
+    <div id="focus-tests">
+      <button type="button" id="focusButton">Focus test button</button>
+      <label for="focusInput">Optional read-only field:</label>
+      <input type="text" id="focusInput" value="Arrow-key focus test" readonly="readonly" autocomplete="off">
+      <button type="button" id="clearReport">Clear session</button>
+      <button type="button" id="reloadProbe">Reload probe</button>
+    </div>
+    <div id="focusState">Active element: loading</div>
+    <div id="message">Click Focus test button, verify its focus below, then press each arrow once and OK once. Save report afterwards.</div>
+    <div id="diagnostics">
+      <div id="metrics">Loading diagnostics…</div>
+      <div id="lastEvent">Last event: none</div>
+      <div id="features"></div>
+      <div id="agent"></div>
+    </div>
+    <div class="footer">LOCAL RESEARCH · NO INSTALLATION · NO NATIVE TV API CALLS</div>
+  </div>
+  <script src="/navigation.js"></script>
+  <script src="/probe.js"></script>
+</body>
+</html>
