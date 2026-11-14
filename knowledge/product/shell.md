@@ -19,9 +19,9 @@
     }
   ],
   "opencast_evidence": [
-    "CONFIRMED: local prototype",
+    "CONFIRMED: packaged TV rendering and arrows/OK; slow startup/navigation",
     "HYPOTHESIS: native coexistence",
-    "PENDING: physical prototype and autostart"
+    "PENDING: acceptable performance and autostart"
   ]
 }
 ---
@@ -32,7 +32,7 @@ OpenCast OS aims to replace the Smart TV experience, including direct startup wh
 
 The owner uses a PS5 for commercial streaming. Current Netflix/YouTube apps on the TV are not required; prioritize measured responsiveness, remote navigation, HDMI, audio, essential settings and reliability. Console/CEC control remains untested.[^architecture]
 
-A conservative local prototype has Home, Apps, Inputs, Media and Settings, directional/pointer navigation and optional appearance storage. Desktop checks passed, but this artifact has not been physically validated. Its HDMI/app cards do not control the TV. The baseline [browser test](/execution/browser.md) is a separate artifact.[^prototype]
+A conservative local prototype has Home, Apps, Inputs, Media and Settings, directional/pointer navigation and optional appearance storage. The official USB-packaged baseline now renders on the TV with owner-confirmed arrows and OK, but both launch and navigation are slow. A lighter candidate reduces redundant DOM writes and painting complexity; its TV performance is unmeasured. Its HDMI/app cards do not control the TV. The baseline [browser test](/execution/browser.md) is a separate artifact.[^prototype]
 
 Integration depends on [graphics/input](/platform/graphics-input.md), [RELEASE coexistence](/platform/release.md) and a viable [app entry point](/execution/app-deployment.md). Automatic startup additionally depends on [boot supervision](/platform/boot.md) and [verified recovery](/execution/recovery.md).
 

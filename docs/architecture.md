@@ -47,10 +47,17 @@ See visual-direction.md. Use conservative JavaScript, local assets and semantic 
 
 ## Decision gates
 
-1. Reversible application execution: demonstrate actual D-pad input, repeat launch and normal exit in an appropriate runtime. Current browser baseline confirms code/clicks/Home return, not direct key delivery.
+1. Reversible application execution: demonstrate actual D-pad input, repeat launch and normal exit in an appropriate runtime. The ordinary browser baseline confirms code/clicks/Home return. The corrected official USB package now renders with working arrows/OK, but opening and movement are slow; successful-launch exit, repeat-load timing and explicit AV continuity checks remain pending.
 2. Coexistence: identify graphics/input registration and an application entry point that retains original TV/HDMI/audio/power behavior. Static named-service wrappers are leads, not tested APIs.
 3. Essential controls: verify supported action contracts one at a time and their failure paths. Siri integration is deferred and can use a separate bridge.
 4. Automatic startup: identify active boot selection, process supervision, watchdogs, update persistence and a recovery method demonstrated for this hardware. Paired partitions in an update template do not pass this gate.
 5. Deeper distribution/kernel replacement: evaluate driver licensing/availability and recovery only after the preceding evidence; preserve this option as research rather than pretending a generic Linux image will support the panel/tuner.
 
 No gate is satisfied solely by root access, an ARM executable, a successful host test or a polished screen.
+
+
+## Native implementation track alongside packaged experiments
+
+The packaged launcher is a physical rendering/input benchmark, not the selected final boot architecture. Its performance cannot be attributed solely to the application container without measurement. Host tests already identify redundant DOM work; a lighter candidate is prepared for comparison. In parallel, static service/lifecycle analysis and the native dependency graph establish the prerequisites for an independently hosted native surface.
+
+The first native C core models resource acquisition, reverse cleanup, callback identity and acknowledged return using disconnected adapter operations. It does not encode recovered LG types or provide an execution route. Library/loader matching, framework admission, window construction and verified recovery remain independent gates; neither cross-compiling an object nor obtaining privileged access satisfies them.

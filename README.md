@@ -22,7 +22,7 @@ The long-term goal: turn on the TV and arrive directly in OpenCast, with a repla
 
 **Research target:** LG **47LA620S-ZA**, firmware **04.28.17**. This is NetCast, not webOS. Findings from this unit do not imply support for other models.
 
-> **Current stage:** there is no installable replacement OS or verified autostart integration. A browser probe has run on the physical TV; the richer launcher below has been validated on desktop only. Recovery and native integration remain open engineering work.
+> **Current stage:** there is no installable replacement OS or verified autostart integration. Both a browser probe and the official USB-packaged launcher have run on the physical TV. The owner confirms arrow/OK navigation, but reports slow opening and movement; performance improvements are still being tested. Recovery and native integration remain open engineering work.
 
 ## A first look
 
@@ -39,9 +39,9 @@ The prototype uses conservative HTML, CSS and JavaScript, with no framework runt
 | Area | Evidence so far |
 | --- | --- |
 | **Device communication** | Exact-target SSDP discovery, read-only UDAP/DLNA descriptions and local connectivity verified. |
-| **Physical execution** | Our browser probe appeared on the TV, received clicks and returned to Smart through Home. Browser arrows moved a cursor; direct D-pad delivery remains unresolved. |
+| **Physical execution** | The browser probe received clicks and returned through Home. The separately packaged launcher now renders with owner-confirmed arrows and OK; opening and navigation are slow. |
 | **Firmware understanding** | Official firmware preserved and analyzed locally. Selected binaries identify ARM32 little-endian EABI5; boot paths, partitions and vendor dependencies are being mapped. This is firmware evidence, not a full hardware inventory. |
-| **Launcher development** | A working static shell, an explicit capability boundary, bounded diagnostics and automated host tests. No fabricated HDMI switching or app launches. |
+| **Launcher development** | A static shell, bounded diagnostics and host tests. A lighter candidate reduces redundant DOM writes and paint complexity; its TV speed is not yet measured. Native TV actions remain disconnected. |
 
 The [experiment log](docs/experiments.md), [firmware analysis](docs/firmware-extraction.md) and [current handover](docs/handover.md) preserve the detail—including failures, uncertainty and validation limits.
 

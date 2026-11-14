@@ -1,40 +1,60 @@
 # OpenCast OS — operational handover
 
-Updated 2026-11-14. Full-access host session; work active. Conversation Spanish; engineering material English. Historical details stay in experiments.md and linked reports.
+Updated 2026-11-14. Conversation Spanish; code and engineering records English. This file is current operational state; chronology belongs in experiments.md and detailed evidence reports.
 
-## Workspace and coordination
+## Workspace and permissions
 
-Root: `/Users/lucasbarrientos/Developer/OpenCast-UI`. Remote: `git@github.com:lbm410/OpenCast-OS.git`. Main was fetched and matched origin/main at `276d54d3a84e3d258a87f8ab5369ed1cc04ad896` before the newly authorized granular local commits. Owner history and GPLv3 LICENSE preserved. Check actual Git state; no push authorized. Exclusive author/committer: `lbm410 <lbm410@inlumine.ual.es>`, no coauthor/AI trailers. Fetch/check divergence and owner changes before each commit/push.
+Root: `/Users/lucasbarrientos/Developer/OpenCast-UI`. Remote: `git@github.com:lbm410/OpenCast-OS.git`, branch main. Inspect actual Git state before integration. The owner explicitly authorized incremental publication on 2026-11-14 (D012); fetch and check divergence and concurrent changes before each commit/push. Author and committer exclusively `lbm410 <lbm410@inlumine.ual.es>`, without attribution trailers. Preserve owner history and GPLv3 license. Unfinished agent work stays uncommitted.
 
-Read collaboration/status/ and new addressed messages. Claude acknowledged CLAUDE-001 and reported four actual read-only agents. Its draft report is under independent review; do not integrate unverified bootloader/runtime conclusions. Messages 007–008 relay the owner's Fable 5.2 model preference and precise, bounded task wording. Claude reports in to-codex-002 that Fable 5.2 is restored and no model change was requested/configured by it; this is its session report, not an independent provider check. Claude accepted message009 and delivered revision2. Residual overclaims remain for final integration. Claude has acknowledged message011 and is implementing an ARM ABI-attributes reader (CLAUDE-002). Codex integrates. The knowledge bundle/retrieval and offline graph are implemented under knowledge/, tools/knowledge.py and tools/knowledge_view.py. Consult the compact index, then relevant concepts. Do not load all reports by default.
+Local static analysis and bounded diagnostics are authorized. Never execute extracted code. Reversible TV experiments need their mechanism/effects/return explained and physical coordination. Privileged/persistent/boot operations require specific authorization and verified recovery; no such procedure exists yet. A successful packaged app is not permission to modify boot or essential services.
 
-## Device and physical test
+## Physical device and observations
 
-LG47LA620S-ZA; firmware04.28.17 matches owner/UDAP; displayed SDK03.05. Exact-target SSDP, advertised UDAP/DLNA descriptors and two pings succeeded. No sweep, pairing, privileged access or firmware write. Current LAN addresses are in ignored diagnostics; recheck leases.
+LG 47LA620S-ZA, owner/UDAP firmware04.28.17, displayed SDK03.05. Exact-target SSDP and advertised UDAP/DLNA descriptions were read; two pings succeeded. No subnet sweep, pairing, privileged access or firmware writes. LAN addresses and raw identifiers remain in ignored artifacts; recheck leases before directed access. No current probe server is intended to remain running: inspect processes before starting one.
 
-HW-001 displayed code in the TV browser. Two reports: WebKit537.4/Chrome22, viewport1276×603, clicks and zero keydown. Owner confirms arrows move a browser cursor but navigate native cards outside it. Home returned to Smart menu. Direct D-pad, repeat launch and explicit HDMI/audio checks remain pending: M3 incomplete. All probe servers are stopped.
+- **HW-001, ordinary browser:** page displayed; reported WebKit537.4/Chrome22 and viewport1276×603. Clicks arrived, no keydown in the recorded reports. Owner says arrows moved a cursor, while native cards respond outside the browser. Home returned normally.
+- **APP-001, official USB-packaged launcher:** first attempt stayed black; Home returned normally. After setting the relative entry `index.html` and explicitly re-uploading the source, the owner confirms the shell displays and arrows/OK work. Opening and movement are very slow. These simultaneous changes do not isolate the original cause.
+- **Still pending:** Home return from the successful rendered build, repeatable timings, explicit HDMI/audio continuity, packaged engine identity/viewport. Do not transfer the ordinary browser's UA to the app or declare M3 fully complete.
 
-Owner requests consolidated high-value physical sessions, not small repeated interruptions. INPUT-001 v2 and the glass/landscape launcher are prepared locally, not tested on TV. Shell native actions are explicitly unavailable. See input-probe-v2.md and shell-prototype.md.
+The owner authorized formatting the identified BIOS pendrive once; subsequent replacement changed only the inspected app directory. It was read-back verified and ejected. Do not reformat as part of routine updates. Three portal downloads remain ignored: first valid layout/black screen, second nested app-ID layout rejected without copying, third correct layout/physical success. The source and portal inspector preserve opaque protected metadata; no DRM workaround or manual manifest editing.
 
-## Firmware evidence
+## Implementation available
 
-- Historical EPK2:24 packages/118 segments. A separate full audit now verifies header and all118 segments against the community public key, including a rejected in-memory negative control. Historical extraction verified77 selected segments. No independent LG trust-root/runtime-enforcement claim. Originals0444 unchanged; hashes/provenance in firmware.md and firmware-extraction.md.
-- Kernel uImage and LG CramFS CRCs pass. RELEASE identified: ARM32 little-endian EABI5,43 direct dependencies. Vendor loader `/lib/ld-linux.so.3`; libc/loader filenames2.12.2. Float ABI unresolved. No target code executed. See lz4p-analysis.md.
-- inittab→rcS→rc.local→foreground lginit in bootmode=auto. No script respawn. Shipped sbin/init identifies sysvinit2.86, but actual PID1 selection unresolved. SquashFS/ext2-RAM remount mismatch unresolved.
-- Normal service declarations separate RELEASE (reboot policy) from fxui Home.swf (respawn); a separate list starts SWUE. See service-supervision.md. Active list/complete failure behavior remain unobserved.
-- RELEASE couples to essential vendor/AV libraries. Home.swf manifest and DirectFB/SaWMan config found. Native input wrapper constructs service messages: native-interfaces.md. Registration/transport/authorization and safe coexistence unverified.
-- Partition template:64 entries,20 pairs,one boot. No active-bank or fallback proof. Recovery unverified; persistent device changes still require specific approval and demonstrated recovery.
+- Lightweight shell in `prototypes/opencast-shell/`: conservative JavaScript, static warm landscape, compact dock, no visible product branding. Native TV actions explicitly unavailable. PS5 covers commercial streaming; prioritize TV navigation, HDMI/audio and essential controls.
+- **Performance candidate (not deployed):** fixed icon geometry, no full-screen overlay/shadows, cached DOM updates. A synthetic single Right event dropped DOM writes18→3 with the same focus count. This is not measured TV speed. Candidate ZIP: `artifacts/netcast-source/launcher-performance-source.zip`,214134bytes, SHA-256 `ebfb11cb8a4c8177fac95c9a9a07f5d71b14fcd22816491627f26404316e7ee9`. Preserve original source baseline. Desktop screenshot: `artifacts/performance-trial/home.png`.
+- Source builder and bounded portal-package inspector; self-contained startup diagnostic; bounded UDAP pairing/inventory foundation tested only with host fixtures. No real pairing/commands have run.
+- `prototypes/native/lifecycle.*`: disconnected C ownership model with admission declaration, reverse cleanup, generation/operation tokens and acknowledged return. Nine host test groups pass. Independent bounded review reported128states/243052transitions; limits and future binding obligations in native-lifecycle.md. No LG IPC implementation, native launch route or physical validation.
 
-## Host validation and local evidence
+## Static platform findings
 
-Latest integrated run:88 Python tests pass in the optional firmware venv;31 Node tests pass including15 revised shell tests. Generated knowledge graph is current:16 concepts/63 relationships. Review fixed report persistence, FIFO blocking, incomplete inventory reporting, resource amplification and contradictory ABI flags. See tool-review.md. The revised shell uses a warm rolling-hills background and a compact dock; desktop capture is not physical-TV validation.
+Read compact concepts via knowledge/index.md, then fetch relevant evidence. A graph link or metadata label is not a substitute for its caveats.
 
-Python3.13.5/Node22.16.0/Apple LLVM, arm64 macOS26.6.2. Crypto dependencies pinned in requirements-firmware.txt, isolated in artifacts/firmware-lab/venv. Lab unsquashfs is a verified host ARM64 tool, bounded offline list/cat only. No global installation.
+- Official EPK2:24packages/118segments; header and all segments verified against a community-distributed key with a failing negative control. Not an independent LG trust root, runtime verification policy or recovery proof. Original firmware hashes in firmware.md; originals read-only; no redistribution.
+- Linux3.0.13 kernel; selected ELF32 little-endian ARM EABI5. Reviewed ARM attributes establish the base FP calling convention in18selected files (17permitv7-A/FP instructions, sysvinitv6KZ). Instruction permission is not a physical CPU measurement. Full symbol-version/library compatibility remains open. A later three-file Chromium check finds a VFP loader but base-PCS Chrome/libstdc++; Chrome requests /lib/ld-linux.so.3, not the adjacent armhf loader. No coherent second runtime is proven. See arm-abi.md and chromium-abi.md.
+- Normal service list runs essential `RELEASE` with reboot policy and separate `fxui` Home.swf with respawn. SWUE has a separate list. Preserve RELEASE while mapping visible interfaces and AV/watchdog ownership. See service-supervision.md and app-lifecycle.md.
+- Static bootloader trace appends `init=/sbin/init` only in the nfs branch; compiled defaults are not the unit's stored environment. Kernel code now establishes retained rdinit (including a conditional /init default), explicit init, then lginit and /bin/sh failure fallbacks. Active selection/PID1 remain unknown. See kernel-init-selection.md; do not present rcS/rc.local as the demonstrated ordinary boot path.
+- Procmgr creates table entries after managed launch **and** through an outer message-dispatch fallback; inner lookup alone does not prove managed launch is mandatory. SCF uses D-Bus, and selected configs use local sockets. Active bus policy, peer authentication, window/focus contract and execution admission are unverified. See native-admission.md and native-bus-policy.md.
+- libscf imports D-Bus functions while declaring only libgcc/libc DT_NEEDED: a dependency-name graph cannot establish all symbol providers or real loader behavior.
+- Partition template64entries/20pairs/oneboot; active banks, automatic fallback, recovery and physical memory/SoC inventory unresolved. Root access would not close these gaps.
 
-Ignored evidence: artifacts/diagnostics/, artifacts/probe/, artifacts/firmware-lab/, artifacts/boot-triage/decoded/, artifacts/partition-analysis/. Vendor inputs: firmware/. Never publish firmware, keys, raw captures or private identifiers.
+## Active collaboration and ownership
 
-## Next
+Use collaboration/README.md and current status/messages; do not infer receipt from a written file. Claude actually acknowledged task002/003 at13:06UTC, reports its configured Fable5.2 unchanged, and launched one real dependency-graph subagent. It delivered the reviewed ABI reader and independent native-core review. Root integrated those as359bfa2 and141027b. Messages024–026 acknowledge results and request current graph/boot-review delivery. No model override, idle wake-up daemon or automatic background execution is claimed.
 
-Owner priority update: commercial streaming is covered by the PS5; current Netflix/YouTube apps on the TV are not required. Prioritize a fast, stable TV interface, original-remote interaction, HDMI, audio and essential settings. No PS5/CEC control has been tested. See decision D011.
+Pending ownership at this update:
 
-Resolve the Claude review evidence gaps, finish the revised shell/README commits without push, and continue static service/boot-supervision analysis while preserving RELEASE. The UDAP agent is implementing a tested local foundation for pairing/inventory/SmartText gating; no real pairing has been executed. The probe server supports an explicit --include-shell route, validated only on loopback. Prepare one useful physical session when the execution/input route warrants it. Siri is deferred in backlog.md. Actual-TV responsiveness takes priority over effects; see performance.md.
+- Claude: dependency graph and tests/report. Delivery007 passed46existing tests but independent review found three defects: rejected files escape cumulative-byte accounting, lone-surrogate inventory text causes traceback, and a size-contradicted listing alias still creates an edge. Message029 assigns fixes; leave uncommitted until independently re-reviewed. Claude also owns its ARM-reader descriptor-leak correction (028) and reconciliation of stale boot-review assertions (025–027).
+- firmware_extract: independent graph repro fixtures under ignored artifacts/graph-review/. Its Chromium ABI report is integrated. platform_research's kernel-init report is integrated.
+- Root: integration, CI, knowledge concepts, experiments and handover. Shared elf_inventory descriptor cleanup fixed in31ba841; synthetic directory/fdopen regressions pass. input_probe finished current-state deployment/shell docs and is available.
+
+Check new messages between work units. Finite mailbox helper: `python3 -m tools.collaboration_wait --recipient codex --after LAST_READ --timeout 30`. A file cannot awaken a session that ended.
+
+## Validation and next work
+
+Host: Apple Silicon macOS, Python3.13, Node22, Apple clang. Optional pinned cryptography environment: `artifacts/firmware-lab/venv`. Use only reviewed host tools for bounded firmware reads; never ldd or execute extracted binaries.
+
+Latest component checks: ARM attributes79tests, bounded disassembly15tests, JavaScript40tests, native C9groups. The tracked suite passed269tests with7optional-crypto skips before two new shared-reader regressions were added. Exact committed-snapshot validation and public CI are being consolidated; do not reuse historical88/175counts as the current suite total. Workflow source exists locally, but hosted execution is pending publication. All fixtures must run without private firmware or real TV access.
+
+Next: independently re-review Claude's graph and reader fixes; test the exact committed snapshot; publish coherent reviewed blocks and inspect actual CI. Kernel init and Chromium ABI reports are already integrated. Consolidate the next physical comparison around baseline versus lightweight app, startup probe, D-pad/OK, normal exit and AV continuity. Do not interrupt the owner for isolated low-value tests. Native admission/graphics integration and recovery remain the critical path to the replacement OS.
+
+Private evidence lives under ignored artifacts/ and firmware/. Do not publish firmware, keys, pairing data, raw captures or unique device identifiers.

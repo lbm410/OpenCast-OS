@@ -43,3 +43,8 @@ The owner explicitly requested local commits by coherent functionality/investiga
 ## D011 — Prioritize the TV experience; PS5 covers streaming
 
 The owner accepts using the PS5 for commercial streaming apps. Latest Netflix/YouTube versions on the original TV are not required for the intended outcome. Focus on actual-device responsiveness, navigation, HDMI, sound, essential settings and reliability while retaining the replacement-shell/startup goal. Defer commercial-app compatibility research unless it supports these priorities. PS5 availability is owner-reported; no console control, CEC, port selection or playback test is implied.
+
+
+## D012 — Publish reviewed blocks incrementally
+
+On2026-11-14 the owner explicitly authorized pushing completed work to the personal GitHub repository. Preserve granular history and exclusive owner attribution; fetch/check branch and divergence before each push. Review and test the exact committed snapshot, keep unfinished agent work local, and exclude vendor firmware, keys and private runtime captures. This publication authorization does not authorize any new TV operation.

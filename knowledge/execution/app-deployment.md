@@ -16,17 +16,18 @@
   ],
   "opencast_evidence": [
     "CONFIRMED: documentary workflow",
-    "PENDING: account packaging and physical launch"
+    "CONFIRMED: owner-downloaded package, physical rendering and arrows/OK",
+    "PENDING: successful-launch exit, repeat timing and AV continuity"
   ]
 }
 ---
 
 # NetCast application deployment
 
-The ordinary browser is the only physically demonstrated project execution route. LG documents USB application testing, including downloadable and hosted web applications, but an unauthenticated login redirect does not prove that packaging and TV-side entitlement services still function.[^deploy]
+Both the ordinary browser and the official USB-packaged launcher have executed on the physical TV. LG documents downloadable and hosted web application tests. The owner downloaded a portal-generated package whose six source assets matched locally; protected metadata remains opaque. The first physical launch stayed black and Home returned normally. A later nested package was rejected locally. After an explicit source re-upload and relative-entry correction, the correctly nested eight-file package was copied to USB and read-back verified; it renders with owner-confirmed arrows and OK. Opening and movement are slow. This demonstrates packaged execution, not detailed entitlement semantics, acceptable performance or boot integration.[^deploy]
 
-The IDE Run on TV workflow depends on prior USB launch; it is not an independent sideload route. webOS Developer Mode and IPK procedures are not documented NetCast deployment mechanisms. No account login, app upload, terms acceptance or packaged installation was performed during this research.[^deploy]
+The IDE Run on TV workflow depends on prior USB launch; it is not an independent sideload route. webOS Developer Mode and IPK procedures are not documented NetCast deployment mechanisms. The owner operated the registration/download flow and physical launch. Successful-launch Home return, repeated timings and AV continuity remain pending.[^deploy]
 
-A coordinated packaged test could compare [browser remote behavior](/execution/browser.md) with application input routing. It is an intermediate step toward the [replacement shell](/product/shell.md), not an autostart solution. Persistent or privileged deployment remains gated by [recovery](/execution/recovery.md).
+A coordinated comparison can now measure the lighter candidate and repeat the exit checks. [Browser remote behavior](/execution/browser.md) and application input routing are distinct contexts. This is an intermediate step toward the [replacement shell](/product/shell.md), not an autostart solution. Persistent or privileged deployment remains gated by [recovery](/execution/recovery.md).
 
 [^deploy]: Official workflow review and explicit availability limits.

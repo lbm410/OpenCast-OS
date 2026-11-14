@@ -16,6 +16,10 @@
     {
       "id": "v2",
       "resource": "../../docs/input-probe-v2.md"
+    },
+    {
+      "id": "app",
+      "resource": "../../docs/app-deployment.md"
     }
   ],
   "opencast_evidence": [
@@ -31,7 +35,9 @@ The owner observed the baseline page on the television, activated buttons and re
 
 That establishes physical browser execution, not direct D-pad navigation, repeated deployment, native integration or completed M3 acceptance. The baseline session ended and its server stopped. V2 adds bounded key/focus observations and explicit focus verification; its physical result is still pending in the experiment record.[^v2]
 
-[Application deployment](/execution/app-deployment.md) offers a separate input-context comparison. [Graphics/input analysis](/platform/graphics-input.md) addresses the native boundary. The [shell prototype](/product/shell.md) must receive its own physical evaluation, with [validation scopes](/engineering/validation.md) kept explicit.
+The later [packaged application](/execution/app-deployment.md) renders with working arrows/OK according to the owner; that separate context does not retroactively change the browser probe result.[^app] [Graphics/input analysis](/platform/graphics-input.md) addresses the native boundary. The [shell prototype](/product/shell.md) must receive its own physical evaluation, with [validation scopes](/engineering/validation.md) kept explicit.
 
 [^probe]: Owner-correlated baseline result and remaining acceptance criteria.
 [^v2]: Focus/event instrumentation and pending physical experiment.
+
+[^app]: Official packaged-launch result and performance limits.

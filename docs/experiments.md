@@ -111,3 +111,98 @@ Review found that the baseline card width excluded padding/borders and could wra
 - **Conclusion:** exact signature coverage is complete relative to the supplied key. Publisher trust chain and runtime enforcement remain unresolved.
 - **Risks:** interpreting key consistency as authority or boot compatibility; no device writes or target-code execution occurred.
 - **Next step:** continue service/boot analysis using preserved inputs; do not infer recovery from signature success.
+
+
+## APP-001 — owner reaches NetCast App Test registration
+
+- **Objective:** determine whether the legacy official packaging route remains reachable.
+- **Hypothesis:** the owner can register our source-only launcher through the Mac browser.
+- **Environment:** owner-operated LG App Test page; source ZIP and icon prepared locally; no TV action.
+- **Procedure:** owner opened New App Test, was given the verified launcher-source.zip path and a code-drawn256×256PNG icon (6337bytes), and subsequently supplied a detail-page screenshot.
+- **Expected result:** registration detail and a downloadable DRM package, or an explicit service error.
+- **Observed result:** screenshot shows LauncherTest, Web > All, the supplied icon and the Download DRM applied file section. Exact submitted entry value, terms acceptance and package download are not yet verified. CP Option Information contains Progress95%; no processing percentage is inferred.
+- **Conclusion:** registration UI is reachable; end-to-end packaging and TV execution remain pending.
+- **Risks:** confusing a detail page with valid packaged content or working device entitlement. No firmware or TV state was changed by the agent.
+- **Next step:** owner reviews terms and downloads if accepted; inspect the resulting local archive with bounded metadata reads before coordinating USB execution.
+
+
+### APP-001 package download follow-up
+
+- **Procedure:** inspect the owner-downloaded ZIP with bounded metadata/member reads and compare launcher assets to local source; prepare a new fixed-allowlist USB staging tree.
+- **Observed result:**222489-byte ZIP,14entries,240501expanded bytes; all six source assets unchanged; four generated icons, developer.test and an opaque NCGFILE_HEADER manifest added. Hash and limits are recorded in app-deployment.md.
+- **Conclusion:** portal package download is demonstrated. Manifest semantics, entitlement and physical launch remain pending.
+- **Risks:** treating packaging success as device compatibility. No target code executed or removable media modified.
+- **Next step:** inspect an owner-supplied USB drive without formatting, then coordinate a reversible TV test.
+
+
+### APP-001 authorized USB preparation
+
+- **Objective/hypothesis:** prepare the official package in the documented USB directory structure for a reversible application test.
+- **Environment/procedure:** owner explicitly authorized formatting the connected BIOS pendrive. Rechecked the sole external physical USB drive's identity/size/volume, formatted FAT32/MBR as OPENCAST, copied the fixed inspected package file set and read every file back.
+- **Expected/observed:** twelve files totaling240501bytes match the package; disk ejection succeeded.
+- **Conclusion:** removable media is prepared; TV discovery, entitlement, input and return remain untested.
+- **Risks:** formatting removed prior USB contents as explicitly requested. No TV state or firmware was changed.
+- **Next step:** owner-coordinated TV USB discovery and application launch.
+
+
+### APP-001 first physical packaged launch: black screen
+
+- **Objective:** determine whether the portal-generated launcher renders on the target TV.
+- **Environment/procedure:** owner connected the prepared USB and reports opening the application. No agent-issued TV command.
+- **Expected result:** launcher landscape and controls, followed by remote/return checks.
+- **Observed result:** owner reports a black screen immediately after opening. Elapsed duration, error messages, Home return and submitted portal URL are not yet known.
+- **Conclusion:** application selection is owner-reported, but successful page load/rendering is NOT established. Candidate causes include entry/manifest configuration, entitlement/runtime loading and rendering compatibility; none is confirmed.
+- **Risks:** repeated blind retries or treating this as a firmware failure. Requested a short bounded observation, then normal Home return if still black. No update, forced power cut or privileged operation proposed.
+- **Next step:** collect Home/error and exact portal URL observations; audit source startup and documented package-entry requirements in parallel.
+
+
+### APP-001 return and registration-field inspection
+
+CONFIRMED (owner-reported): the screen remained black and Home returned normally to the Smart home screen. No reboot or forced power removal was reported. CONFIRMED (owner screenshots of Modify): URL field appears blank, Web subtype displays --Select--, Developer CP Service is checked, and the uploaded file tree contains index.html. These edit-form values do not prove exactly what the previously generated opaque manifest contained. LG's deployment guide, printed page8, requires a relative HTML entry path for a downloadable ZIP and explicitly excludes http:// for this mode. Next controlled correction: set URL to index.html, Web subtype All, CP unchecked; save and download a new package, then compare and replace only the app directory on USB. Physical launch must be repeated before attributing causality.
+
+
+### APP-001 revised package layout failure
+
+- **Objective:** verify the regenerated package before USB replacement.
+- **Procedure:** inventory the new owner download, compare it with the original package and recheck source ZIP layout.
+- **Expected:** index.html directly beneath the single app-ID folder.
+- **Observed:** the first package's12files are unchanged inside a second app-ID directory; the new outer level has only a manifest and developer.test.
+- **Conclusion:** the revised output does not satisfy the intended index.html entry layout. Portal/input cause unknown.
+- **Risks/actions:** no USB replacement or TV retry performed; do not manually flatten or alter protected metadata.
+- **Next:** explicitly re-upload original source ZIP through LG, inspect root entry and regenerate.
+
+
+### APP-001 source re-upload and corrected USB package
+
+CONFIRMED (local): the next owner download is196778bytes, SHA-256 `d348ae50f8e059449fee3d3569b0a9df490c44f5cfe4f708ef2479777b2d42d2`. Its10ZIPentries contain a single app-ID directory, assets directory and8files totaling215044bytes. index.html is directly under the app root; all six launcher source assets match byte-for-byte. The new protected manifest is retained intact. This output contains no separate generated icon files; do not invent or patch protected metadata to add them.
+
+The existing USB app's12files matched the prior verification report. Additional AppleDouble sidecars were bounded and recognized before removal. Only the app folder was replaced, with a temporary rollback directory during copying; all8new files were read-back verified. Cleanup handled macOS automatically removing paired sidecars when deleting their data files. The rollback directory was removed and disk ejection succeeded. No formatting occurred. The verification report is ignored artifacts/netcast-source/usb-copy-v2-verification.json. Next: owner repeats launch and observes rendering, remote navigation and Home return. Successful TV execution remains pending.
+
+
+### APP-001 corrected packaged launch: visible shell and native remote delivery
+
+- **Objective:** repeat launch after correcting entry path and re-uploading the original source ZIP.
+- **Observed (owner):** the interface now displays, arrow navigation works and OK works. Owner reports both slow application opening and slow movement. No quantified latency or load duration was provided. Home successfully exited the previous black-screen attempt; return from this successful launch is still awaiting confirmation.
+- **Conclusion:** official packaged execution and D-pad/OK delivery are physically established for this build. Responsiveness is unacceptable by the owner's assessment; this is not an OS/boot replacement or performance success.
+- **Next:** reduce redundant DOM updates and variable selected-icon geometry, simplify painting, compare the same navigation workload. Keep the packaged source baseline for reproducibility. Continue static native integration separately.
+
+## NATIVE-STATIC-002 — reviewed native foundations and init selection
+
+- **Objective:** narrow the execution/ABI boundary before proposing a native launcher binding.
+- **Hypothesis:** declared ABI, process lifecycle and kernel execution order can be established independently with bounded static tools and synthetic host tests.
+- **Environment:** preserved official firmware, Apple Silicon host, reviewed readers; real Claude session plus disjoint Codex research agents.
+- **Procedure:** integrate the79-test ARM reader; review the native C ownership model; independently trace kernel parameter slots and fallback calls; inspect three Chromium-tree ELFs after finding an armhf filename.
+- **Expected result:** exact static contracts and explicit remaining runtime questions.
+- **Observed result:**18selected core files declare base PCS; the separate armhf loader declares VFP while Chrome and adjacent libstdc++ declare base. Kernel code supports retained rdinit/early-init, explicit init, then lginit and shell fallbacks. Nine host C test groups pass; the independent reviewer reports a bounded128-state/243052-transition explorer without an invariant violation. See arm-abi.md, chromium-abi.md, kernel-init-selection.md and native-lifecycle.md for evidence/limits.
+- **Conclusion:** native build planning and startup architecture have stronger evidence; no native TV process or startup replacement has been executed.
+- **Risks:** interpreting build attributes as measured CPU features, compiled fallback as active PID1, or synthetic cleanup as actual TV restoration. All remain distinguished.
+- **Next step:** review the declared-dependency graph and identify missing graphics/IPC providers; establish an actual reversible execution and window-ownership contract.
+
+### Host integration regression: descriptor ownership
+
+- **Objective:** prevent repeated invalid local inputs leaking file descriptors in ELF readers.
+- **Hypothesis:** wrapping an opened directory with fdopen can raise before a context manager takes ownership.
+- **Environment/procedure:** Claude reported a five-call directory leak; root inspected both open paths in elf_inventory, moved regular-file validation before fdopen, and closed descriptors if validation/wrapping fails. Synthetic regressions cover repeated directory rejection and injected fdopen failures in direct reading and tree sniffing.
+- **Expected/observed:** descriptors are closed after rejected inputs; five ELF review tests pass and valid-file inspection still works. Claude owns the equivalent ARM-reader correction separately.
+- **Conclusion:** resource cleanup is now explicit in the shared ELF reader; no firmware data or runtime behavior is changed.
+- **Risks/next step:** preserve normal ownership transfer and rerun the combined frozen suite after both reader fixes. No TV action.

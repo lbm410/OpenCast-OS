@@ -16,6 +16,10 @@
     {
       "id": "voice",
       "resource": "../../docs/backlog.md"
+    },
+    {
+      "id": "client",
+      "resource": "../../docs/udap-client.md"
     }
   ],
   "opencast_evidence": [
@@ -35,3 +39,7 @@ A future [Siri bridge](/product/siri.md) may consume individually validated acti
 
 [^hardware]: Confirmed service descriptions and their limits.
 [^voice]: Deferred action-by-action bridge investigation.
+
+A bounded inventory-only UDAP client now passes43synthetic/loopback tests, with explicit pairing coordination, private optional inventory output and callback cleanup. It has not paired with the TV. SmartText sending remains disabled.[^client]
+
+[^client]: Implemented network bounds, session lifecycle and physical-test limits.
