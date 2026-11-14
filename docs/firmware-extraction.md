@@ -141,3 +141,19 @@ The sandbox profile and host tool are local lab artifacts, not automatically ins
 - **Risks:** malformed native parser inputs, misidentifying unused update contents as active runtime behavior, overclaiming public-key provenance, and accidental vendor redistribution. Mitigations were bounded list/cat execution, strict signatures, ignored read-only artifacts and explicit scope labels.
 - **Validation:** eight synthetic tests passed in the optional venv (bounds, malformed metadata, path traversal, symlink metadata, invalid segments, aggregate lengths, exact signature mutation/wrong-key rejection and destination preservation). Standard-library-only runs pass four boundary tests and explicitly skip four cryptography-dependent tests. Validated the real manifest again after adding aggregate-size checks.
 - **Next step:** correlate `lginit`, startup scripts, launcher XML, graphics/input libraries and the compressed `lgap`/kernel/boot payloads. Establish recovery independently before proposing any privileged or persistent device experiment.
+
+
+## Full signature audit — separate follow-up event
+
+CONFIRMED (local, 2026-11-14): `tools.firmware_lab --verify-all` verified the header and **all118 segments across24 packages** without extracting additional packages. The original extraction event above remains77 segments across11 selected packages. A one-bit mutation of the first signed ciphertext byte was rejected in memory; no input was altered. Eleven synthetic firmware-lab tests pass, including a corrupted later segment and a deliberately permissive verifier rejected by the negative control.
+
+Reproduce using the existing offline lab:
+
+```sh
+/usr/bin/sandbox-exec -f artifacts/firmware-lab/offline.sb \
+  artifacts/firmware-lab/venv/bin/python -B -m tools.firmware_lab firmware/lab/input.epk \
+  --key-file artifacts/vendor/epk2extract/keys/AES.key \
+  --public-key artifacts/vendor/epk2extract/keys/mtk5398.pem --verify-all
+```
+
+Ignored report: `artifacts/firmware-lab/full-signature-audit.json`, SHA-256 `b1eee9c3e67905569e3c14e75b7c8a84dc4f1a038574d6ec94f83ad4dea75d9c`. Input SHA-256 remains `b8c15b5f3eefa3c4064bbf1b4da9dd857572e313a8a41a3c5cef89acdb024a7e`. Negative-control signed offset1876, first segment of `part`. Exact verification is consistency with the supplied community public key; it does not establish an independent LG key chain, device signature enforcement, safe modifications or recovery.

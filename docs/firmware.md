@@ -4,7 +4,7 @@ Updated: 2026-11-14. Scope: level 0 local analysis. Nothing has been installed o
 
 ## Current result (supersedes initial triage limitations below)
 
-See [controlled extraction](firmware-extraction.md), [kernel/RELEASE decoding](lz4p-analysis.md), and [boot dependency map](boot-dependencies.md). Historical EPK2 is now confirmed; the header and 77 segments of 11 selected packages verify against the supplied upstream public key. Selected files were copied for static inspection. Kernel Linux3.0.13 and ARM32 little-endian EABI5 userspace are confirmed in the firmware. Original hashes remain unchanged. Public-key consistency is not independent LG trust-root attestation, and no device recovery is demonstrated. The following sections preserve the earlier FW-001 investigation and its then-current uncertainties.
+See [controlled extraction](firmware-extraction.md), [kernel/RELEASE decoding](lz4p-analysis.md), and [boot dependency map](boot-dependencies.md). Historical EPK2 is now confirmed; a separate full audit verifies the header and all118 segments against the supplied upstream public key. Historical extraction verified77 segments of11 selected packages. Selected files were copied for static inspection. Kernel Linux3.0.13 and ARM32 little-endian EABI5 userspace are confirmed in the firmware. Original hashes remain unchanged. Public-key consistency is not independent LG trust-root attestation, and no device recovery is demonstrated. The following sections preserve the earlier FW-001 investigation and its then-current uncertainties.
 
 ## Provenance and integrity
 

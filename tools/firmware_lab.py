@@ -190,6 +190,46 @@ def inspect(stream: BinaryIO, key_file: Path, public_key_file: Path) -> tuple[di
     return manifest, key, public_key
 
 
+def audit_signatures(stream: BinaryIO, manifest: dict, public_key: object) -> dict:
+    """Verify every exact declared ciphertext span without extracting packages.
+
+    The manifest must come from inspect(). A one-bit mutation in memory checks
+    rejection without changing the input. Success is relative to the supplied
+    public key, never a claim about publisher identity or runtime enforcement.
+    """
+    if not manifest["signature"]["header_verified"]:
+        raise LabError("Audit requires a valid header signature")
+    verified = 0
+    packages = []
+    negative_control = None
+    for package in manifest["packages"]:
+        if not package["segments"]:
+            raise LabError("Empty segment list")
+        for segment in package["segments"]:
+            size = segment["signed_size"]
+            if not 128 < size <= MAX_SEGMENT + 128:
+                raise LabError("Signed span exceeds bounds")
+            signature = read_at(stream, segment["signature_offset"], 128, manifest["input_size"])
+            signed = read_at(stream, segment["signed_offset"], size, manifest["input_size"])
+            if not verify_signature(public_key, signature, signed):
+                raise LabError("Package segment signature failed during audit")
+            if negative_control is None:
+                altered = bytes([signed[0] ^ 1]) + signed[1:]
+                if verify_signature(public_key, signature, altered):
+                    raise LabError("Signature negative control was accepted")
+                negative_control = {"package": package["name"], "index": segment["index"],
+                                    "signed_offset": segment["signed_offset"],
+                                    "mutation": "first ciphertext byte XOR 1, in memory only",
+                                    "rejected": True}
+            verified += 1
+        packages.append({"name": package["name"], "verified_segments": len(package["segments"])})
+    if not verified:
+        raise LabError("No signatures available to audit")
+    return {"verified_segments": verified, "packages": packages,
+            "negative_control": negative_control,
+            "scope": "Exact declared spans; consistency with supplied public key only"}
+
+
 def extract_selected(stream: BinaryIO, manifest: dict, key: bytes, public_key: object,
                      names: list[str], output: Path) -> list[dict]:
     if len(names) != len(set(names)):
@@ -238,6 +278,8 @@ def main() -> None:
     parser.add_argument("--public-key", required=True, type=Path)
     parser.add_argument("--package", action="append", default=[])
     parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--verify-all", action="store_true",
+                        help="Audit every segment signature without requiring package extraction")
     args = parser.parse_args()
     if bool(args.package) != bool(args.output_dir):
         parser.error("Package selection and output directory must be supplied together")
@@ -246,10 +288,15 @@ def main() -> None:
             raise LabError("Input must be a regular non-symlink file")
         with args.input.open("rb") as stream:
             manifest, key, public_key = inspect(stream, args.key_file, args.public_key)
+            if args.verify_all:
+                manifest["signature_audit"] = audit_signatures(stream, manifest, public_key)
+                manifest["signature"]["package_segments"] = "all exact declared spans verified"
+                manifest["signature"]["verified_segments"] = manifest["signature_audit"]["verified_segments"]
             if args.package:
                 manifest["extracted"] = extract_selected(stream, manifest, key, public_key, args.package, args.output_dir)
-                manifest["signature"]["package_segments"] = "verified for explicitly extracted packages only"
-                manifest["signature"]["verified_segments"] = sum(item["verified_segments"] for item in manifest["extracted"])
+                if not args.verify_all:
+                    manifest["signature"]["package_segments"] = "verified for explicitly extracted packages only"
+                    manifest["signature"]["verified_segments"] = sum(item["verified_segments"] for item in manifest["extracted"])
         print(json.dumps(manifest, indent=2))
     except (LabError, OSError) as error:
         parser.exit(1, f"Firmware laboratory error: {error}\n")

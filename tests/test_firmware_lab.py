@@ -6,6 +6,7 @@ from pathlib import Path
 import struct
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from tools import firmware_lab as lab
 from tools.firmware_lab_squashfs import parse_listing, safe_path
@@ -98,6 +99,48 @@ class ContainerTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 lab.extract_selected(io.BytesIO(), {"packages": [], "signature": {"header_verified": True}},
                                      self.key, None, [], Path(directory))
+
+    def audit_fixture(self):
+        private = rsa.generate_private_key(public_exponent=65537, key_size=1024)
+        image = bytearray()
+        segments = []
+        for index in range(2):
+            data = bytes([index + 1]) * 160
+            signature = private.sign(hashlib.sha1(data).digest(), padding.PKCS1v15(), hashes.SHA1())
+            offset = len(image)
+            image.extend(signature + data)
+            segments.append({"index": index, "signature_offset": offset,
+                             "signed_offset": offset + 128, "signed_size": len(data)})
+        return bytes(image), {"input_size": len(image), "signature": {"header_verified": True},
+                              "packages": [{"name": "test", "segments": segments}]}, private.public_key()
+
+    def test_full_audit_verifies_every_span_and_preserves_input(self):
+        image, manifest, public = self.audit_fixture()
+        stream = io.BytesIO(image)
+        result = lab.audit_signatures(stream, manifest, public)
+        self.assertEqual(result["verified_segments"], 2)
+        self.assertTrue(result["negative_control"]["rejected"])
+        self.assertEqual(stream.getvalue(), image)
+        corrupted = bytearray(image)
+        corrupted[-1] ^= 1
+        with self.assertRaises(lab.LabError):
+            lab.audit_signatures(io.BytesIO(corrupted), manifest, public)
+
+    def test_audit_rejects_vacuous_and_unauthenticated_manifests(self):
+        image, manifest, public = self.audit_fixture()
+        manifest["signature"]["header_verified"] = False
+        with self.assertRaises(lab.LabError):
+            lab.audit_signatures(io.BytesIO(image), manifest, public)
+        manifest["signature"]["header_verified"] = True
+        manifest["packages"] = []
+        with self.assertRaises(lab.LabError):
+            lab.audit_signatures(io.BytesIO(image), manifest, public)
+
+    def test_audit_negative_control_detects_permissive_verifier(self):
+        image, manifest, public = self.audit_fixture()
+        with patch.object(lab, "verify_signature", return_value=True):
+            with self.assertRaisesRegex(lab.LabError, "negative control"):
+                lab.audit_signatures(io.BytesIO(image), manifest, public)
 
 
 if __name__ == "__main__":
