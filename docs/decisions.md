@@ -48,3 +48,7 @@ The owner accepts using the PS5 for commercial streaming apps. Latest Netflix/Yo
 ## D012 — Publish reviewed blocks incrementally
 
 On2026-11-14 the owner explicitly authorized pushing completed work to the personal GitHub repository. Preserve granular history and exclusive owner attribution; fetch/check branch and divergence before each push. Review and test the exact committed snapshot, keep unfinished agent work local, and exclude vendor firmware, keys and private runtime captures. This publication authorization does not authorize any new TV operation.
+
+## D013 — Separate native build, admission and resource ownership
+
+The original minimal ARM probe demonstrates local linking, not a device launch route. Keep artifact construction independent from entry/admission research. Static window evidence further separates process registration, identifier reservation, graphics-surface creation and acknowledged restoration. A method named GetWindowID may mutate bookkeeping; a successful response or valid numeric ID is not ownership proof. The disconnected lifecycle model is an OpenCast contract, not a recovered LG protocol, and must not be bound by assuming its stages map one-to-one to vendor calls. Resolve legitimate execution and explicit ownership/cleanup contracts before adding a platform adapter. See native-execution-gates.md and native-window-allocation.md.

@@ -42,6 +42,7 @@ The prototype uses conservative HTML, CSS and JavaScript, with no framework runt
 | **Device communication** | Exact-target SSDP discovery, read-only UDAP/DLNA descriptions and local connectivity verified. |
 | **Physical execution** | The browser probe received clicks and returned through Home. The separately packaged launcher now renders with owner-confirmed arrows and OK; opening and navigation are slow. |
 | **Firmware understanding** | Official firmware preserved and analyzed locally. Selected binaries identify ARM32 little-endian EABI5; boot paths, partitions and vendor dependencies are being mapped. This is firmware evidence, not a full hardware inventory. |
+| **Native build** | Original source links reproducibly to a 648-byte ARM executable, independently inspected on the Mac. [Build evidence](docs/native-probe-build.md). It has not run on the TV; native admission remains unresolved. |
 | **Launcher development** | A static shell, bounded diagnostics and host tests. A lighter candidate reduces redundant DOM writes and paint complexity; its TV speed is not yet measured. Native TV actions remain disconnected. |
 
 The [experiment log](docs/experiments.md), [firmware analysis](docs/firmware-extraction.md) and [current handover](docs/handover.md) preserve the detail—including failures, uncertainty and validation limits.
