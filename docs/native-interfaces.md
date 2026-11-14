@@ -51,3 +51,8 @@ Treat RELEASE as a candidate host for essential TV services, not as a process th
 - Conclusion: there are concrete static-analysis targets; safe runtime access and separation remain unproven.
 - Risks: treating names as semantics or accidentally executing native control; avoided by static metadata-only inspection.
 - Next: disassemble the identified wrappers, identify IPC/argument contracts, and reconcile with Claude's independent boot/recovery review.
+
+
+## Receiver and lifecycle follow-up
+
+[App lifecycle tracing](app-lifecycle.md) now matches the input wrapper to procmgr's method table, handler and input-manager dispatch path. [Native admission tracing](native-admission.md) identifies both managed-launch and message-receiver process-table insertion. These narrow earlier receiver/registration unknowns; they do not establish IPC authorization, callable enum/layout contracts or successful standalone access. No service call has been sent.

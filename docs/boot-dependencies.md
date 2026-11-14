@@ -63,6 +63,6 @@ PENDING: active boot mode/storage, true partition map and redundancy, kernel con
 
 [Selected service lists and procmgr analysis](service-supervision.md) now supply a concrete boundary: the normal list declares `/mnt/lg/lgapp/RELEASE` under `reboot`, and a separate `fxui .../home/Home.swf --service lg.service.normal.home2 --auid 11174` under `respawn`. The SWUE list declares a separate `/mnt/swue/SWUE` executable. The supplied comments define these policies for normal/abnormal termination, while bounded procmgr disassembly identifies additional conditions; do not equate closing Home with exiting procmgr or rebooting the TV. Actual active list selection remains unobserved.
 
-The Home service AUID string `11174`, interpreted as hexadecimal, equals decimal70004 in the selected Home manifest. This numerical match supports a common identifier mapping; argument parsing and universal identifier semantics still require tracing.
+The Home service AUID string `11174`, interpreted as hexadecimal, equals decimal70004 in the selected Home manifest. The subsequent fxui parser trace confirms base16 parsing of this argument, matching the manifest in this case; universal identifier semantics are not implied. See [app-lifecycle.md](app-lifecycle.md).
 
 Next static work targets appctrl/fxui registration, focus and lifecycle rather than replacing RELEASE. Original startup declarations and Home assets remain untouched on the TV.
