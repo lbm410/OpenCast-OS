@@ -1,6 +1,6 @@
 # Appctrl type provenance and execution conditions
 
-Date: 2026-11-14. **CONFIRMED (local static):** the downloaded parsed field `+0x28` comes from XML `app_type`; downloaded native classes select the account label `game`; the examined execution-condition helper rejects particular loading/state/flag combinations. **PENDING:** provider acceptance of our native artifact, the policy producing the rejection flag, actual account enforcement and a permitted launch mechanism. These findings do not establish native admission or privileges.
+Date: 2026-11-14. **CONFIRMED (local static):** the downloaded parsed field `+0x28` comes from XML `app_type`; downloaded native classes select the account label `game`; the examined execution-condition helper rejects particular loading/state/flag combinations. **Current follow-up:** [execution policy](native-execution-policy.md) identifies descriptor producers for lists 2/3, and the [account](process-account-contract.md)/[field-provenance](process-account-provenance.md) reports connect the selected name buffer to numeric setter attempts. **PENDING:** USB-test initial policy, upstream authority, effective credentials, provider acceptance of our native artifact and a permitted launch mechanism. These findings do not establish native admission or privileges.
 
 This follows [manifest admission](native-manifest-admission.md) and [execution gates](native-execution-gates.md). Scope is the already selected appctrl only. No protected package was opened/decrypted, no metadata changed, and no IPC, TV, network, target execution or Git operation occurred. Upctrl remains a separate investigation.
 
@@ -71,7 +71,7 @@ No direct native-type comparison occurs inside `_APPCTRL_CheckExecuteCondition`.
 
 The downloaded conversion passes its parsed record and app-info output to this helper at `0x37050–0x37058`. In `_APPCTRL_ExecuteProcess`, several paths pass app-info `+0x1594` as a stack argument to `AC_SEND_ExecuteProcess` (for example `0x17114–0x17138`). This connects the selected label to the send wrapper; it does not establish how the receiving supervisor resolves or applies it.
 
-**PENDING:** passwd/group mapping, effective UID/GID, fallback on account failure, filesystem/mount execution permissions, supervisor validation and runtime privileges. In particular, neither the `game` label nor presence of a `root` case proves privilege level for our artifact. Nothing here proposes selecting another type or altering protected metadata to influence that label.
+The later account reports trace the name-lookup fallback, passwd-enumeration prefix resolver and GID-then-UID setter attempts. **PENDING:** actual database values, fallback-source authority, effective UID/GID, filesystem/mount execution permissions and native authorization. Setter attempts are not proven identity changes. In particular, neither the `game` label nor presence of a `root` case proves privilege level for our artifact. Nothing here proposes selecting another type or altering protected metadata to influence that label.
 
 ## Reproduction and stopping point
 
@@ -84,9 +84,9 @@ python3 -m tools.arm_disassembly firmware/lab/app-lifecycle/open/bin/appctrl \
   --start 0x14594 --end 0x146a8
 ```
 
-Stop at the untraced execution-info descriptor producer, `_APPCTRL_GetLiveAppItem`/state writers, other execution branches, and supervisor account enforcement. The independent upctrl slice must resolve provider acceptance. A useful next narrowly scoped trace is the caller that constructs the descriptor consumed by `SetAppExecuteInfo`; a default bit value or a permissive account label alone cannot admit an ELF. No device-side experiment is justified by this slice.
+The original slice stopped at descriptor production and supervisor account handling; the follow-ups below now trace selected paths across both boundaries. Current unresolved edges are USB-test initial policy/authority, `_APPCTRL_GetLiveAppItem` and state writers, other execution branches, effective credentials and legitimate provider admission. Do not repeat the completed lists 2/3 producer or selected account-writer traces. A default bit value or account label cannot admit an ELF, and no device-side experiment is justified by these slices.
 
-## Experiment NATIVE-CONDITIONS-001
+## Historical experiment NATIVE-CONDITIONS-001
 
 - **Objective:** recover XML type provenance and bounded downstream conditions/account selection.
 - **Hypothesis:** native-looking conversion support still passes additional metadata/state gates.
@@ -100,6 +100,6 @@ Stop at the untraced execution-info descriptor producer, `_APPCTRL_GetLiveAppIte
 
 ## Follow-up producer trace
 
-[Execution policy](native-execution-policy.md) now identifies XML `prohibit` and update-completion fields as concrete descriptor producers for lists2/3. Neither captured producer selects USB-test list4 or directly tests app_type. Upstream authority, other writers and the USB-test initial field remain unresolved. This narrows the prior producer gap without establishing native permission.
+[Execution policy](native-execution-policy.md) now identifies XML `prohibit` and update-completion fields as concrete descriptor producers for lists 2/3. Neither captured producer selects USB-test list4 or directly tests app_type. Upstream authority, other writers and the USB-test initial field remain unresolved. This narrows the prior producer gap without establishing native permission.
 
 Follow-up: [account flow](process-account-contract.md) and [field provenance](process-account-provenance.md) now connect the selected name buffer, fallback, enumeration-based resolver and numeric setter attempts. They resolve this static edge without establishing effective credentials, filesystem execution permissions or admission of an OpenCast artifact.

@@ -8,8 +8,10 @@ either after its own `vfork` or while receiving a method whose supplied process
 key is not already present. Consequently the inner registration handler's
 lookup does **not** prove that only supervisor-launched programs may register.
 Whether an independently started application can reach and satisfy that path
-remains **PENDING**: bus access policy, identity validation and registration
-state transitions have not been established.
+remains **PENDING**. The later [bus/state trace](native-bus-policy.md) identifies
+SCF's D-Bus wrapper, shipped policy and the operation-32 registration callback,
+including one state transition. Active policy, authenticated identity and
+complete registration success remain unestablished.
 
 This refines [native-entry-contract.md](native-entry-contract.md); it does not
 provide an execution mechanism or a packet recipe.
@@ -52,8 +54,10 @@ The previously matched `AC_SEND_ExecuteProcess` method reaches
 | `0x165e0`, `0x165f0`, `0x16604` | `PM_PROC_UpdatePTAUID`, `PM_PROC_UpdateCreateProcApp`, `PM_PROC_UpdatePTOrderRelated` | Attaches AUID and additional lifecycle metadata after creation |
 
 The child branch includes scheduling/environment setup, working-directory
-selection and `execve` at `0x1b1c0`. Account-related branches also exist. This
-does not establish a default privilege or an acceptable custom executable path.
+selection and `execve` at `0x1b1c0`. Later [account handling](process-account-contract.md)
+and [field provenance](process-account-provenance.md) trace the name/fallback,
+prefix-based resolver and GID-then-UID setter attempts. Effective credentials
+and an acceptable custom executable path remain unestablished.
 No branch was run. The parent does not visibly branch on the insert return at
 `0x1af60`; successful creation alone therefore must not be treated as proof of
 successful record insertion or subsequent registration.
@@ -112,27 +116,26 @@ compares service strings; that is different from PID lookup and includes
 state-sensitive selection. This is only a partial layout for static reasoning,
 not a usable struct ABI or a runtime memory address map.
 
-## Next evidence, narrowly scoped
+## Current boundary after follow-up traces
 
-The highest-value remaining trace is now **transport admission and callback
-state**, rather than finding another generic launcher:
+[SCF/policy and state analysis](native-bus-policy.md) completed the connection,
+shipped-policy and initial callback identification originally proposed here.
+[Window consumer](native-window-contract.md) and [allocation](native-window-allocation.md)
+reports also distinguish framework identifiers, conditional reservation and
+surface creation. Do not repeat these discoveries as admission experiments.
 
-- Identify the selected connection requested at `0x17ea8`, its policy/configuration
-  and whether SCF checks sender credentials or transforms the supplied PID/name.
-  Evaluate library code and shipped policy statically; do not connect to it.
-- Resolve the registration state-table callback reached from operation selector
-  32 and its initial record state. Determine whether the fallback record alone
-  can complete registration, and how callback setup and service-name ownership
-  are validated.
-- Trace the first owned native window and readiness transition after registration.
-  Preserve RELEASE and the original Home throughout the design.
+The remaining transport questions are selector/address resolution, active daemon
+configuration and authenticated sender identity. Registration still needs its
+ordering-process branches and complete success/teardown contract; graphics still
+needs a service-bound lease, actual provider semantics and acknowledged cleanup.
+These are scoped downstream gaps, not initial execution mechanisms.
 
-These scopes complement a dependency/ABI graph: a symbol provider proves where
-a function is defined; this report addresses why and in what state it is called.
-Native execution access, safe exit/focus restoration and nonpersistent deployment
-are still unproven. No executable, IPC request or device procedure is proposed.
+Prioritize the [legitimate native entry gate](native-execution-gates.md) before
+building a runtime client. Record insertion, shipped policy and static callback
+identification establish neither independent execution nor safe Home/AV return.
+No IPC request or device procedure is proposed.
 
-## Experiment NATIVE-ADMISSION-001
+## Historical experiment NATIVE-ADMISSION-001
 
 - **Objective:** locate the creator and identity key of the record required by
   the inner registration dispatcher.

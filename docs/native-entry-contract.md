@@ -12,9 +12,10 @@ this contract and would additionally require drivers, boot and recovery work.
 record, but the outer method receiver can create a missing record first. The
 follow-up [native-admission.md](native-admission.md) establishes this important
 qualification: prior supervisor launch is not proven mandatory. The installed
-Apple compiler also produces a small ARM32 EABI5 relocatable object. Neither
-result establishes a runnable native application or permission to invoke the
-vendor framework.
+Apple compiler also produces ARM32 EABI5 objects. Later builds include the
+[current window lifecycle object](native-lifecycle-arm-build.md) and a separate
+[linked minimal probe](native-probe-build.md). Neither build nor record insertion
+establishes native admission or permission to invoke the vendor framework.
 
 ## Evidence and the missing admission step
 
@@ -31,8 +32,11 @@ Previously traced facts remain relevant:
 - Home has a distinct service and AUID. Its fxui argument `11174` is parsed in
   base 16 and matches manifest ID 70004. Reusing that identity would not create
   an independent application.
-- Fxui registers, obtains window information and reports readiness. Its normal
-  exit path includes application exit and service unregistration.
+- Fxui registers, obtains window information and reports readiness. A specialized
+  main branch performs application exit, service unregistration and process exit;
+  the general post-render cleanup/return path remains unproven. The later
+  [window trace](native-window-contract.md) also finds a `playerRun` libc-exit path;
+  no universal teardown or restored focus follows.
 
 New bounded disassembly tightens the registration prerequisite:
 
@@ -67,9 +71,9 @@ correlated PLT calls with ELF relocations. No vendor code was loaded or executed
 | Boundary | Concrete evidence | Evidence needed before implementation |
 | --- | --- | --- |
 | Loader and C ABI | Fxui/appctrl/procmgr are ARM32 little-endian EABI5 with `/lib/ld-linux.so.3`; selected libc/loader filenames are 2.12.2 | Verified sysroot, symbol-version requirements, compiler runtime compatibility and per-dependency ABI; filenames alone do not establish compatibility |
-| Registration and IPC | Fxui imports `HOA_PROC_RegisterService`; libafopenapi performs SCF initialization, connection and callback setup; appctrl/procmgr use `libscf.so` and D-Bus | Actual argument layouts, callback threading, timeout/error ownership, sender identity policy and state transitions after either identified record-creation path |
+| Registration and IPC | Fxui imports `HOA_PROC_RegisterService`; libafopenapi performs SCF initialization, connection and callback setup. SCF wraps D-Bus; shipped policy and the initial registration state callback are identified in [bus/state analysis](native-bus-policy.md) | Actual argument layouts, callback threading, timeout/error ownership, active sender policy and complete ordering/registration outcomes |
 | Application identity | Appctrl requires metadata; stock Home has its own service/AUID | A legitimate native admission mechanism, a distinct identity and allowed executable location; successful web packaging does not prove native ELF admission |
-| Graphics | Fxui directly needs `libEGL.so`, `libGLESv2.so`, `libIMGegl.so`, `libsrv_um.so` and `libfxcore.so`; it imports `eglCreateWindowSurface`, `eglGetDisplay`, `eglInitialize`, `eglDestroySurface`, `eglTerminate`, and `HOA_GX_GetWindowID` | The native display/window types and their provider, configuration/format selection, surface ownership, focus ordering and teardown; EGL names alone do not provide a usable window constructor |
+| Graphics | Fxui directly needs `libEGL.so`, `libGLESv2.so`, `libIMGegl.so`, `libsrv_um.so` and `libfxcore.so`; it imports EGL display, initialization, window-surface and teardown functions plus `HOA_GX_GetWindowID`. The [consumer](native-window-contract.md) passes a framework identifier to EGL; the [receiver](native-window-allocation.md) separates conditional reservation from surface creation | Service-bound ownership, actual EGL/native-window ABI and provider semantics, callback quiescence, focus restoration and acknowledged teardown; a successful reply or numeric ID is not a lease |
 | Input and focus | Appctrl sends focus requests; procmgr implements window/input dispatch and depends on `liblginputopenapi.so` | Key event delivery/callback ABI for an owned window, repeat semantics, focus loss/restore and Home handling; no global input-mode change is part of the first client |
 | Essential TV services | RELEASE is a separate service with AV dependencies and a declared reboot policy; Home has respawn policy | Runtime continuity and watchdog ownership; keep RELEASE/procmgr/appctrl and stock Home intact while investigating |
 
@@ -86,34 +90,38 @@ and integrated; do not generalize the sample to every vendor library. The later
 not a demonstrated second coherent runtime. CPU feature permission, actual instructions, procedure
 calling convention and physical CPU identification are separate questions.
 
-## Lifecycle contract to implement first on the host
+## Current host lifecycle contract
 
-Use a simulated adapter with explicit outcomes, not guessed vendor function
-declarations. Its intended state sequence is:
+The implemented [ownership model](native-lifecycle.md) uses synthetic adapters,
+not guessed vendor declarations. Its successful acquisition sequence is:
 
 ```text
-not-admitted -> admitted -> registered -> surface-owned -> ready
-                                                 ready <-> focused
-                            focused/ready -> closing -> returned
+not-admitted -> admitted -> registered -> window-owned -> surface-owned -> ready
+                                                               ready <-> focused
+close -> dependency-aware cleanup -> return-pending -> returned OR failed
 ```
 
-This is an OpenCast test model, **not a recovered vendor state machine**.
-In this OpenCast model, admission means a verified execution route and framework
-access; it is not synonymous with a preexisting procmgr record. Registration
-must not pretend to prove those prerequisites. Focus loss must leave the shell idle
-without changing global input dispatch. Closing releases only resources acquired
-by this instance, in reverse acquisition order, and must tolerate partial setup.
-`returned` requires an acknowledged lifecycle outcome; a process exit alone is
-insufficient evidence that Home, HDMI audio or input focus was restored.
+A failed return dispatch enters failed directly; a never-admitted close is local
+and claims no restoration. This is an OpenCast contract, **not a recovered vendor
+state machine**. Admission declares an independently verified execution route
+and framework access; registration cannot establish those prerequisites. The
+future window adapter must establish a service-bound lease, not merely accept a
+numeric ID. Vendor readiness can precede rendering, so its events require an
+explicit mapping to this model.
 
-The first host contract tests should inject rejection at each transition,
-duplicate readiness, focus loss while closing, callback after teardown, timeout
-and second close. Require zero TV-control actions, no identity reuse, and exactly
-one release per acquired resource. They validate our future adapter's ownership
-rules, not the device's private protocol. No production IPC adapter should be
-written until the corresponding signatures and policies are evidenced.
+Cleanup makes at most one attempt per eligible owned resource, in reverse order.
+Unconfirmed surface release retains window and registration; unconfirmed window
+release retains registration. Only an independent restoration request continues;
+a positive acknowledgment cannot clear failed cleanup or unresolved ownership.
+Process exit alone proves neither Home/focus return nor AV continuity.
 
-## A toolchain artifact already produced
+Ten host test groups and independent scenario review cover transition failures,
+late/stale callbacks, timeouts, reentrancy, retained dependencies and idempotent
+close. These are host evidence, not validation of an LG adapter. Keep native
+capabilities disconnected until admission, signatures, ownership and policy are
+evidenced; further model review must preserve these dependency rules.
+
+## Historical ABI-shape object experiment
 
 The installed **Apple clang 17.0.0 (clang-1700.6.3.2)** compiled our own small C
 translation unit twice without additional dependencies. It has no entry point,
@@ -146,39 +154,32 @@ physical CPU support. `-mfloat-abi=soft` is a conservative option for this pure
 object experiment, not the final renderer configuration. No performance claim
 follows from it. No Linux cross-linker or target C runtime was installed here.
 
-## Next bounded engineering work
+## Current bounded engineering priorities
 
-1. **Admission trace:** record creation and the PID key are now traced in
-   [native-admission.md](native-admission.md), including the method receiver's
-   fallback insertion. Next inspect SCF connection policy, identity provenance
-   below message parsing and the registration state callback. Stop short of
-   constructing IPC.
-2. **Graphics contract:** trace fxui's existing `HOA_GX_GetWindowID` and
-   `eglCreateWindowSurface` call sites, then the exact provider of the native
-   window value. Recover ownership and teardown before choosing EGL, DirectFB
-   or software rendering; do not assume `/dev/fb0` or a generic desktop backend.
-3. **Host adapter model:** implement the transition/ownership tests above with
-   synthetic callbacks only. Keep all native capabilities unavailable. Reuse
-   current UI navigation logic where practical; changing the renderer need not
-   redesign focus behavior.
-4. **Link-readiness audit:** inventory undefined symbols and required/provided
-   symbol versions for the chosen small adapter dependency closure. Select
-   matching headers and compiler runtime only after that audit. A subsequent
-   linked artifact is still host-inspected data until an independently verified
-   execution route exists.
+1. **Legitimate entry:** follow [execution gates](native-execution-gates.md) and
+   the [runtime artifact/issuer boundary](native-runtime-artifacts.md). No
+   admitted owner-authored ELF or permitted starter has been demonstrated.
+2. **Remaining registration/graphics contracts:** connection and callback
+   identification, window consumer flow and conditional reservation are already
+   traced. Any further slice must target active-policy provenance, ordering-state
+   branches, service-bound ownership, actual EGL semantics or acknowledged
+   teardown, rather than repeat those completed discoveries. Do not construct IPC.
+3. **Binding readiness:** the host lifecycle and its current ARM object exist,
+   but no real adapter or linked graphics client does. Audit argument/callback
+   contracts and the chosen dependency closure before selecting compatible headers
+   or linking vendor providers. The separate libc-free probe needs no sysroot;
+   that result does not supply a renderer ABI or execution permission.
 
-The SCF admission/state trace is the highest-information next step: it
-determines whether an independently started client can use the registration
-path, whose outer receiver can create a process record on demand.
-The graphics trace answers whether a small client can own a surface without the
-full fxui stack. Neither requires privileges or changes on the TV.
+These tracks can progress locally, but downstream framework work cannot substitute
+for legitimate initial execution. Keep RELEASE, procmgr, appctrl and stock Home
+intact; real service continuity and return must eventually be observed separately.
 
 Autostart remains a separate integration boundary. A coexisting shell becoming
 usable does not justify replacing Home's declaration, intercepting Home globally,
 selecting a different startup list or modifying boot files. Those actions require
 their own compatibility, recovery and owner-authorized execution procedure.
 
-## Experiment NATIVE-ENTRY-001
+## Historical experiment NATIVE-ENTRY-001
 
 - **Objective:** identify a precise native admission prerequisite and test the
   Mac's ability to produce a conservative ARM object.
@@ -204,6 +205,6 @@ their own compatibility, recovery and owner-authorized execution procedure.
 
 ## Later build and graphics evidence
 
-The separate [minimal native probe](native-probe-build.md) now demonstrates a local linked ARM ELF using existing host tools, beyond the earlier object-only experiment. Its self-contained syscall experiment has no LG framework binding and has not run on a device. The [native window consumer trace](native-window-contract.md) establishes a framework identifier passed into EGL, but window allocation, callback quiescence and actual return remain unresolved. Vendor process readiness occurs before rendering setup in the inspected paths, so the host model's surface/readiness order must be mapped explicitly rather than treated as a recovered protocol.
+The separate [minimal native probe](native-probe-build.md) now demonstrates a local linked ARM ELF using existing host tools, beyond the earlier object-only experiment. Its self-contained syscall experiment has no LG framework binding and has not run on a device. The [native window consumer trace](native-window-contract.md) establishes a framework identifier passed into EGL, while the later receiver trace identifies conditional reservation. Service-bound ownership, callback quiescence and actual return remain unresolved. Vendor process readiness occurs before rendering setup in the inspected paths, so the host model's surface/readiness order must be mapped explicitly rather than treated as a recovered protocol.
 
 Receiver follow-up: [window allocation](native-window-allocation.md) distinguishes conditional bookkeeping reservation, reply success, numeric validity and surface creation. A GetWindowID-shaped call is not automatically read-only. No native adapter should borrow a stock ID/path or consider success a service-ownership proof.
