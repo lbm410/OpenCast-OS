@@ -2,6 +2,8 @@
 
 Read AGENTS.md, README.md, docs/handover.md and docs/decisions.md. Apply the same risk, evidence, language and Git rules.
 
+Use `knowledge/index.md` for progressive context loading; follow the bounded retrieval commands in `docs/knowledge-format.md`. Do not repeatedly load every report. Treat compact concepts as pointers to evidence, not replacements for checking a critical source. Check truncation and preserve uncertainty. The channel's assigned file ownership still applies to knowledge edits.
+
 ## Mandatory authorship and integration rules
 
 - All new commits and PRs must use only `lbm410 <lbm410@inlumine.ual.es>` as author.

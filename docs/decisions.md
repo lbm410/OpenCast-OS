@@ -23,3 +23,19 @@ The browser path offers a low-risk first execution without depending on legacy L
 ## D006 — English engineering record
 
 All repository knowledge and technical material is written in English, including agent instructions, comments and CLI messages. Conversation with the owner remains Spanish. Original third-party material and recorded evidence are preserved verbatim, not rewritten to change the historical observation.
+
+## D007 — Preserve essential vendor services while researching shell replacement
+
+The decoded RELEASE executable has vendor AV dependencies and native TV-related definitions. A graphics/input wrapper uses a service-message path. Investigate coexistence and explicit capability adapters before proposing process replacement. Symbol names or paired partitions do not prove safe separation or recovery. See native-interfaces.md and architecture.md.
+
+## D008 — OKF concepts are a bounded retrieval layer
+
+At the owner's request, adopt Open Knowledge Format0.2 in knowledge/ with concise linked concepts and source references. Keep detailed experiment reports as evidence. Use JSON-object YAML frontmatter for a dependency-free local profile; do not claim a universal YAML reader. Return only task-relevant context with exact byte limits and explicit truncation. Token counts are estimates until measured with a specific tokenizer. Do not fabricate verification metadata or duplicate raw artifacts into the graph.
+
+## D009 — Responsiveness governs visual effects
+
+The owner's landscape/glass direction starts with a static local image and inexpensive translucent panels. Actual-TV input latency, startup and stability decide whether any movement or additional compositing is acceptable. Desktop smoothness and compressed asset size are insufficient evidence. See performance.md.
+
+## D010 — Granular local history, publication separately authorized
+
+The owner explicitly requested local commits by coherent functionality/investigation. Keep tests and relevant documentation with each block, fetch/check before every commit, preserve exclusive owner attribution, and leave unfinished work out. This instruction does not authorize push or deployment.

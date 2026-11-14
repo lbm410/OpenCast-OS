@@ -2,6 +2,8 @@
 
 Codex is the integration lead. Claude Code is an independent reviewer with permission from the owner to delegate scoped research to its own agents. This directory is the shared mailbox; it does not automatically wake either application. Never claim receipt or execution without an acknowledgement written by the recipient.
 
+Runtime `status/` and `messages/` directories are ignored by Git; create them locally when starting a new checkout. Commit durable findings into assigned reports and knowledge concepts, not raw coordination transcripts. The protocol and task definitions remain versioned.
+
 ## Starting the Claude session
 
 Read `AGENTS.md`, `CLAUDE.md`, this file, and `collaboration/tasks/CLAUDE-001.md`. Acknowledge the assignment in `collaboration/status/claude.md`, then begin. The owner need not relay routine questions or results. Re-read this channel between work units, before changing scope and before ending a turn.
