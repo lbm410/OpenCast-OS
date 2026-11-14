@@ -43,6 +43,8 @@ Executable segments can contain literal pools and tables. The wrapper validates 
 
 This version deliberately adds no PLT annotations, demangled API contracts, call signatures or control-flow interpretation. The older scratch helper's relocation/PLT logic has not been copied. Symbol-boundary selection and named-call conclusions in existing reports still need their own evidence; this tool only makes the selected-address operation reproducible.
 
+The companion [ARM branch index](arm-branch-index.md) lists candidate immediate B/BL destinations from the same validated ELF/range interface. It does not infer code/data identity or replace the following interpretation review.
+
 ### Evidence review before integration
 
 Account-path reviews exposed errors that hashes alone cannot detect. For each claimed rejection, continuation or state transition, follow the actual branch target through its rejoin or return; a branch away from adjacent instructions is not necessarily a failure exit. Record caller arguments at the call site after tracking intervening assignments. For comparisons, identify both operands and the source of the length, distinguishing prefix comparison from exact equality.

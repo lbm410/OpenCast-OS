@@ -291,3 +291,13 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Conclusion:** a future adapter must track reservation separately and cannot infer ownership from a successful response. See native-window-allocation.md.
 - **Risks:** misclassifying a private method as read-only, borrowing a stock identity, or equating record reset with restored video/input. No TV/IPC or target execution occurred.
 - **Next:** resolve admitted entry first; if pursuing the graphics contract, follow the demonstrated reset queue consumer and EGL provider boundary without invoking them.
+
+## ARM-BRANCH-001 — reproducible direct-target review
+
+- **Objective/hypothesis:** make distant branch targets and backward rejoins explicit without attempting automatic control-flow recovery.
+- **Environment/procedure:** reviewed ELF/range reader, fixed A32 encoding decoder and primary Arm references; synthetic fixtures plus a read-only existing procmgr slice.
+- **Expected:** exact signed target arithmetic and declared limitations on instruction state, literal data, conditions and indirect branches.
+- **Observed:**12 new tests pass; independent oracle agrees for10,023 synthetic words across three bases, including address wrap. Maximum64KiB slice yields16,384candidates and2,786,241JSONbytes below4MiB. The actual selected480-word slice includes both the conditional target and previously missed backward rejoin.
+- **Conclusion:** repeatable target indexing is available; it does not establish runtime reachability or validate an account-policy interpretation. Full working-tree suite372Python tests passes with optional cryptography/no skips.
+- **Risks:** literal data can resemble instructions, alignment does not establish ARM state and filesystem/stdout are not hard real-time bounded. Output repeats these limits.
+- **Next:** use the index alongside independent argument/branch review for future bounded static reports. No vendor program, disassembler subprocess or TV operation was executed by this index.
