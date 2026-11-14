@@ -77,6 +77,10 @@ The bounded body of `APPSEC_DRM_DecryptFileToBuffer` establishes concrete return
 
 This separate branch cannot be substituted for the USB-test chain: the preceding report connected USB-test list/storage to the **app-ID** handler. File-path existence, a non-DRM branch or service registration does not demonstrate arbitrary external callers, native admission or privileged execution.
 
+## Follow-up: AppInfo is gated by sample support
+
+The later [AppInfo provenance trace](appinfo-provenance.md) establishes that the path builder accepts only storage3 with a nonzero app ID and requires a successful imported sample-support query with a nonzero result flag. A diagnostic calls this CP Box, but the underlying policy and the owner's device result remain unknown. Failure takes the protected downloaded fallback. No immediate producer was identified. This qualifies the earlier AppInfo-first description: it is not a general unprotected alternative, and it must not be equated with the portal's Developer CP Service checkbox.
+
 ## Remaining execution gap and next bounded experiment
 
 No Web-only restriction was established in these selected provider bodies, but no native permit was established either. Appctrl's type/path conversion remains downstream of successful provider output and XML parsing; later execution conditions, filesystem execution permissions, process account and lifecycle ownership remain unresolved.

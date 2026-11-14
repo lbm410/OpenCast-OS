@@ -4,6 +4,10 @@ Checked 2026-11-14. **CONFIRMED (official historical documentation):** LG's depl
 
 The [SDK overview](https://webostv.developer.lge.com/more/netcast/sdk-overview) lists the IDE, emulator and Web API. That public component list alone does not supply a native Linux sysroot or a valid ARM binary delivery mechanism.
 
+## Emulator cannot validate native execution
+
+The official [2013 emulator comparison, printed pages15–16](https://webostv.developer.lge.com/assets/netcast/NetCast-Testing_App_on_Emulator.pdf) lists C Native as unsupported in the emulator and supported on the DTV. USB emulation is also unsupported there, and performance/resources depend on the host. This generic historical capability matrix is not model-specific native admission evidence. Installing the legacy emulator would therefore not close our current USB/native execution gate or establish TV speed.
+
 ## Relationship to the recovered loader
 
 The firmware's [native type/path conversion](native-execution-gates.md) and [USB-test manifest path](native-manifest-admission.md) make the historical route relevant. They do not establish that an arbitrary ELF is a valid Marmalade/Unity application, that those runtime labels correspond to any particular recovered numeric type, or that current packaging can issue the required metadata.
