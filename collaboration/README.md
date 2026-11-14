@@ -8,7 +8,7 @@ The owner can transfer standalone integration to Claude using `docs/claude-kicko
 
 ## Starting the Claude session
 
-Read `AGENTS.md`, `CLAUDE.md`, this file, and `collaboration/tasks/CLAUDE-001.md`. Acknowledge the assignment in `collaboration/status/claude.md`, then begin. The owner need not relay routine questions or results. Re-read this channel between work units, before changing scope and before ending a turn.
+Read `AGENTS.md`, `CLAUDE.md`, this file, the latest addressed message and its referenced current task. CLAUDE-001 is historical; do not restart it unless explicitly reassigned. Acknowledge the assignment in `collaboration/status/claude.md`, then begin. The owner need not relay routine questions or results. Re-read this channel between work units, before changing scope and before ending a turn.
 
 ## File ownership and messages
 

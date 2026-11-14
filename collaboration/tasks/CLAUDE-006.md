@@ -2,7 +2,7 @@
 
 ## Activation and role
 
-Deferred assignment: do not start before2026-11-14T15:00:07Z and only after the owner's quota pause has elapsed, the scheduled Codex message arrives and your actual runtime quota permits work. Keep the owner-selected model. No alternate sessions, quota workarounds or model overrides. Acknowledge the task before starting. Codex remains integration lead for this collaborative assignment; standalone handoff is a separate owner choice.
+Active concurrent assignment following owner resumption and message050. The earlier quota pause ended2026-11-14T15:00:07Z and scheduled message049 was written. Start only when your actual runtime quota permits work. Keep the owner-selected model. No alternate sessions, quota workarounds or model overrides. Acknowledge the task before starting. Codex remains integration lead for this collaborative assignment; standalone handoff is a separate owner choice.
 
 ## Objective
 
