@@ -63,6 +63,12 @@ jobs:
           cc -std=c11 -O2 -Wall -Wextra -Werror prototypes/native/lifecycle.c prototypes/native/lifecycle_test.c -o artifacts/native-lifecycle/lifecycle_test
           artifacts/native-lifecycle/lifecycle_test
 
+      - name: Check the native lifecycle model with Linux sanitizers
+        if: matrix.crypto
+        run: |
+          cc -std=c11 -O1 -g -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer prototypes/native/lifecycle.c prototypes/native/lifecycle_test.c -o artifacts/native-lifecycle/lifecycle_sanitized
+          timeout 30s env ASAN_OPTIONS=detect_leaks=1:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1 artifacts/native-lifecycle/lifecycle_sanitized
+
       - name: Validate the knowledge bundle
         run: .venv-ci/bin/python -m tools.knowledge --bundle knowledge validate
 

@@ -37,7 +37,13 @@ static oc_result close_internal(oc_lifecycle *self)
         if (result == 0) self->surface_owned = 0;
         else { self->cleanup_failed = 1; failure(self, OC_STAGE_RELEASE); }
     }
-    if (self->registered && !self->unregister_attempted) {
+    if (!self->surface_owned && self->window_owned && !self->window_release_attempted) {
+        self->window_release_attempted = 1;
+        result = self->ops.release_window(self->context, self->generation);
+        if (result == 0) self->window_owned = 0;
+        else { self->cleanup_failed = 1; failure(self, OC_STAGE_RELEASE_WINDOW); }
+    }
+    if (!self->surface_owned && !self->window_owned && self->registered && !self->unregister_attempted) {
         self->unregister_attempted = 1;
         result = self->ops.unregister_client(self->context, self->generation);
         if (result == 0) self->registered = 0;
@@ -55,8 +61,8 @@ oc_result oc_lifecycle_init(oc_lifecycle *self, const oc_ops *ops,
                             void *context, unsigned long generation)
 {
     if (!self || !ops || !generation || !ops->register_client ||
-        !ops->acquire_surface || !ops->announce_ready || !ops->request_focus ||
-        !ops->release_surface || !ops->unregister_client || !ops->request_return)
+        !ops->acquire_window || !ops->acquire_surface || !ops->announce_ready || !ops->request_focus ||
+        !ops->release_surface || !ops->release_window || !ops->unregister_client || !ops->request_return)
         return OC_BAD_ARGUMENT;
     if (self->initialized) return self->busy ? OC_BUSY : OC_BAD_STATE;
     self->ops = *ops;
@@ -68,8 +74,10 @@ oc_result oc_lifecycle_init(oc_lifecycle *self, const oc_ops *ops,
     self->state = OC_NEW;
     self->failure_stage = OC_STAGE_NONE;
     self->registered = 0;
+    self->window_owned = 0;
     self->surface_owned = 0;
     self->release_attempted = 0;
+    self->window_release_attempted = 0;
     self->unregister_attempted = 0;
     self->cleanup_failed = 0;
     self->focus_pending = 0;
@@ -97,6 +105,10 @@ oc_result oc_lifecycle_start(oc_lifecycle *self)
     if (self->ops.register_client(self->context, self->generation) != 0) goto failed;
     self->registered = 1;
     self->state = OC_REGISTERED;
+    stage = OC_STAGE_WINDOW;
+    if (self->ops.acquire_window(self->context, self->generation) != 0) goto failed;
+    self->window_owned = 1;
+    self->state = OC_WINDOW;
     stage = OC_STAGE_SURFACE;
     if (self->ops.acquire_surface(self->context, self->generation) != 0) goto failed;
     self->surface_owned = 1;
