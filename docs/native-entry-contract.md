@@ -201,3 +201,7 @@ their own compatibility, recovery and owner-authorized execution procedure.
   or app execution as startup replacement. None is claimed here.
 - **Next step:** process-record creation is now traced; inspect SCF identity
   validation and registration state transitions offline.
+
+## Later build and graphics evidence
+
+The separate [minimal native probe](native-probe-build.md) now demonstrates a local linked ARM ELF using existing host tools, beyond the earlier object-only experiment. Its self-contained syscall experiment has no LG framework binding and has not run on a device. The [native window consumer trace](native-window-contract.md) establishes a framework identifier passed into EGL, but window allocation, callback quiescence and actual return remain unresolved. Vendor process readiness occurs before rendering setup in the inspected paths, so the host model's surface/readiness order must be mapped explicitly rather than treated as a recovered protocol.
