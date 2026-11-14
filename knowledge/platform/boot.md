@@ -28,6 +28,10 @@
     {
       "id": "kernel-init",
       "resource": "../../docs/kernel-init-selection.md"
+    },
+    {
+      "id": "static-entry",
+      "resource": "../../docs/static-initializer-entry.md"
     }
   ],
   "opencast_evidence": [
@@ -58,3 +62,7 @@ Static bootloader tracing finds a conditional init=/sbin/init append only in the
 
 [^selection]: Bounded bootloader control-flow analysis and unresolved runtime state.
 [^kernel-init]: Independently traced parameter slots, early /init condition and exec-style fallback order.
+
+The static initializer entry supplies candidate0x82ac to a libc-style startup call. Its bounded prefix has a zero phase-pointer literal, unlike the dynamic initializer; APP_START is passed to an unnamed callee whose zero return branches to0x853c. Candidate extent, callee identity, successor behavior and actual unit startup remain unverified. Do not transfer dynamic initializer API names or recovery behavior by resemblance.[^static-entry]
+
+[^static-entry]: Independently reviewed entry and256-byte prefix, explicit literal values and branch successors; no target execution.

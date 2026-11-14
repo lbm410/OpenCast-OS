@@ -351,3 +351,11 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:**3,344-byte ARM EABI5 ET_REL, SHA-256 d8e890eb9d4ad01e3080f18780882d2d4774a63007877d09c5320e89eb884972, identical independent output and no reported undefined symbols.
 - **Conclusion/risks:** compiler-target object build only; no linker, target execution, physical ISA or native admission proof. Keep this separate from the old3,140-byte object and minimal linked probe.
 - **Next:** complete the legitimate entry and platform adapter contracts before any device experiment.
+
+## STATIC-ENTRY-002 — initial static phase gate
+
+- **Objective/hypothesis:** test whether the demonstrated static candidate shares the dynamic initializer's first phase selection.
+- **Environment/procedure:** pinned static lginit;256-byte candidate prefix, five referenced words and two bounded technical strings; independent reproduction and branch/argument review.
+- **Expected/observed:** zero static pointer literal causes fallthrough, unlike the dynamic nonzero pointer. APP_START reaches unknown callee0xbb78; its zero return branches to0x853c. Review verified64words,11targets and five literals without expanding scope.
+- **Conclusion/risks:** an artifact-level phase distinction is confirmed; API identity, active boot and recovery are not. Do not infer environment semantics from a string or borrow dynamic function names.
+- **Next:** separately bounded128-byte successor study; no TV action or target execution.
