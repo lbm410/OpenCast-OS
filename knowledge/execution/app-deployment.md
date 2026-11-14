@@ -28,6 +28,10 @@
     {
       "id": "account-writer",
       "resource": "../../docs/process-account-provenance.md"
+    },
+    {
+      "id": "sample-policy",
+      "resource": "../../docs/sample-support-policy.md"
     }
   ],
   "opencast_evidence": [
@@ -60,3 +64,7 @@ The selected process-manager path resolves its account-name buffer through passw
 Original vendor sources tie Marmalade LG support to historical professional/developer entitlement and describe platform-specific loaders; Unity's LGTV route involved Union distribution. No exact NetCast2013 target bundle or current native issuer was recovered. Those histories do not make an arbitrary ARM image uploadable.[^runtime-artifact]
 
 [^runtime-artifact]: Independently verified original/archived vendor sources, with historical and target-version limits.
+
+The AppInfo sample-support query now has a traced client status/output gate, exact static method/handler pointer pair and three-global-word predicate in RELEASE. No actual field values or setters were inspected. Active dispatch, policy producers/authority, AppInfo integrity and native admission remain unresolved; the portal checkbox is not an identified control for this state.[^sample-policy]
+
+[^sample-policy]: Independently reviewed532-byte wrapper/handler/predicate analysis and bounded import/data provenance; no device request.

@@ -391,3 +391,11 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** both selected routes reach SVC0 with r7=11 and filename/argv/envp arguments, matching ARM EABI execve. Verified95words/18targets; error normalization and the caller's saved-zero return are explicit.
 - **Conclusion/risks:** an execution attempt is established statically. Initial process-creation gate, complete vectors, live environment and success remain unproven; an ignored returned error is not recovery.
 - **Next:** separately scoped process-gate analysis, without executing firmware or modifying the TV.
+
+## SAMPLE-POLICY-001 — implementation behind the AppInfo support query
+
+- **Objective/hypothesis:** trace the exact imported sample-support query to an internal policy, rather than equating it with a portal checkbox.
+- **Environment/procedure:** two previously selected ELFs, four symbol-bounded ranges totaling532bytes, ten PLT/relocation imports, technical-string arguments, an exact method/handler pair and independent argument/branch/storage review.
+- **Expected/observed:** wrapper status1 gates output copying independently of support value; matching handler normalizes a three-global-word predicate. All133words/20targets verified. Sender outcomes are unchecked. A/C storage is file-backed and B zero-fill-only; no field values were read.
+- **Conclusion/risks:** static policy shape is now explicit; active dispatch, live values/writers, metadata integrity and native admission remain unknown. ELF initialization and table adjacency are not physical-state proof.
+- **Next:** separately scope policy producers or dispatch only if needed; no owner action, IPC or TV test now.
