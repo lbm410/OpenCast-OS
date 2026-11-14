@@ -14,6 +14,10 @@ Use `knowledge/index.md` for progressive context loading; follow the bounded ret
 
 Codex integrates tools, prototypes and tests. Claude Code implements tools and tests, investigates firmware and architecture, and reviews decisions within explicit ownership. Assign explicit files without overlapping writes; use worktrees once a valid Git baseline is available. Do not create commits or push automatically.
 
+## Owner-invoked standalone continuation
+
+The owner may invoke `docs/claude-kickoff.md` to hand integration responsibility to Claude when continuing without Codex. In that mode, historical no-commit/review-only assignments remain historical: Claude may finish, review and integrate new authorized work under AGENTS.md, the actual Git state and the owner's publication decision D012. No additional Codex approval is required. If both agents are still active, retain explicit disjoint ownership and coordinate the transfer through the mailbox; do not create concurrent integration writers. This changes the integration role, not the hardware-risk, privacy, attribution or quota boundaries.
+
 Suggested first task: audit docs/platform-research.md and build a boot dependency matrix from verified official firmware evidence. Report facts with paths/offsets/hashes, clearly separate hypotheses and challenge unsupported assumptions. Do not connect to the TV or execute extracted code. Never include secrets in prompts or reports.
 
 ## Shared coordination channel

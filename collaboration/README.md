@@ -4,6 +4,8 @@ Codex is the integration lead. Claude Code is an implementation and research par
 
 Runtime `status/` and `messages/` directories are ignored by Git; create them locally when starting a new checkout. Commit durable findings into assigned reports and knowledge concepts, not raw coordination transcripts. The protocol and task definitions remain versioned.
 
+The owner can transfer standalone integration to Claude using `docs/claude-kickoff.md`. Read the current handover and actual Git state; a fresh chat must not restart completed research or treat an old review assignment as a permanent prohibition on integration. While Codex and Claude are concurrent, file ownership still applies. A quota pause overrides continuous monitoring; a local waiting process is distinct from repeated model-driven polling, and automatic completion delivery must be supported by the actual runtime.
+
 ## Starting the Claude session
 
 Read `AGENTS.md`, `CLAUDE.md`, this file, and `collaboration/tasks/CLAUDE-001.md`. Acknowledge the assignment in `collaboration/status/claude.md`, then begin. The owner need not relay routine questions or results. Re-read this channel between work units, before changing scope and before ending a turn.
