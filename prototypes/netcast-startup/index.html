@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Startup diagnostic</title>
+</head>
+<body bgcolor="#006060" text="#ffffff" style="margin:40px;background-color:#006060;color:#ffffff;font-family:Arial,sans-serif;font-size:26px;">
+  <h1 style="font-size:54px;margin:0 0 18px;">HTML LOADED</h1>
+  <p style="margin:10px 0;">Startup diagnostic S001</p>
+  <div id="script-state">JS NOT CONFIRMED</div>
+  <div id="load-state">WINDOW LOAD NOT CONFIRMED</div>
+  <div id="event-state">Keys: 0 | Last code: none | Clicks: 0</div>
+  <div id="life-state">Page shows: 0 | Page hides: 0</div>
+  <div id="error-state">Script errors: 0 | Last line: none</div>
+  <p style="font-size:22px;margin:24px 0 0;">Use Home to return. This page does not intercept keys.</p>
+  <script type="text/javascript">
+  (function () {
+      var keys = 0, clicks = 0, shows = 0, hides = 0, errors = 0, last = "none";
+      function bump(value) { return value < 999 ? value + 1 : 999; }
+      function write(id, value) {
+          var node = document.getElementById(id);
+          if (!node) { return; }
+          if (typeof node.textContent !== "undefined") { node.textContent = value; }
+          else { node.innerText = value; }
+      }
+      function countEvents() {
+          write("event-state", "Keys: " + keys + " | Last code: " + last + " | Clicks: " + clicks);
+      }
+      function lifecycle() {
+          write("life-state", "Page shows: " + shows + " | Page hides: " + hides);
+      }
+      function key(event) {
+          event = event || window.event;
+          var code = event ? (event.keyCode || event.which) : null;
+          last = typeof code === "number" && code >= 0 && code <= 65535 && code % 1 === 0 ? code : "unknown";
+          keys = bump(keys);
+          countEvents();
+      }
+      function click() { clicks = bump(clicks); countEvents(); }
+      function show() { shows = bump(shows); lifecycle(); }
+      function hide() { hides = bump(hides); lifecycle(); }
+      window.onerror = function (message, source, line) {
+          errors = bump(errors);
+          var safeLine = typeof line === "number" && line >= 0 && line <= 999999 && line % 1 === 0 ? line : "unknown";
+          write("error-state", "Script errors: " + errors + " | Last line: " + safeLine);
+          /* Do not display error text, URLs, stack traces or event field contents. */
+          return false;
+      };
+      write("script-state", "JS LOADED");
+      window.onload = function () { write("load-state", "WINDOW LOAD RECEIVED"); };
+      if (document.addEventListener) {
+          document.addEventListener("keydown", key, false);
+          document.addEventListener("click", click, false);
+      } else if (document.attachEvent) {
+          document.attachEvent("onkeydown", key);
+          document.attachEvent("onclick", click);
+      } else { document.onkeydown = key; document.onclick = click; }
+      if (window.addEventListener) {
+          window.addEventListener("pageshow", show, false);
+          window.addEventListener("pagehide", hide, false);
+      }
+  }());
+  </script>
+</body>
+</html>
