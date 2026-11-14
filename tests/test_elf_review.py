@@ -6,6 +6,7 @@ from pathlib import Path
 import struct
 import tempfile
 import unittest
+from unittest import mock
 
 from tools import elf_inventory as elf
 from test_elf_inventory import fixture
@@ -25,6 +26,51 @@ def repeated_name_fixture(count):
 
 
 class ElfReviewTests(unittest.TestCase):
+    def test_rejected_directory_does_not_leak_descriptor(self):
+        original_open = os.open
+        opened = []
+
+        def tracked_open(*args, **kwargs):
+            descriptor = original_open(*args, **kwargs)
+            opened.append(descriptor)
+            return descriptor
+
+        with tempfile.TemporaryDirectory() as directory:
+            with mock.patch.object(elf.os, "open", side_effect=tracked_open):
+                for _ in range(5):
+                    with self.assertRaisesRegex(ValueError, "regular"):
+                        elf.inspect_file(Path(directory))
+                    with self.assertRaises(OSError):
+                        os.fstat(opened[-1])
+        self.assertEqual(len(opened), 5)
+
+    def test_fdopen_failure_closes_descriptor_for_read_and_tree_scan(self):
+        original_open = os.open
+        opened = []
+
+        def tracked_open(*args, **kwargs):
+            descriptor = original_open(*args, **kwargs)
+            opened.append(descriptor)
+            return descriptor
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sample = root / "sample"
+            sample.write_bytes(fixture())
+            with mock.patch.object(elf.os, "open", side_effect=tracked_open), \
+                 mock.patch.object(elf.os, "fdopen", side_effect=OSError("injected fdopen failure")):
+                with self.assertRaisesRegex(OSError, "injected"):
+                    elf.inspect_file(sample)
+                with self.assertRaises(OSError):
+                    os.fstat(opened[-1])
+                result = elf.scan_tree(root)
+                self.assertFalse(result["complete"])
+                self.assertEqual(result["status"], "partial")
+                with self.assertRaises(OSError):
+                    os.fstat(opened[-1])
+            self.assertEqual(len(opened), 2)
+            self.assertEqual(elf.inspect_file(sample)["machine_id"], 40)
+
     def test_repeated_string_references_cannot_expand_one_file_unboundedly(self):
         data = repeated_name_fixture(4093)
         with self.assertRaisesRegex(ValueError, "metadata budget"):

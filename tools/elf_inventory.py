@@ -150,9 +150,20 @@ def inspect_stream(stream, size: int) -> dict:
     return report
 
 
-def inspect_file(path: Path) -> dict:
+def _open_regular(path: Path):
+    """Transfer descriptor ownership only after fdopen succeeds."""
     descriptor = os.open(path, os.O_RDONLY | os.O_NONBLOCK | getattr(os, "O_NOFOLLOW", 0))
-    with os.fdopen(descriptor, "rb") as stream:
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            raise ValueError("Only regular files are supported")
+        return os.fdopen(descriptor, "rb")
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
+def inspect_file(path: Path) -> dict:
+    with _open_regular(path) as stream:
         before = os.fstat(stream.fileno())
         if not stat.S_ISREG(before.st_mode):
             raise ValueError("Only regular files are supported")
@@ -204,8 +215,7 @@ def scan_tree(root: Path, limit: int = 10000, byte_limit: int = 2 * 1024**3) -> 
                             continue
                         if not stat.S_ISREG(mode):
                             continue
-                        descriptor = os.open(path, os.O_RDONLY | os.O_NONBLOCK | getattr(os, "O_NOFOLLOW", 0))
-                        with os.fdopen(descriptor, "rb") as stream:
+                        with _open_regular(path) as stream:
                             metadata = os.fstat(stream.fileno())
                             if not stat.S_ISREG(metadata.st_mode):
                                 raise ValueError("File changed type during inspection")
