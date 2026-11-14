@@ -256,3 +256,12 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Observed:** no App Type selector; the upload area explicitly says Web App.
 - **Conclusion:** historical Marmalade/Unity choices are not exposed by the observed UI. This is not proof of every backend/account capability or a firmware-wide native ban.
 - **Risks/next step:** avoid treating Developer CP Service as a firmware flag or altering protected metadata. Preserve the Web baseline; research a concrete native entry contract independently.
+
+## ELF-SEGMENTS-001 — reusable program-segment evidence
+
+- **Objective:** make already-parsed program headers available to a separate native-probe artifact checker without copying the ELF parser.
+- **Hypothesis:** an additive segments field preserves reader behavior and lets the caller distinguish loadable regions, zero-fill and declared permissions.
+- **Environment/procedure:** synthetic ELF32/64 fixtures in both byte orders; existing bounded reader; independent review.
+- **Expected/observed:** four new tests and77existing reader/review/graph tests pass. The first explicit module invocation omitted the legacy tests fixture directory and failed one import; PYTHONPATH=.:tests resolved that runner issue without source changes. Standard discovery already handles it.
+- **Conclusion:** metadata is now reusable. Reporting flags does not establish W^X, entry reachability, loader validity or effective device permissions. No vendor/target program was executed.
+- **Risks/next step:** preserve the caller's independent artifact checks and resource limits; use this for the separately built native probe.

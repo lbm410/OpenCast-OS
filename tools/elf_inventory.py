@@ -141,7 +141,10 @@ def inspect_stream(stream, size: int) -> dict:
               "machine_id": machine, "machine": MACHINES.get(machine, "unknown"),
               "osabi": ident[7], "abi_version": ident[8], "elf_type": file_type,
               "entry_hex": hex(entry), "flags_hex": hex(flags),
-              "interpreter": interpreter, "program_headers": len(segments), **names}
+              "interpreter": interpreter, "program_headers": len(segments),
+              # Raw declarations only: this does not validate a loader contract,
+              # entry reachability, W^X, alignment or runtime permissions.
+              "segments": segments, **names}
     if machine == 40:
         report["arm_eabi_version"] = (flags >> 24) & 255
         report["arm_float_abi_flags"] = ("conflicting" if flags & 0x600 == 0x600 else
