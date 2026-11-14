@@ -12,6 +12,10 @@
     {
       "id": "deploy",
       "resource": "../../docs/app-deployment.md"
+    },
+    {
+      "id": "native-issuer",
+      "resource": "../../docs/native-packaging-route.md"
     }
   ],
   "opencast_evidence": [
@@ -31,3 +35,7 @@ The IDE Run on TV workflow depends on prior USB launch; it is not an independent
 A coordinated comparison can now measure the lighter candidate and repeat the exit checks. [Browser remote behavior](/execution/browser.md) and application input routing are distinct contexts. This is an intermediate step toward the [replacement shell](/product/shell.md), not an autostart solution. Persistent or privileged deployment remains gated by [recovery](/execution/recovery.md).
 
 [^deploy]: Official workflow review and explicit availability limits.
+
+LG also historically documented Marmalade/Unity App Test uploads. Current account availability, valid build artifact and native entitlement remain unverified; a Web package is not an arbitrary ELF loader.[^native-issuer]
+
+[^native-issuer]: Official historical non-Web workflow and current inspection limits.

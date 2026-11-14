@@ -28,6 +28,18 @@
     {
       "id": "execution",
       "resource": "../../docs/native-execution-gates.md"
+    },
+    {
+      "id": "manifest",
+      "resource": "../../docs/native-manifest-admission.md"
+    },
+    {
+      "id": "provider",
+      "resource": "../../docs/upctrl-manifest-gate.md"
+    },
+    {
+      "id": "conditions",
+      "resource": "../../docs/native-execution-conditions.md"
     }
   ],
   "opencast_evidence": [
@@ -53,6 +65,10 @@ The native entry study separates app metadata, process registration, graphics su
 [^lifecycle]: Matched native receiver and lifecycle call paths.
 [^admission]: Corrected dual process-table creation paths and unresolved bus policy.
 
-Native type conversion and executable-path construction exist in appctrl, including in its downloaded-type helper. This does not establish that the owner's USB package can obtain native admission: manifest provenance, storage class and the upstream acceptance gate must be traced. A compiled ARM object, a framework record and a running native process are three different achievements.[^execution]
+Native type conversion and executable-path construction exist in appctrl, including in its downloaded-type helper. This does not establish that the owner's USB package can obtain native admission: USB-test storage 3 now connects through provider retrieval and XML parsing to the converter.[^manifest] The provider tries local AppInfo before a protected fallback with a checked verifier call; AppInfo provenance and native acceptance remain unresolved.[^provider] XML app_type and a game account label are identified, but neither metadata nor loading/state checks establish effective privileges or permission to launch our artifact.[^conditions] A compiled ARM object, a framework record and a running native process are three different achievements.[^execution]
 
 [^execution]: Four bounded type/path function traces and remaining native execution prerequisites.
+
+[^manifest]: Connected USB-test storage/list, manifest provider and native conversion.
+[^provider]: AppInfo-first handling, conditional protected fallback and verification boundary.
+[^conditions]: Exact XML field provenance, account metadata and later execution conditions.
