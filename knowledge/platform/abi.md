@@ -24,6 +24,10 @@
     {
       "id": "chromium",
       "resource": "../../docs/chromium-abi.md"
+    },
+    {
+      "id": "linkage",
+      "resource": "../../docs/native-linkage.md"
     }
   ],
   "opencast_evidence": [
@@ -50,3 +54,7 @@ The [kernel](/platform/kernel.md) constrains native execution, while [RELEASE de
 [^decoded]: Validated RELEASE ELF extent; historical flags-only ABI uncertainty.
 [^attributes]: Reviewed attribute parser, 85 synthetic tests and 18-file calling-convention evidence.
 [^chromium]: Three exact selected files, explicit VFP-loader attribute and Chrome's different interpreter path.
+
+The fixed19-file dependency sample declares241DT_NEEDED edges and10interpreters over105names; nine names have inspected candidates and96remain listing-only in that sample. These are name matches, not symbol resolution or loader selection. libscf imports D-Bus calls without declaring their provider directly, so even complete declared dependencies would not establish a working link contract.[^linkage]
+
+[^linkage]: Bounded dependency graph, reviewed identity/budget handling and unresolved providers.

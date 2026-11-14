@@ -206,3 +206,40 @@ The existing USB app's12files matched the prior verification report. Additional 
 - **Expected/observed:** descriptors are closed after rejected inputs; five ELF review tests pass and valid-file inspection still works. Claude owns the equivalent ARM-reader correction separately.
 - **Conclusion:** resource cleanup is now explicit in the shared ELF reader; no firmware data or runtime behavior is changed.
 - **Risks/next step:** preserve normal ownership transfer and rerun the combined frozen suite after both reader fixes. No TV action.
+
+## NATIVE-STATIC-003 — USB-test provenance and provider gates
+
+- **Objective:** connect the discovered native dispatcher to the actual USB-test metadata route and identify its acceptance boundaries.
+- **Hypothesis:** native classes survive conversion but require earlier provider acceptance and later execution conditions.
+- **Environment:** pinned official appctrl and individually selected upctrl; bounded host-only disassembly and independent review.
+- **Procedure:** trace list/storage/path mapping, provider callbacks, XML type write, account metadata, execution checks and manifest-provider handlers. Review source ELF words, branch targets, literals and import relocations independently.
+- **Expected result:** a connected path with explicit gates, or a demonstrated disconnection.
+- **Observed result:** USB-test list4/storage3 joins provider-mediated parsing and native conversion. XML app_type writes parsed+0x28; examined native classes select game metadata. Upctrl first attempts AppInfo, then a protected downloaded fallback that checks the named verifier and read results. AppInfo availability/provenance, real account and native issuer remain unresolved. Independent review of the two later reports matched24captures/10088bytes,2522ARM words,483branch targets,20relocations,24literals and two method records. See native-manifest-admission.md, upctrl-manifest-gate.md and native-execution-conditions.md.
+- **Conclusion:** the native path is connected statically, but our ELF has not been admitted or executed.
+- **Risks:** treating metadata, a zero return, an account label or a verifier name as full authorization, effective privilege or live-device behavior.
+- **Next step:** trace AppInfo provenance and the supplied execution-policy flag; verify current official native-runtime submission availability. No device operation occurred.
+
+### CI-001 — published checks on GitHub
+
+- **Objective:** reproduce host validation outside the development workspace.
+- **Hypothesis:** reviewed source and synthetic fixtures suffice without private firmware or device access.
+- **Environment/procedure:** clean Git snapshot10c556d locally, then GitHub run43600750961 with Python3.11 baseline/Python3.13 optional crypto, Node22 and host C.
+- **Expected/observed:** local285Python tests pass without skips,40Node tests and9C groups pass; both hosted matrix jobs and knowledge/view checks pass.
+- **Conclusion:** published host checks are reproducible in these environments; no TV compatibility or speed conclusion follows.
+- **Risks/next step:** keep private artifacts and target execution out of CI; validate the next reviewed graph implementation before publication.
+
+### NATIVE-STATIC-003 follow-up: AppInfo policy boundary
+
+The next six captures (1532bytes), independently reproduced by root, restrict AppInfo lookup to storage3/nonzero app ID and a successful sample-support query with a nonzero output. No producer was identified in immediate references. Vendor CP Box wording does not establish the owner's device class or correspond to the portal checkbox. See appinfo-provenance.md. This narrows the branch; no device behavior or new execution permission follows.
+
+### LINKAGE-001 — reviewed dependency graph
+
+- **Objective:** distinguish inspected dependency-name candidates from listing-only evidence.
+- **Hypothesis:** a bounded declared-dependency graph reveals missing inspections without claiming loader/symbol compatibility.
+- **Environment/procedure:** real Claude/subagent implementation, synthetic fixtures, fixed19-file firmware sample and seven listings; independent root/reviewer execution.
+- **Observed:**64graph tests pass; review caught and corrected rejected-file byte accounting, unencodable text and contradicted listing-link matches. Independent pathname-race/same-descriptor tests pass. Root full suite passes349tests with optional crypto/no skips. Fixed sample has241NEEDED edges,10interpreters,105names,9inspected candidates and96listing-only names. See native-linkage.md for category limits.
+- **Conclusion:** dependency evidence is reproducible; it does not establish dynamic linking, native admission or physical execution.
+- **Risks:** name matches or listing sizes can mislead; contradictions remain explicit and imported/dynamically loaded providers may be undeclared.
+- **Next:** use only the needed provider contracts after selecting a permitted entry route.
+
+The independent reproduction initially stopped at its frozen documentation hash after root's two wording corrections; substituting only the reviewed report hash in memory made all synthetic checks pass. Tool/test hashes were unchanged. The original ignored reproduction is preserved.

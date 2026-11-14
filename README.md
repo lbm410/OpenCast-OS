@@ -3,6 +3,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/lbm410/OpenCast-OS/actions/workflows/ci.yml"><img src="https://github.com/lbm410/OpenCast-OS/actions/workflows/ci.yml/badge.svg" alt="Host checks"></a>
   <img src="https://img.shields.io/badge/stage-active_research-263d35?style=flat-square" alt="Stage: active research">
   <img src="https://img.shields.io/badge/target-LG_NetCast_2013-263743?style=flat-square" alt="Target: LG NetCast 2013">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL_v3-3d3549?style=flat-square" alt="License: GPL v3"></a>
