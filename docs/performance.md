@@ -37,3 +37,17 @@ The same real-handler synthetic fixture compares one Home→Apps right-arrow mov
 Candidate CSS fixes icon/SVG geometry across selection and removes full-screen overlay, gradients and shadows. Focus uses solid color and an outline; small static translucent dock/tab backgrounds remain. High Contrast removes the background image for a possible later within-build comparison, but only if the owner chooses it. Nineteen shell tests and five startup-probe tests pass; two source-bundle tests pass. Desktop Home rendering was inspected at1276×603. The baseline landscape asset is unchanged.
 
 A new source-only ZIP is prepared under ignored artifacts/netcast-source/launcher-performance-source.zip; it is not installed or tested on the TV. Regenerate through LG with root index.html, explicitly uploading this source archive to avoid the observed Modify nesting behavior. Suggested physical comparison: time opening until controls respond, then ten isolated left/right presses at roughly one-second intervals, then a short sequence and normal Home return. Record owner observations separately from any handler timing. Do not conflate entry-point correction with a performance improvement.
+
+### Consolidated physical session readiness
+
+A separate read-only audit reproduced the214134-byte candidate archive byte-for-byte (SHA-256`ebfb11cb8a4c8177fac95c9a9a07f5d71b14fcd22816491627f26404316e7ee9`). All six current assets match; only shell.js/style.css differ from the physical baseline. Nineteen shell and two source-bundle tests pass. This is local readiness, not a measured improvement.
+
+The shell has no in-app timing/key-count telemetry. Use approximate owner-observed seconds or an optional local video showing presses and screen; the separate probe's telemetry does not measure this app. Preserve appearance/remote/context and avoid Settings/Remember changes. Five minutes refers to TV interaction, excluding unpredictable portal generation and USB preparation.
+
+| Build / attempt | Launch to visible | Launch to first effective Right | Ten isolated alternating arrows | Right4/Left4 settles | Internal Apps OK | Physical Home return |
+| --- | --- | --- | --- | --- | --- | --- |
+| Baseline / session first | Pending | Pending | Pending | Pending | Pending | Pending |
+| Candidate / session first | Pending | Pending | Pending | Pending | Pending | Pending |
+| Candidate / repeat | Pending | Pending | Pending | Not repeated | Not repeated | Pending |
+
+Time launch from normal OK activation; distinguish visible layout from usable input. Use individual presses without holds, then open only the internal Apps section and return with physical Home. If the baseline cannot return normally, stop the comparison and coordinate before changing packages. A candidate-only session is valid but cannot supply matched baseline timings. Do not call session-first/repeat launches cold/warm cache states without evidence. No HDMI/audio action occurs in this navigation protocol; AV continuity remains a separate owner-coordinated observation. The largest uncertainty is physical press-to-visible-focus lag and queueing, including runtime costs outside our handler.

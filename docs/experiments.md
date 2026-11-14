@@ -311,3 +311,11 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Conclusion:** the selected static writer chain is established. Mapping, attempted calls and live effective identity remain distinct; there is no native launch or privilege proof. Full details: process-account-contract.md and process-account-provenance.md.
 - **Risks:** unobserved database/state, prefix/input reachability, ignored resolver/setter failures and remaining allocation/launch prerequisites.
 - **Next:** native artifact issuer/admission and independently recoverable startup remain the integration questions; do not broaden credential searches or call private methods.
+
+## ISSUER-002 — historical runtime artifact prerequisites
+
+- **Objective/hypothesis:** identify whether historical runtime upload labels imply a public native build/deployment contract.
+- **Environment/procedure:** original LG/Unity documentation and timestamped original-site Marmalade archives; independent source verification. No SDK or application binary acquisition/execution.
+- **Expected/observed:** historical LG-target entitlement and a generic architecture-binary/platform-loader package model exist; exact NetCast2013 loader, archive and current issuer remain absent from this bounded search. Unity's source describes Union licensing/distribution. Independent archive retrieval succeeded with bounded HTTPS after the web tool failed.
+- **Conclusion/risks:** historical availability is not current entitlement or model compatibility. See native-runtime-artifacts.md; do not install a generic legacy SDK to substitute for the missing target specification.
+- **Next:** acquire a provenance-verifiable exact target specification/bundle only through an authorized available source; continue recovery and performance work independently.

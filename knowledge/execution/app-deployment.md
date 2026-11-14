@@ -18,6 +18,10 @@
       "resource": "../../docs/native-packaging-route.md"
     },
     {
+      "id": "runtime-artifact",
+      "resource": "../../docs/native-runtime-artifacts.md"
+    },
+    {
       "id": "account-flow",
       "resource": "../../docs/process-account-contract.md"
     },
@@ -52,3 +56,7 @@ The selected process-manager path resolves its account-name buffer through passw
 
 [^account-flow]: Independently reviewed fallback, credential ordering and per-component failure/skip behavior.
 [^account-writer]: Demonstrated name-to-field writer; prefix/enumeration and live-identity limits.
+
+Original vendor sources tie Marmalade LG support to historical professional/developer entitlement and describe platform-specific loaders; Unity's LGTV route involved Union distribution. No exact NetCast2013 target bundle or current native issuer was recovered. Those histories do not make an arbitrary ARM image uploadable.[^runtime-artifact]
+
+[^runtime-artifact]: Independently verified original/archived vendor sources, with historical and target-version limits.
