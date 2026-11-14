@@ -1,65 +1,70 @@
 # OpenCast launcher prototype
 
-Prepared: 2026-11-14. Location: `prototypes/opencast-shell/`.
+Updated: 2026-11-14. Location: `prototypes/opencast-shell/`. Current visual revision: **landscape dock**.
 
-**CONFIRMED (local):** a working static launcher with Home, Apps, Inputs, Media and Settings sections, bounded directional navigation, pointer operation and local appearance preferences. **PENDING:** execution of this artifact on the physical TV, native integration and actual input delivery in that execution context. This prototype is not an installed OS, an autostart mechanism or a replacement for the current NetCast launcher.
+**CONFIRMED (local):** a working static launcher with five sections, horizontal remote-focus navigation, pointer operation and local appearance preferences. **PENDING:** physical-TV validation of this revision, native integration and reliable key delivery in that execution context. This is not an installed OS or verified autostart mechanism.
 
-## Design and implementation
+## Current design
 
-The interface uses an original OpenCast identity, a quiet landscape, translucent tinted panels, thin light borders, large text and a clearly outlined focused button. It follows the owner's requested restrained glass-like direction without relying on modern live blur. The generated static background is `assets/landscape.jpg`; its provenance is maintained separately by the integrator.
+The owner's reference changed the visual direction from a feature-card home screen to a quiet television launcher. The current UI has a full-bleed warm rolling-hills landscape, a selected-item title and one-line action hint at upper left, browser clock/date at upper right, a discreet section bar including **TV / HDMI**, and a compact horizontal dock near the bottom. The central landscape stays open.
 
-The main layout targets the previously observed 1276 × 603 browser viewport. A five-item navigation bar sits above a home introduction and two-column cards. Other sections keep the same navigation and use two-column cards. Appearance controls provide Mint or Amber accents and an optional high-contrast mode. All visible labels and source comments are English.
+The dock uses original semantic icons for Internet, Apps, Media, Live TV and Settings. It contains no commercial service logos or claims of installed streaming applications. The selected icon becomes slightly larger and brighter; keyboard focus adds a subtle fill and one-pixel inset highlight. Focus outlines are replaced by these visible treatments, not simply removed. Optional high contrast strengthens the treatment. Native-action failures appear as short contextual notices only after activation; long technical warnings and marketing copy are absent from the home view. Project branding and preview badges are absent from the television interface. Development status remains in repository documentation and the on-demand About view.
 
-The code deliberately uses conservative JavaScript, ordinary buttons, CSS floats, fixed-size cards, static opacity and basic gradients. There are no dependencies, remote assets, network requests, native TV API calls, `backdrop-filter`, canvas effects, CSS animation or animation loops. The only periodic update is the browser clock, at most once per minute; it stops on page hide/unload and resumes on page show.
+The local background is `assets/landscape-v2.jpg`; the original `landscape.jpg` is retained but is no longer loaded by the active stylesheet. The integrator maintains image provenance in [visual direction](visual-direction.md). The new JPEG is 1280 × 720 and approximately 188 kB compressed; one decoded RGBA image occupies approximately 3.5 MiB before compositor/browser copies. Neither compressed size nor static CSS establishes real-TV memory or performance.
 
-The 1280 × 720 landscape JPEG is about 97 kB compressed. One decoded 32-bit image is about 3.5 MiB before compositor surfaces or browser caches. The complete current artifact is approximately 121 kB on disk. Neither figure measures actual TV memory consumption. Static glass-like compositing may still have a cost on the old browser. Landscape motion remains absent until device measurements justify a separately reviewed implementation.
+There is no animation, moving landscape, live blur, `backdrop-filter`, framework runtime, external resource or per-frame work. The glass-like treatment uses static opacity and small shadows. The browser clock updates at most once per minute and suspends on page hide/unload. Real-device measurements must precede adding motion.
 
-## Architecture
+## Files and boundaries
 
 | File | Responsibility |
 | --- | --- |
-| `index.html` | Semantic buttons, static section content and truthful capability status. |
-| `style.css` | Landscape layering, compact two-column layout and focus/accessibility styling. |
-| `navigation.js` | Pure row/column and tab/content movement rules; exportable for host tests. |
-| `capabilities.js` | Explicit native-operation boundary; all TV capabilities default to unavailable. |
-| `shell.js` | Section changes, actual event handlers, local preferences and clock lifecycle. |
-| `assets/landscape.jpg` | Static local background supplied by the integrator. |
+| `index.html` | Semantic buttons, original inline SVG icons, compact section/dock layout. |
+| `style.css` | Static landscape, translucent dock, selected/focused treatments and contrast. |
+| `navigation.js` | Pure horizontal movement and section-bar transitions, exported for host tests. |
+| `capabilities.js` | Disconnected native capability boundary; every TV action remains unavailable. |
+| `shell.js` | Actual focus/click handlers, selection context, page-local preferences and clock. |
+| `assets/landscape-v2.jpg` | Current local landscape. |
 
-All links are relative so the directory can be served intact beneath a reviewed route. It is intentionally separate from the existing input probe. The probe server's current routes must not be assumed to expose it automatically.
+Assets are relative so the directory can be served intact beneath a separately reviewed route. This artifact remains independent of the input probe. It makes no network request or native TV API call. The current probe server must not be assumed to expose the shell automatically.
 
-### Navigation and activation
+### Input behavior
 
-Left/Right move across the section bar and select its section. Down enters the section's first card. Card arrows move within a two-column grid without wrapping across row edges. Up from the first row returns to that section's tab. Native Tab traversal is also supported: Down on a tab that received focus through Tab first opens that actual section.
+- Left/Right move across the dock without wrapping at its ends. The upper-left title follows selection.
+- Up moves from the dock to its section tab. Left/Right on the tab bar select sections; Down returns to that section's remembered dock item.
+- Native Tab traversal remains available. Down from a natively focused tab opens that actual section before entering its dock.
+- Enter and Space use native button click activation. No keydown handler synthesizes a duplicate click.
+- Back, Home, Exit, unknown/missing key codes and unrelated targets remain untouched. Only explicit arrow codes on current controls are canceled.
+- Pointer hover updates the selected context without stealing keyboard focus or activating anything. Hidden section controls cannot trigger actions.
 
-Enter and Space use native button click activation. No keydown handler synthesizes a second action. Back, Home, Exit, missing key codes, unknown key codes and events targeted at unrelated elements are not consumed. The controller cancels only recognized arrow codes on its own controls. Native browser behavior therefore remains the return path.
+The original physical probe observed pointer-style arrows in the ordinary TV browser. This UI does not claim to change browser-level routing. If arrows remain consumed by that browser, pointer operation may work while physical D-pad control is still unresolved. The pure navigation module can be reused when a supported application/native input route is established.
 
-The earlier physical probe demonstrated cursor-style arrows in the normal TV browser. This launcher does not solve or hide that limitation: if that browser still consumes arrow events, pointer buttons remain usable but physical D-pad control has not been established. The same navigation module can be reused after a supported application/native input route is verified.
+### Native actions and truthful status
 
-### Native capability boundary
+`OpenCastShellCapabilities.query(name)` returns `available=false`. `invoke(name, target)` returns an unsuccessful result with a short explanation; it performs no native operation. Unknown and inherited-property names remain unavailable.
 
-`OpenCastShellCapabilities.query(name)` always returns `available=false` in this version. `invoke(name, target)` returns a truthful unsuccessful result and explanation; it executes no TV action. Unknown capability names are also unavailable, including inherited object-property names.
+Internet/NetCast app launch, TV/HDMI selection, USB browsing and network media are represented as destinations but are disconnected. Clicking them displays that limitation. There is no simulated app launch, HDMI transition, playback, device scan or native file access. HDMI 1/2/3 are proposed layout slots and are explicitly described as unverified when selected, not a detected physical port inventory.
 
-The following operations are represented but disconnected: launching NetCast applications, selecting an input, browsing USB and browsing network media. Selecting these cards displays the missing capability. It never reports successful HDMI switching, opens a guessed native API, launches a commercial app, scans the network or accesses files.
+The clock/date come from the browser. No connection, playback, input or power state is inferred. The About view provides installation/integration status when requested.
 
-HDMI 1/2/3 are proposed layout destinations, explicitly labeled undetected. They are not a verified inventory of this unit's ports, connection state or attached equipment. A future verified adapter must enumerate actual destinations and supported operations. The browser clock is local display data; no connection, tuner, playback or power status is inferred.
+### Appearance preferences
 
-### Preferences and storage
-
-Accent and contrast affect this page only. They initially remain in memory. The page performs no automatic storage write. Explicitly enabling **Remember my choices** stores only this small object under `opencast.shell.preferences.v1`:
+Accent and contrast initially live in memory. Explicitly enabling Remember stores only the following small, versioned record under `opencast.shell.preferences.v1`:
 
 ```json
 {"version":1,"accent":"mint","contrast":false}
 ```
 
-On a subsequent load, stored content is limited to 256 characters, parsed only when JSON/storage are available, and checked for the expected version, allowed accent and boolean contrast. No stored value becomes HTML or a class name unless it matches the allowed choices. Corrupt or unsupported content is ignored. A blocked/quota-failing write keeps the page usable and tells the owner that appearance is for the current visit only. Turning remembering off removes only the namespaced key; it never clears other browser data. If removal fails, the UI keeps its saved-preference indicator on rather than claiming deletion.
+There is no automatic write. Stored input is capped at 256 characters and validated against the version, Mint/Amber allowlist and boolean contrast. Corrupt or unsupported values are ignored. No arbitrary stored value becomes HTML or a CSS class. Storage failures keep the interface usable and display a short notice. Disabling Remember removes only this project's key; failed removal keeps the saved-state indicator truthful.
 
-Origin changes or `file://` browser policies may change preference availability. Host tests and desktop behavior do not prove localStorage support on this TV. No credentials, media history or device identifiers are stored.
+No credentials, personal text or device identifiers are retained. Origin changes and `file://` policies can alter storage availability. Host tests do not prove localStorage support on the TV.
 
-## Local verification
+## Verification
 
-Twelve Node tests in `tests/test_shell_navigation.cjs` passed. They cover pure grid/tab navigation, actual shell key handlers, native Enter activation without duplication, preserved system/unknown keys, inactive TV adapters, pointer actions, preference opt-in, validation, storage failures, removal scope and lifecycle timer cleanup. The fixtures exercise the real scripts with a deterministic DOM/storage model; they do not emulate the TV or certify browser compatibility.
+**CONFIRMED (local):** 15 Node tests pass, covering pure horizontal navigation, real event handlers, section memory, native activation, preserved system keys, missing codes, pointer focus behavior, hidden-control guards, disconnected capabilities, opt-in preferences, malformed stored records, storage errors and clock lifecycle.
 
-Installed desktop Chrome rendered local temporary copies with the project's relative assets resolved to local files. No HTTP server or TV connection was needed. Home, Inputs and Settings were rendered at an actual inner viewport of 1276 × 603. Each document measured 1276 × 603; the shell ended at y=547, and the two-row Inputs/Settings content ended at y=471. Screenshots were visually inspected. The final full-height landscape treatment was also rendered and inspected after correcting the body height. These measurements establish only the tested desktop layout, not old-WebKit rendering or performance.
+Installed desktop Chrome rendered the actual local artifact through a DevTools pipe without a TCP debugging endpoint or an HTTP server. Device metrics were explicitly set to 1276 × 603 and screenshots captured exactly that region. Home, Inputs and Settings were inspected. All three documents measured 1276 × 603, with the dock at y=415–558 and the footer ending at y=584. There was no page overflow. The current README preview is the unedited Home screenshot from that run.
+
+This validates desktop layout and host behavior only. It does not establish old-WebKit SVG rendering, TV performance, physical input delivery, native access or safe boot integration. Previous card-layout screenshots and measurements are superseded by this revision.
 
 ```sh
 node --check prototypes/opencast-shell/navigation.js
@@ -68,15 +73,15 @@ node --check prototypes/opencast-shell/shell.js
 node --test tests/test_shell_navigation.cjs
 ```
 
-## Proposed next experiment
+## Next physical experiment
 
-- **Objective:** evaluate this launcher layout and navigation through the least-risk verified execution route.
-- **Hypothesis:** the static UI renders acceptably at the TV's measured viewport; physical arrow delivery remains dependent on execution context.
-- **Environment:** a reviewed single-peer LAN asset route, original TV and remote; no system installation.
-- **Procedure:** integrate a fixed asset allowlist for the complete directory, coordinate one combined owner session, open the prototype, exercise all five sections, observe focus/input behavior, test one in-memory appearance control and return through the normal browser control. Persistent browser preferences should remain off unless explicitly chosen during that session.
-- **Expected result:** visible, readable cards and actual section changes, with unsupported native actions accurately explained.
-- **Observed result:** PENDING; this artifact has not been deployed to the TV.
-- **Conclusion:** desktop success supports preparing the experiment only. It does not establish M3 completion, native navigation, launcher replacement or boot integration.
-- **Risks:** temporary browser/page state, image/compositing memory, remote events being consumed by the browser, and optional origin-specific browser preference writes. No TV firmware or system settings are changed.
-- **Return path:** ordinary browser Back/Exit/Home; the prototype does not cancel these keys or replace their behavior. The owner confirmed Home return in the earlier probe, but this artifact requires its own observation.
-- **Next step:** review host exposure and bundle this check with the next useful physical input/deployment session rather than requesting repeated small interruptions. Native graphics/input/boot dependency analysis continues independently.
+- **Objective:** validate the landscape dock's layout and interaction on the actual TV through a reviewed reversible route.
+- **Hypothesis:** static rendering is usable at the measured viewport; arrow delivery depends on the browser/application context.
+- **Environment:** original TV/remote and a reviewed single-peer local asset route; no installation.
+- **Procedure:** coordinate one useful owner session, open the launcher, exercise sections and focus, observe SVG/landscape rendering, try one in-memory appearance control, and return through the normal browser exit path. Remember remains off unless explicitly chosen.
+- **Expected result:** readable icons/context, actual section changes, truthful unavailable-action notices and ordinary exit behavior.
+- **Observed result:** PENDING; this revision has not run on the TV.
+- **Conclusion:** desktop success justifies preparing the experiment, not declaring an OS replacement or completed physical milestone.
+- **Risks:** transient browser state, image/compositing resource use, browser-consumed remote input and optional browser-only preference writes. No firmware/system setting is modified.
+- **Return path:** native Back/Exit/Home remain unhandled; confirm the actual return during the coordinated session.
+- **Next step:** review host exposure and combine this check with meaningful input/deployment work. Continue native input/graphics/boot research independently.

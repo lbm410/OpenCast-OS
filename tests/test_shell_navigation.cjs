@@ -18,7 +18,7 @@ function fixture(options = {}) {
     const id = match[1];
     elements[id] = { id, textContent: '', style: {}, attributes: {}, className: '',
       setAttribute(key, value) { this.attributes[key] = value; },
-      focus() { document.activeElement = this; } };
+      focus() { document.activeElement = this; if (this.onfocus) this.onfocus(); } };
   }
   if (!options.legacy) document.addEventListener = (name, fn) => { listeners[name] = fn; };
   const window = { JSON,
@@ -47,52 +47,50 @@ function fixture(options = {}) {
   };
 }
 
-test('pure navigation respects rows, edges, and the content-to-tabs boundary', () => {
-  const move = (index, key, count = 4) => navigation.move('content', index, key, count, 2, 3, 5);
+test('pure horizontal navigation clamps edges and returns to the section bar', () => {
+  const move = (index, key, count = 5) => navigation.move('content', index, key, count, 3, 5);
   assert.deepEqual(move(0, 37), { zone: 'content', index: 0 });
-  assert.deepEqual(move(1, 39), { zone: 'content', index: 1 });
-  assert.deepEqual(move(1, 40), { zone: 'content', index: 3 });
+  assert.deepEqual(move(4, 39), { zone: 'content', index: 4 });
+  assert.deepEqual(move(1, 39), { zone: 'content', index: 2 });
   assert.deepEqual(move(3, 40), { zone: 'content', index: 3 });
-  assert.deepEqual(move(2, 38), { zone: 'content', index: 0 });
-  assert.deepEqual(move(0, 38), { zone: 'tabs', index: 3 });
-  assert.deepEqual(move(0, 40, 1), { zone: 'content', index: 0 });
-  assert.equal(navigation.move('content', 0, 39, 0, 2, 0, 5), null);
+  assert.deepEqual(move(2, 38), { zone: 'tabs', index: 3 });
+  assert.equal(navigation.move('content', 0, 39, 0, 0, 5), null);
 });
 
-test('native activation and system keys are outside the arrow mapping', () => {
+test('native activation and system keys remain outside the arrow mapping', () => {
   for (const key of [undefined, NaN, 0, 8, 13, 27, 32, 36, 461, 1000]) {
-    assert.equal(navigation.move('content', 0, key, 4, 2, 0, 5), null);
+    assert.equal(navigation.move('content', 0, key, 5, 0, 5), null);
   }
-  assert.deepEqual(navigation.move('tabs', 4, 39, 4, 2, 4, 5), { zone: 'tabs', index: 4 });
+  assert.deepEqual(navigation.move('tabs', 4, 39, 4, 4, 5), { zone: 'tabs', index: 4 });
 });
 
-test('default adapter never reports or invokes an available native TV action', () => {
+test('default adapter never reports an available native action', () => {
   for (const action of ['launchApp', 'switchInput', 'openUsb', 'browseNetwork', 'unknown', 'toString', 'constructor']) {
     assert.equal(capabilities.query(action).available, false);
     const result = capabilities.invoke(action, 'test');
     assert.equal(result.ok, false);
     assert.equal(result.available, false);
-    assert.match(result.message, /unavailable|not implemented/);
+    assert.match(result.message, /not connected|not available/);
   }
 });
 
-test('live arrows move between tabs and visible content without wrapping rows', () => {
+test('live dock arrows update focus and the selected title, Up reaches the tabs', () => {
   const f = fixture();
+  assert.equal(f.document.activeElement.id, 'home-internet');
+  assert.equal(f.elements['selection-title'].textContent, 'Internet');
+  assert.equal(f.key('home-internet', 39).defaultPrevented, true);
+  assert.equal(f.document.activeElement.id, 'home-apps');
+  assert.equal(f.elements['selection-title'].textContent, 'Your apps');
+  f.key('home-apps', 38);
   assert.equal(f.document.activeElement.id, 'tab-home');
-  assert.equal(f.key('tab-home', 39).defaultPrevented, true);
+  f.key('tab-home', 39);
   assert.equal(f.document.activeElement.id, 'tab-apps');
   assert.equal(f.elements['panel-apps'].style.display, 'block');
   f.key('tab-apps', 40);
-  assert.equal(f.document.activeElement.id, 'apps-open');
-  f.key('apps-open', 39);
-  assert.equal(f.document.activeElement.id, 'apps-info');
-  f.key('apps-info', 40);
-  assert.equal(f.document.activeElement.id, 'apps-info');
-  f.key('apps-info', 38);
-  assert.equal(f.document.activeElement.id, 'tab-apps');
+  assert.equal(f.document.activeElement.id, 'apps-browser');
 });
 
-test('Down enters the tab actually focused by native tab traversal', () => {
+test('Down opens the tab actually focused through native tab traversal', () => {
   const f = fixture();
   f.elements['tab-media'].focus();
   f.key('tab-media', 40);
@@ -101,41 +99,71 @@ test('Down enters the tab actually focused by native tab traversal', () => {
   assert.equal(f.document.activeElement.id, 'media-usb');
 });
 
-test('live Enter has no synthetic action and native click changes a setting once', () => {
+test('returning to a section preserves its last dock selection', () => {
+  const f = fixture();
+  f.key('home-internet', 39);
+  f.key('home-apps', 38);
+  f.key('tab-home', 39);
+  f.key('tab-apps', 37);
+  f.key('tab-home', 40);
+  assert.equal(f.document.activeElement.id, 'home-apps');
+});
+
+test('live Enter has no synthetic action; native click updates appearance once', () => {
   const f = fixture();
   f.click('home-settings');
   assert.equal(f.document.activeElement.id, 'setting-accent');
   assert.equal(f.key('setting-accent', 13).defaultPrevented, undefined);
-  assert.equal(f.elements['accent-label'].textContent, 'Mint');
+  assert.match(f.elements['selection-hint'].textContent, /^Mint/);
   f.click('setting-accent');
-  assert.equal(f.elements['accent-label'].textContent, 'Amber');
+  assert.match(f.elements['selection-hint'].textContent, /^Amber/);
   assert.equal(f.writes, 0);
 });
 
-test('system keys and unrelated page targets are not intercepted', () => {
+test('system keys, missing codes, and unrelated targets are not intercepted', () => {
   const f = fixture({ legacy: true });
   for (const key of [undefined, NaN, 0, 8, 13, 27, 32, 36, 461, 1000]) {
-    const event = f.key('tab-home', key);
+    const event = f.key('home-internet', key);
     assert.equal(event.defaultPrevented, undefined);
     assert.equal(event.returnValue, true);
   }
   assert.equal(f.key('unrelated', 39).defaultPrevented, undefined);
-  f.key('tab-home', 39);
-  assert.equal(f.document.activeElement.id, 'tab-apps');
+  f.key('home-internet', 39);
+  assert.equal(f.document.activeElement.id, 'home-apps');
 });
 
-test('native-action cards explain unavailability without invented success', () => {
+test('activation displays a short truthful capability notice, never success', () => {
   const f = fixture();
-  for (const id of ['apps-open', 'input-hdmi1', 'input-tv', 'media-usb', 'media-network']) {
+  for (const [section, id] of [['home', 'home-internet'], ['home', 'home-tv'], ['apps', 'apps-open'], ['inputs', 'input-hdmi1'], ['media', 'media-usb'], ['media', 'media-network']]) {
+    f.click('tab-' + section);
+    assert.equal(f.elements.message.textContent, '');
     f.click(id);
-    assert.match(f.elements.message.textContent, /unavailable/);
+    assert.match(f.elements.message.textContent, /not connected/);
   }
   assert.equal(f.writes, 0);
 });
 
-test('preferences write only after explicit opt-in and remove only the namespaced key', () => {
+test('pointer selection updates context without stealing keyboard focus or activating', () => {
+  const f = fixture();
+  f.elements['home-media'].onmouseover();
+  assert.equal(f.elements['selection-title'].textContent, 'Your media');
+  assert.equal(f.document.activeElement.id, 'home-internet');
+  assert.equal(f.elements['panel-home'].style.display, 'block');
+  assert.equal(f.elements.message.textContent, '');
+});
+
+test('hidden section controls cannot perform an action', () => {
+  const f = fixture();
+  f.click('setting-accent');
+  assert.equal(f.document.body.className, '');
+  assert.equal(f.elements['selection-title'].textContent, 'Internet');
+  assert.equal(f.key('setting-accent', 39).defaultPrevented, undefined);
+});
+
+test('preferences write only after explicit opt-in and remove only the project key', () => {
   const f = fixture();
   f.storage.set('unrelated', 'keep');
+  f.click('home-settings');
   f.click('setting-accent');
   f.click('setting-contrast');
   assert.equal(f.writes, 0);
@@ -149,7 +177,7 @@ test('preferences write only after explicit opt-in and remove only the namespace
   assert.equal(f.storage.get('unrelated'), 'keep');
 });
 
-test('stored choices are validated and loaded without an automatic write', () => {
+test('saved choices are validated and loaded without an automatic write', () => {
   const valid = fixture({ saved: '{"version":1,"accent":"amber","contrast":true}' });
   assert.match(valid.document.body.className, /amber high-contrast/);
   assert.equal(valid.writes, 0);
@@ -160,26 +188,25 @@ test('stored choices are validated and loaded without an automatic write', () =>
   }
 });
 
-test('blocked storage and failed removal remain truthful in the visible indicator', () => {
+test('storage errors and failed removal preserve truthful visible state', () => {
   const blocked = fixture({ blockStorage: true });
-  blocked.click('setting-storage');
-  assert.match(blocked.elements['storage-label'].textContent, /^Off/);
+  blocked.click('home-settings'); blocked.click('setting-storage');
+  assert.match(blocked.elements['selection-hint'].textContent, /^This visit only/);
   assert.match(blocked.elements.message.textContent, /unavailable/);
   const removal = fixture({ blockRemoval: true, saved: '{"version":1,"accent":"mint","contrast":false}' });
-  removal.click('setting-storage');
-  assert.match(removal.elements['storage-label'].textContent, /^On/);
+  removal.click('home-settings'); removal.click('setting-storage');
+  assert.match(removal.elements['selection-hint'].textContent, /^Saved in this browser/);
   assert.match(removal.elements.message.textContent, /could not be removed/);
 });
 
-test('clock timer is single, stopped on pagehide and resumed on pageshow', () => {
+test('clock timer is single and suspend/resume does not activate controls', () => {
   const f = fixture();
   assert.equal(f.timers.size, 1);
-  f.lifecycle.pageshow();
-  assert.equal(f.timers.size, 1);
-  f.lifecycle.pagehide();
-  assert.equal(f.timers.size, 0);
+  f.lifecycle.pageshow(); assert.equal(f.timers.size, 1);
+  f.click('home-settings');
+  f.lifecycle.pagehide(); assert.equal(f.timers.size, 0);
   f.click('setting-accent');
-  assert.equal(f.elements['accent-label'].textContent, 'Mint');
-  f.lifecycle.pageshow();
-  assert.equal(f.timers.size, 1);
+  assert.match(f.elements['selection-hint'].textContent, /^Mint/);
+  f.lifecycle.pageshow(); assert.equal(f.timers.size, 1);
+  assert.match(f.elements.date.textContent, /Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday/);
 });

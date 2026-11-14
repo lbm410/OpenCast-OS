@@ -1,79 +1,43 @@
-html, body { margin: 0; padding: 0; background: #0c1319; color: #edf3ef; font-family: Arial, sans-serif; }
-body { background: -webkit-linear-gradient(120deg, #0c1319, #13201e); background: linear-gradient(120deg, #0c1319, #13201e); }
-button { font-family: inherit; cursor: pointer; }
-#shell { max-width: 1150px; margin: 0 auto; padding: 22px 4% 14px; }
-#header { height: 52px; }
-#brand { float: left; font-size: 29px; letter-spacing: -1px; line-height: 34px; }
-.brand-mark { display: inline-block; box-sizing: border-box; width: 24px; height: 24px; border: 6px solid #a6e9c8; border-radius: 7px; vertical-align: -1px; margin-right: 10px; }
-.brand-sub { display: block; color: #81958e; font-size: 9px; line-height: 14px; margin-left: 35px; letter-spacing: 2px; }
-#environment { float: right; line-height: 34px; }
-.preview-badge { font-size: 10px; color: #a9bbb3; letter-spacing: 1.5px; margin-right: 20px; }
-#clock { font-size: 25px; color: #d3dfd8; }
-#tabs { height: 46px; margin: 12px 0 20px; border-bottom: 1px solid #2a3836; }
-.tab { padding: 9px 19px; margin: 0 8px 0 0; border: 2px solid transparent; border-radius: 6px; background: transparent; color: #9db0a7; font-size: 18px; }
-.tab.active { color: #e9f8ed; background: #24392f; }
-button:focus { outline: 3px solid #bcf5d5; outline-offset: 2px; }
-#main { height: 320px; }
-.panel { width: 100%; }
-#welcome { float: left; width: 36%; padding-top: 10px; }
-.kicker { font-size: 10px; letter-spacing: 2px; color: #a6e9c8; }
-h1 { font-size: 42px; font-weight: normal; line-height: 1.08; letter-spacing: -1.5px; margin: 17px 0 16px; }
-#welcome p { font-size: 19px; line-height: 1.4; margin: 0; color: #aebdb5; }
-.stage-note { border-left: 2px solid #345647; color: #81998d; padding-left: 12px; font-size: 12px; line-height: 1.5; margin-top: 20px; }
-.tiles { overflow: hidden; padding: 5px; box-sizing: border-box; }
-.home-grid { float: right; width: 62%; }
-.tile { display: block; box-sizing: border-box; float: left; width: 48%; height: 137px; margin: 0 4% 14px 0; padding: 14px 20px; border: 1px solid #35493f; border-radius: 10px; text-align: left; color: #f0f5ef; background: #22362c; }
-.tile:nth-child(2n) { margin-right: 0; }
-.tile:focus { border-color: #c1f4d7; }
-.tile strong, .tile-detail, .availability { display: block; }
-.tile strong { font-weight: normal; font-size: 24px; margin: 4px 0 7px; }
-.tile-detail { font-size: 14px; color: #bbccc0; line-height: 1.3; }
-.tile-symbol { display: inline-block; font-size: 11px; letter-spacing: 1px; line-height: 26px; width: 31px; text-align: center; border: 1px solid #6c8974; border-radius: 6px; color: #c6e5cd; }
-.tile-apps { background: #294335; background: linear-gradient(115deg, #294335, #1c3028); }
-.tile-inputs { background: #283e49; background: linear-gradient(115deg, #283e49, #1b2d35); border-color: #3a535e; }
-.tile-media { background: #4b4035; background: linear-gradient(115deg, #4b4035, #302c26); border-color: #625442; }
-.tile-settings { background: #363747; background: linear-gradient(115deg, #363747, #272935); border-color: #4e4c61; }
-.tile-neutral { background: #202c2b; border-color: #354745; }
-.section-heading { padding: 0 5px; height: 58px; }
-h2 { font-size: 30px; font-weight: normal; line-height: 34px; margin: 0; letter-spacing: -0.5px; }
-.section-heading p { color: #9cafa6; font-size: 13px; margin: 4px 0 0; }
-.full-grid .tile { height: 111px; padding-top: 13px; }
-.availability { color: #a8b9ae; font-size: 9px; letter-spacing: 1px; margin-bottom: 5px; }
-#message { box-sizing: border-box; height: 42px; padding: 8px 0 0; color: #b9cfc1; font-size: 14px; line-height: 1.3; overflow: auto; border-top: 1px solid #2a3836; }
-#footer { overflow: hidden; color: #7f9689; font-size: 10px; letter-spacing: 1px; line-height: 18px; }
-#footer span { float: left; }
-#footer #input-hint { float: right; letter-spacing: 0; }
-body.amber .brand-mark { border-color: #f1cd98; }
-body.amber .kicker { color: #f1cd98; }
-body.amber button:focus { outline-color: #f1cd98; }
-body.amber .tab.active { background: #49402e; color: #fff1d8; }
-body.high-contrast { background: #080d10; color: #fff; }
-body.high-contrast .tile { background: #16231e; border-color: #b2c8bb; }
-body.high-contrast .tile-detail, body.high-contrast .availability, body.high-contrast .section-heading p,
-body.high-contrast .stage-note, body.high-contrast #welcome p, body.high-contrast #message { color: #f0f4f1; }
-body.high-contrast .tab { color: #e5efe8; }
-body.high-contrast button:focus { outline-width: 4px; }
+html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
+body { color: #fff; background: #3e483b url("assets/landscape-v2.jpg") center center no-repeat; background-size: cover; font-family: Arial, sans-serif; }
+body:before { content: ""; position: fixed; left: 0; right: 0; top: 0; bottom: 0; background: rgba(10, 18, 18, 0.16); background: -webkit-linear-gradient(top, rgba(10, 18, 18, 0.34), rgba(10, 18, 18, 0.04) 58%, rgba(10, 18, 18, 0.37)); background: linear-gradient(to bottom, rgba(10, 18, 18, 0.34), rgba(10, 18, 18, 0.04) 58%, rgba(10, 18, 18, 0.37)); }
+#shell { position: relative; width: 100%; height: 100%; min-height: 520px; }
+button { font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#tabs { position: absolute; top: 35px; left: 54px; white-space: nowrap; padding: 3px; border-radius: 24px; background: rgba(20, 30, 27, 0.13); }
+.tab { font-size: 13px; line-height: 18px; font-weight: normal; border: 0; border-radius: 20px; padding: 8px 14px; margin: 0; color: rgba(255,255,255,0.78); background: transparent; }
+.tab.active { background: rgba(255,255,255,0.13); color: #fff; }
+.tab:focus { outline: none; background: rgba(255,255,255,0.28); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35); color: #fff; }
+#time { position: absolute; top: 29px; right: 54px; text-align: right; text-shadow: 0 1px 8px rgba(0,0,0,0.18); }
+#clock { font-size: 37px; line-height: 42px; font-weight: normal; letter-spacing: -1px; }
+#date { color: rgba(255,255,255,0.8); font-size: 12px; line-height: 20px; }
+#selection { position: absolute; top: 132px; left: 58px; width: 690px; text-shadow: 0 2px 16px rgba(0,0,0,0.2); }
+#section-label { font-size: 10px; line-height: 18px; letter-spacing: 2.2px; color: rgba(255,255,255,0.72); }
+h1 { font-size: 53px; line-height: 1.1; margin: 8px 0 10px; font-weight: normal; letter-spacing: -1.6px; }
+#selection-hint { font-size: 16px; line-height: 24px; color: rgba(255,255,255,0.85); }
+#message { max-width: 620px; margin-top: 13px; min-height: 38px; font-size: 14px; line-height: 1.45; color: #fff; }
+#dock { position: absolute; left: 47px; right: 47px; bottom: 45px; height: 143px; }
+.dock-section { width: 100%; }
+.dock-row { display: inline-block; padding: 10px 12px 5px; border-radius: 22px; background: rgba(25,33,28,0.18); border: 1px solid rgba(255,255,255,0.10); box-shadow: 0 8px 28px rgba(7,12,9,0.08); white-space: nowrap; }
+.dock-item { display: inline-block; width: 119px; height: 117px; padding: 0; border: 0; margin: 0 1px; vertical-align: top; border-radius: 16px; background: transparent; color: rgba(255,255,255,0.82); text-align: center; }
+.icon-face { display: block; width: 72px; height: 72px; margin: 7px auto 10px; border-radius: 18px; background: rgba(246,250,245,0.09); box-shadow: inset 0 1px 0 rgba(255,255,255,0.11); }
+.icon-face svg { width: 44px; height: 44px; margin-top: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.item-label { display: block; font-size: 12px; line-height: 18px; white-space: nowrap; }
+.dock-item.selected { color: #fff; }
+.dock-item.selected .icon-face { width: 84px; height: 84px; margin-top: 1px; margin-bottom: 4px; border-radius: 21px; background: rgba(246,250,245,0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 7px 18px rgba(6,13,8,0.11); }
+.dock-item.selected .icon-face svg { width: 48px; height: 48px; margin-top: 18px; }
+.dock-item:focus { outline: none; color: #fff; }
+.dock-item:focus .icon-face { background: rgba(246,250,245,0.34); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45), 0 8px 20px rgba(6,13,8,0.13); }
+#footer { position: absolute; bottom: 19px; left: 61px; color: rgba(255,255,255,0.62); font-size: 10px; line-height: 16px; }
+#footer span { padding: 0 8px; }
+body.amber .dock-item:focus .icon-face { background: rgba(255,226,181,0.38); box-shadow: inset 0 0 0 1px rgba(255,231,194,0.6), 0 8px 20px rgba(6,13,8,0.13); }
+body.amber .tab:focus { background: rgba(255,226,181,0.3); }
+body.high-contrast:before { background: rgba(5,10,8,0.7); }
+body.high-contrast .dock-row { background: rgba(8,16,12,0.75); }
+body.high-contrast .dock-item:focus .icon-face { background: #425e50; box-shadow: inset 0 0 0 2px #f1fff5; }
+body.high-contrast #selection-hint, body.high-contrast #section-label, body.high-contrast .tab, body.high-contrast #footer, body.high-contrast #date { color: #fff; }
 @media screen and (max-height: 550px) {
-  #shell { padding-top: 12px; }
-  #tabs { margin-top: 6px; margin-bottom: 12px; }
-  #main { height: 298px; }
-  .tile { height: 130px; }
-  h1 { font-size: 37px; }
+  #selection { top: 115px; }
+  h1 { font-size: 45px; }
+  #dock { bottom: 37px; }
+  #footer { bottom: 12px; }
 }
-/* Static glass-like layering: translucency and hairlines, with no live blur. */
-body { background: #101b21 url("assets/landscape.jpg") center center no-repeat; background-size: cover; }
-body:before { content: ""; position: fixed; left: 0; right: 0; top: 0; bottom: 0; background: rgba(5, 12, 18, 0.63); }
-#shell { position: relative; z-index: 1; }
-#header, #welcome { text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45); }
-.tab.active { background: rgba(170, 215, 193, 0.18); border-color: rgba(234, 250, 241, 0.16); }
-.tile { background: rgba(35, 50, 54, 0.72); border: 1px solid rgba(222, 241, 233, 0.25); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06); }
-.tile-apps { background: rgba(44, 76, 61, 0.75); }
-.tile-inputs { background: rgba(41, 65, 79, 0.76); }
-.tile-media { background: rgba(79, 65, 47, 0.76); }
-.tile-settings { background: rgba(56, 54, 80, 0.76); }
-.tile-neutral { background: rgba(33, 45, 48, 0.78); }
-body.high-contrast:before { background: rgba(4, 8, 12, 0.94); }
-body.high-contrast .tile { background: #14211e; border-color: #c3d9cc; }
-html { height: 100%; }
-body { min-height: 100%; }
-.panel:after { content: ""; display: block; clear: both; }

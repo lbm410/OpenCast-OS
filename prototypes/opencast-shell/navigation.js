@@ -1,6 +1,6 @@
-/* Pure bounded navigation. System keys, including Home/Back, are not mapped. */
+/* A single horizontal dock and a compact section bar. No system-key mapping. */
 var OpenCastShellNavigation = (function () {
-    function move(zone, index, code, count, columns, pageIndex, tabCount) {
+    function move(zone, index, code, count, pageIndex, tabCount) {
         if ((code !== 37 && code !== 38 && code !== 39 && code !== 40) || count < 1) { return null; }
         if (zone === "tabs") {
             if (code === 40) { return { zone: "content", index: 0 }; }
@@ -8,13 +8,9 @@ var OpenCastShellNavigation = (function () {
             return { zone: "tabs", index: Math.max(0, Math.min(tabCount - 1, index + (code === 37 ? -1 : 1))) };
         }
         if (zone !== "content") { return null; }
-        if (code === 38 && index < columns) { return { zone: "tabs", index: pageIndex }; }
-        var next = index;
-        if (code === 37 && index % columns > 0) { next = index - 1; }
-        if (code === 39 && index % columns < columns - 1 && index + 1 < count) { next = index + 1; }
-        if (code === 38) { next = Math.max(0, index - columns); }
-        if (code === 40 && index + columns < count) { next = index + columns; }
-        return { zone: "content", index: next };
+        if (code === 38) { return { zone: "tabs", index: pageIndex }; }
+        if (code === 40) { return { zone: "content", index: index }; }
+        return { zone: "content", index: Math.max(0, Math.min(count - 1, index + (code === 37 ? -1 : 1))) };
     }
     return { move: move };
 }());

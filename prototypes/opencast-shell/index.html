@@ -3,72 +3,66 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OpenCast — Launcher Prototype</title>
+  <title>Launcher</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="shell">
-    <div id="header">
-      <div id="brand"><span class="brand-mark" aria-hidden="true"></span>OpenCast<span class="brand-sub">YOUR SCREEN, REIMAGINED</span></div>
-      <div id="environment"><span class="preview-badge">BROWSER PREVIEW</span><span id="clock" title="Browser clock">--:--</span></div>
-    </div>
     <div id="tabs" role="navigation" aria-label="Main sections">
       <button id="tab-home" class="tab active" type="button" aria-pressed="true">Home</button>
       <button id="tab-apps" class="tab" type="button" aria-pressed="false">Apps</button>
-      <button id="tab-inputs" class="tab" type="button" aria-pressed="false">Inputs</button>
+      <button id="tab-inputs" class="tab" type="button" aria-pressed="false">TV / HDMI</button>
       <button id="tab-media" class="tab" type="button" aria-pressed="false">Media</button>
       <button id="tab-settings" class="tab" type="button" aria-pressed="false">Settings</button>
     </div>
-    <div id="main">
-      <div id="panel-home" class="panel">
-        <div id="welcome">
-          <div class="kicker">A QUIETER KIND OF TV</div>
-          <h1>Make room<br>for what matters.</h1>
-          <p>Your apps, your inputs,<br>your own space.</p>
-          <div class="stage-note">An early OpenCast launcher.<br>TV integrations are still in development.</div>
-        </div>
-        <div class="home-grid tiles">
-          <button id="home-apps" class="tile tile-apps" type="button"><span class="tile-symbol" aria-hidden="true">AP</span><strong>All your apps</strong><span class="tile-detail">Explore the app space</span></button>
-          <button id="home-inputs" class="tile tile-inputs" type="button"><span class="tile-symbol" aria-hidden="true">HD</span><strong>Switch the scene</strong><span class="tile-detail">HDMI &amp; live TV</span></button>
-          <button id="home-media" class="tile tile-media" type="button"><span class="tile-symbol" aria-hidden="true">AV</span><strong>Your collection</strong><span class="tile-detail">Local &amp; network media</span></button>
-          <button id="home-settings" class="tile tile-settings" type="button"><span class="tile-symbol" aria-hidden="true">UI</span><strong>Make it yours</strong><span class="tile-detail">Color &amp; accessibility</span></button>
-        </div>
-      </div>
-      <div id="panel-apps" class="panel" style="display:none">
-        <div class="section-heading"><h2>Apps</h2><p>A place for compatible experiences.</p></div>
-        <div class="tiles full-grid">
-          <button id="apps-open" class="tile tile-apps" type="button"><span class="availability">INTEGRATION PENDING</span><strong>NetCast applications</strong><span class="tile-detail">Check native launch availability</span></button>
-          <button id="apps-info" class="tile tile-neutral" type="button"><span class="availability">ABOUT COMPATIBILITY</span><strong>Built for this screen</strong><span class="tile-detail">What this prototype can run</span></button>
+    <div id="time"><div id="clock" title="Browser clock">--:--</div><div id="date">Browser date</div></div>
+    <div id="selection" aria-live="polite">
+      <div id="section-label">HOME</div>
+      <h1 id="selection-title">Internet</h1>
+      <div id="selection-hint">Press OK to open</div>
+      <div id="message" role="status"></div>
+    </div>
+    <div id="dock">
+      <div id="panel-home" class="dock-section">
+        <div class="dock-row">
+          <button type="button" id="home-internet" class="dock-item selected" aria-label="Internet"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="20"/><path d="M12 32h40M32 12c-12 12-12 28 0 40M32 12c12 12 12 28 0 40M16 21h32M16 43h32"/></svg></span><span class="item-label">Internet</span></button>
+          <button type="button" id="home-apps" class="dock-item" aria-label="Apps"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="12" y="12" width="16" height="16" rx="4"/><rect x="36" y="12" width="16" height="16" rx="4"/><rect x="12" y="36" width="16" height="16" rx="4"/><rect x="36" y="36" width="16" height="16" rx="4"/></svg></span><span class="item-label">Apps</span></button>
+          <button type="button" id="home-media" class="dock-item" aria-label="Media"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="11" y="15" width="42" height="34" rx="8"/><path d="M28 24l13 8-13 8z"/></svg></span><span class="item-label">Media</span></button>
+          <button type="button" id="home-tv" class="dock-item" aria-label="Live TV"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="9" y="13" width="46" height="33" rx="6"/><path d="M23 53h18M32 46v7"/></svg></span><span class="item-label">Live TV</span></button>
+          <button type="button" id="home-settings" class="dock-item" aria-label="Settings"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M12 18h40M12 32h40M12 46h40"/><circle cx="24" cy="18" r="5"/><circle cx="42" cy="32" r="5"/><circle cx="25" cy="46" r="5"/></svg></span><span class="item-label">Settings</span></button>
         </div>
       </div>
-      <div id="panel-inputs" class="panel" style="display:none">
-        <div class="section-heading"><h2>Inputs</h2><p>TV controls appear here when a verified adapter is available.</p></div>
-        <div class="tiles full-grid">
-          <button id="input-hdmi1" class="tile tile-inputs" type="button"><span class="availability">NOT CONNECTED TO TV CONTROLS</span><strong>HDMI 1</strong><span class="tile-detail">Availability has not been detected</span></button>
-          <button id="input-hdmi2" class="tile tile-inputs" type="button"><span class="availability">NOT CONNECTED TO TV CONTROLS</span><strong>HDMI 2</strong><span class="tile-detail">Availability has not been detected</span></button>
-          <button id="input-hdmi3" class="tile tile-inputs" type="button"><span class="availability">NOT CONNECTED TO TV CONTROLS</span><strong>HDMI 3</strong><span class="tile-detail">Availability has not been detected</span></button>
-          <button id="input-tv" class="tile tile-neutral" type="button"><span class="availability">INTEGRATION PENDING</span><strong>Live TV</strong><span class="tile-detail">Native tuner controls unavailable</span></button>
+      <div id="panel-apps" class="dock-section" style="display:none">
+        <div class="dock-row">
+          <button type="button" id="apps-browser" class="dock-item selected" aria-label="Internet"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="20"/><path d="M12 32h40M32 12c-12 12-12 28 0 40M32 12c12 12 12 28 0 40M16 21h32M16 43h32"/></svg></span><span class="item-label">Internet</span></button>
+          <button type="button" id="apps-open" class="dock-item" aria-label="NetCast apps"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="12" y="12" width="16" height="16" rx="4"/><rect x="36" y="12" width="16" height="16" rx="4"/><rect x="12" y="36" width="16" height="16" rx="4"/><rect x="36" y="36" width="16" height="16" rx="4"/></svg></span><span class="item-label">NetCast apps</span></button>
+          <button type="button" id="apps-info" class="dock-item" aria-label="Compatibility"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="21"/><path d="M32 29v15M32 21v1"/></svg></span><span class="item-label">Compatibility</span></button>
         </div>
       </div>
-      <div id="panel-media" class="panel" style="display:none">
-        <div class="section-heading"><h2>Your collection</h2><p>Media stays in your home. Sources have not been scanned.</p></div>
-        <div class="tiles full-grid">
-          <button id="media-usb" class="tile tile-media" type="button"><span class="availability">INTEGRATION PENDING</span><strong>USB library</strong><span class="tile-detail">Native file access unavailable</span></button>
-          <button id="media-network" class="tile tile-neutral" type="button"><span class="availability">INTEGRATION PENDING</span><strong>Home network</strong><span class="tile-detail">DLNA browsing is not connected</span></button>
+      <div id="panel-inputs" class="dock-section" style="display:none">
+        <div class="dock-row">
+          <button type="button" id="input-hdmi1" class="dock-item selected" aria-label="HDMI 1"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="13" y="14" width="38" height="30" rx="5"/><path d="M24 50h16M32 44v6M24 29h16M34 23l6 6-6 6"/></svg></span><span class="item-label">HDMI 1</span></button>
+          <button type="button" id="input-hdmi2" class="dock-item" aria-label="HDMI 2"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="13" y="14" width="38" height="30" rx="5"/><path d="M24 50h16M32 44v6M24 29h16M34 23l6 6-6 6"/></svg></span><span class="item-label">HDMI 2</span></button>
+          <button type="button" id="input-hdmi3" class="dock-item" aria-label="HDMI 3"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="13" y="14" width="38" height="30" rx="5"/><path d="M24 50h16M32 44v6M24 29h16M34 23l6 6-6 6"/></svg></span><span class="item-label">HDMI 3</span></button>
+          <button type="button" id="input-tv" class="dock-item" aria-label="Live TV"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="9" y="13" width="46" height="33" rx="6"/><path d="M23 53h18M32 46v7"/></svg></span><span class="item-label">Live TV</span></button>
         </div>
       </div>
-      <div id="panel-settings" class="panel" style="display:none">
-        <div class="section-heading"><h2>Make it yours</h2><p>These settings affect this page only.</p></div>
-        <div class="tiles full-grid">
-          <button id="setting-accent" class="tile tile-settings" type="button"><span class="availability">APPEARANCE</span><strong>Accent color</strong><span id="accent-label" class="tile-detail">Mint</span></button>
-          <button id="setting-contrast" class="tile tile-neutral" type="button" aria-pressed="false"><span class="availability">ACCESSIBILITY</span><strong>High contrast</strong><span id="contrast-label" class="tile-detail">Off</span></button>
-          <button id="setting-storage" class="tile tile-neutral" type="button" aria-pressed="false"><span class="availability">BROWSER PREFERENCES</span><strong>Remember my choices</strong><span id="storage-label" class="tile-detail">Off · this visit only</span></button>
-          <button id="setting-about" class="tile tile-neutral" type="button"><span class="availability">PROJECT STATUS</span><strong>About OpenCast</strong><span class="tile-detail">A launcher under development</span></button>
+      <div id="panel-media" class="dock-section" style="display:none">
+        <div class="dock-row">
+          <button type="button" id="media-usb" class="dock-item selected" aria-label="USB"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32 49V16M26 22l6-7 6 7M32 34l-12-8v-6M32 40l12-8v-6"/><circle cx="32" cy="51" r="4"/><circle cx="20" cy="17" r="3"/><rect x="41" y="18" width="6" height="6" rx="1"/></svg></span><span class="item-label">USB</span></button>
+          <button type="button" id="media-network" class="dock-item" aria-label="Home network"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="23" y="11" width="18" height="13" rx="3"/><rect x="8" y="42" width="18" height="12" rx="3"/><rect x="38" y="42" width="18" height="12" rx="3"/><path d="M32 24v9M17 42v-9h30v9"/></svg></span><span class="item-label">Home network</span></button>
+        </div>
+      </div>
+      <div id="panel-settings" class="dock-section" style="display:none">
+        <div class="dock-row">
+          <button type="button" id="setting-accent" class="dock-item selected" aria-label="Accent"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="21"/><path d="M32 11v42M12 32h40"/></svg></span><span class="item-label">Accent</span></button>
+          <button type="button" id="setting-contrast" class="dock-item" aria-label="Contrast"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="21"/><path d="M32 11a21 21 0 010 42z" fill="currentColor" stroke="none"/></svg></span><span class="item-label">Contrast</span></button>
+          <button type="button" id="setting-storage" class="dock-item" aria-label="Remember"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="15" y="10" width="34" height="44" rx="5"/><path d="M23 10v16h18V10M23 54V37h18v17"/></svg></span><span class="item-label">Remember</span></button>
+          <button type="button" id="setting-about" class="dock-item" aria-label="About"><span class="icon-face"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="21"/><path d="M32 29v15M32 21v1"/></svg></span><span class="item-label">About</span></button>
         </div>
       </div>
     </div>
-    <div id="message" role="status" aria-live="polite">Choose a section. Native TV controls are not connected.</div>
-    <div id="footer"><span>ARROWS · MOVE&nbsp;&nbsp;&nbsp; OK · SELECT</span><span id="input-hint">Pointer supported · browser Back / Home unchanged</span></div>
+    <div id="footer">Arrows to move <span>·</span> OK to select</div>
   </div>
   <script src="navigation.js"></script>
   <script src="capabilities.js"></script>

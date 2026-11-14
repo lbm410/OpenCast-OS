@@ -1,13 +1,13 @@
-/* A capability boundary, deliberately disconnected from native TV controls. */
+/* Disconnected native capability boundary. These results never claim execution. */
 var OpenCastShellCapabilities = (function () {
     var reasons = {
-        launchApp: "Application launch is unavailable: no verified NetCast adapter is connected.",
-        switchInput: "Input switching is unavailable: no verified TV-control adapter is connected.",
-        openUsb: "USB browsing is unavailable: this page has no native file-access adapter.",
-        browseNetwork: "Network media browsing is unavailable: no DLNA browser is connected."
+        launchApp: "This TV app is not connected yet.",
+        switchInput: "TV input control is not connected yet.",
+        openUsb: "USB browsing is not connected yet.",
+        browseNetwork: "Network media is not connected yet."
     };
     function query(name) {
-        return { available: false, reason: typeof reasons[name] === "string" ? reasons[name] : "This TV capability is not implemented." };
+        return { available: false, reason: typeof reasons[name] === "string" ? reasons[name] : "This feature is not available yet." };
     }
     function invoke(name, target) {
         var state = query(name);
