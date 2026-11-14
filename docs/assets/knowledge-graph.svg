@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1424 954" role="img" aria-labelledby="title desc">
+<title id="title">OpenCast OS knowledge graph</title>
+<desc id="desc">16 concepts and 63 directed relationships. A readable spanning overview of 15 actual links; the local interactive viewer contains every relationship.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#7bbfa7"/></marker></defs>
+<rect width="1424" height="954" rx="20" fill="#0a1118"/>
+<g font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+<text x="32" y="43" font-size="11" font-weight="700" letter-spacing="3" fill="#8ce3c0">OPENCAST OS / KNOWLEDGE ATLAS</text>
+<text x="32" y="91" font-size="36" font-weight="650" fill="#edf4f5">Follow the evidence.</text>
+<text x="32" y="123" font-size="14" fill="#97adb9">16 concepts · 63 relationships · linked research, explicit unknowns.</text>
+<path d="M1052 233 C732.5 233,661.5 233,342 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M372 233 C342 233,372 233,342 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M372 315 C342 315,372 233,342 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M372 397 C342 397,372 233,342 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M372 479 C342 479,372 233,342 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M712 315 C545.5 315,508.5 233,342 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M712 479 C545.5 479,508.5 233,342 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M712 725 C545.5 725,508.5 233,342 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M342 315 C358 315,358 233,342 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1362 233 C1378 233,1378 315,1362 315" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M712 233 C682 233,712 233,682 233" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M712 807 C682 807,712 397,682 397" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M712 561 C682 561,712 479,682 479" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M682 479 C712 479,682 643,712 643" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1022 397 C1052 397,1022 315,1052 315" fill="none" stroke="#7bbfa7" stroke-opacity=".42" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="32" y="177" font-size="11" font-weight="650" letter-spacing="2" fill="#97adb9">PRODUCT</text>
+<text x="372" y="177" font-size="11" font-weight="650" letter-spacing="2" fill="#97adb9">EXECUTION</text>
+<text x="712" y="177" font-size="11" font-weight="650" letter-spacing="2" fill="#97adb9">PLATFORM</text>
+<text x="1052" y="177" font-size="11" font-weight="650" letter-spacing="2" fill="#97adb9">ENGINEERING</text>
+<a href="../../knowledge/engineering/knowledge-loading.md"><rect x="1052" y="198" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="1065" y="223" font-size="13" font-weight="600" fill="#edf4f5">Bounded knowledge loading</text>
+<text x="1065" y="255" font-size="10" fill="#97adb9">draft · 3 outgoing links</text></a>
+<a href="../../knowledge/engineering/validation.md"><rect x="1052" y="280" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="1065" y="305" font-size="13" font-weight="600" fill="#edf4f5">Evidence and validation scopes</text>
+<text x="1065" y="337" font-size="10" fill="#97adb9">draft · 4 outgoing links</text></a>
+<a href="../../knowledge/execution/app-deployment.md"><rect x="372" y="198" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="385" y="223" font-size="13" font-weight="600" fill="#edf4f5">NetCast application deployment</text>
+<text x="385" y="255" font-size="10" fill="#97adb9">draft · 3 outgoing links</text></a>
+<a href="../../knowledge/execution/browser.md"><rect x="372" y="280" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="385" y="305" font-size="13" font-weight="600" fill="#edf4f5">Physical browser probe</text>
+<text x="385" y="337" font-size="10" fill="#97adb9">draft · 4 outgoing links</text></a>
+<a href="../../knowledge/execution/local-control.md"><rect x="372" y="362" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="385" y="387" font-size="13" font-weight="600" fill="#edf4f5">Read-only LAN surface</text>
+<text x="385" y="419" font-size="10" fill="#97adb9">draft · 3 outgoing links</text></a>
+<a href="../../knowledge/execution/recovery.md"><rect x="372" y="444" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="385" y="469" font-size="13" font-weight="600" fill="#edf4f5">Recovery gate</text>
+<text x="385" y="501" font-size="10" fill="#97adb9">draft · 4 outgoing links</text></a>
+<a href="../../knowledge/platform/abi.md"><rect x="712" y="198" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="725" y="223" font-size="13" font-weight="600" fill="#edf4f5">Firmware ABI</text>
+<text x="725" y="255" font-size="10" fill="#97adb9">draft · 4 outgoing links</text></a>
+<a href="../../knowledge/platform/boot.md"><rect x="712" y="280" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="725" y="305" font-size="13" font-weight="600" fill="#edf4f5">Boot and init chain</text>
+<text x="725" y="337" font-size="10" fill="#97adb9">draft · 5 outgoing links</text></a>
+<a href="../../knowledge/platform/firmware.md"><rect x="712" y="362" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="725" y="387" font-size="13" font-weight="600" fill="#edf4f5">Official firmware evidence</text>
+<text x="725" y="419" font-size="10" fill="#97adb9">draft · 4 outgoing links</text></a>
+<a href="../../knowledge/platform/graphics-input.md"><rect x="712" y="444" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="725" y="469" font-size="13" font-weight="600" fill="#edf4f5">Graphics and input boundary</text>
+<text x="725" y="501" font-size="10" fill="#97adb9">draft · 4 outgoing links</text></a>
+<a href="../../knowledge/platform/kernel.md"><rect x="712" y="526" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="725" y="551" font-size="13" font-weight="600" fill="#edf4f5">Kernel image</text>
+<text x="725" y="583" font-size="10" fill="#97adb9">draft · 4 outgoing links</text></a>
+<a href="../../knowledge/platform/partitions.md"><rect x="712" y="608" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="725" y="633" font-size="13" font-weight="600" fill="#edf4f5">Partition-map evidence</text>
+<text x="725" y="665" font-size="10" fill="#97adb9">draft · 3 outgoing links</text></a>
+<a href="../../knowledge/platform/release.md"><rect x="712" y="690" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="725" y="715" font-size="13" font-weight="600" fill="#edf4f5">RELEASE system application</text>
+<text x="725" y="747" font-size="10" fill="#97adb9">draft · 5 outgoing links</text></a>
+<a href="../../knowledge/platform/target.md"><rect x="712" y="772" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="725" y="797" font-size="13" font-weight="600" fill="#edf4f5">Target television</text>
+<text x="725" y="829" font-size="10" fill="#97adb9">draft · 4 outgoing links</text></a>
+<a href="../../knowledge/product/shell.md"><rect x="32" y="198" width="310" height="70" rx="9" fill="#17342f" stroke="#8ce3c0"/>
+<text x="45" y="223" font-size="13" font-weight="600" fill="#edf4f5">OpenCast replacement shell</text>
+<text x="45" y="255" font-size="10" fill="#97adb9">draft · 6 outgoing links</text></a>
+<a href="../../knowledge/product/siri.md"><rect x="32" y="280" width="310" height="70" rx="9" fill="#111d28" stroke="#344957"/>
+<text x="45" y="305" font-size="13" font-weight="600" fill="#edf4f5">Deferred Siri bridge</text>
+<text x="45" y="337" font-size="10" fill="#97adb9">draft · 3 outgoing links</text></a>
+<text x="32" y="911" font-size="12" fill="#97adb9">Overview: 15 actual links. Open the interactive map to search and trace all 63 relationships.</text>
+<text x="32" y="932" font-size="11" fill="#8298a6">Draft summaries. Static firmware evidence does not establish physical validation or an installable replacement OS.</text>
+</g></svg>
