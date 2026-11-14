@@ -282,3 +282,12 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Observed:** framework window ID passes to EGL; stock Home has a separate binding; ready precedes rendering in inspected paths. Callback tables connect EGL initialization/termination, but external scheduling/quiescence and Home restoration remain unproven. Independent review matched 2,006 ARM words, 480 branches and 188 PLT annotations.
 - **Conclusion:** a future adapter needs distinct process-ready, graphics-ready, window ownership and return handling.
 - **Risks/next:** do not reuse Home identity or copy unchecked cleanup; trace the window allocator and receiver next. No device operation occurred.
+
+## NATIVE-WINDOW-002 — receiver reservation and reset
+
+- **Objective/hypothesis:** distinguish ID lookup from allocation and graphics-surface ownership.
+- **Environment/procedure:** selected procmgr;15 bounded captures/4,484bytes and bounded method-table reads; independent reproduction from original ELF.
+- **Observed:** generic GetWindowID can reserve service-name bookkeeping; reply boolean and numeric-range validation are separate from ownership. CreateWindow's examined handler does not create a GAL surface. Reset has direct/queued branches but complete exit-to-reset and restoration are unproven.
+- **Conclusion:** a future adapter must track reservation separately and cannot infer ownership from a successful response. See native-window-allocation.md.
+- **Risks:** misclassifying a private method as read-only, borrowing a stock identity, or equating record reset with restored video/input. No TV/IPC or target execution occurred.
+- **Next:** resolve admitted entry first; if pursuing the graphics contract, follow the demonstrated reset queue consumer and EGL provider boundary without invoking them.

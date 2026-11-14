@@ -205,3 +205,5 @@ their own compatibility, recovery and owner-authorized execution procedure.
 ## Later build and graphics evidence
 
 The separate [minimal native probe](native-probe-build.md) now demonstrates a local linked ARM ELF using existing host tools, beyond the earlier object-only experiment. Its self-contained syscall experiment has no LG framework binding and has not run on a device. The [native window consumer trace](native-window-contract.md) establishes a framework identifier passed into EGL, but window allocation, callback quiescence and actual return remain unresolved. Vendor process readiness occurs before rendering setup in the inspected paths, so the host model's surface/readiness order must be mapped explicitly rather than treated as a recovered protocol.
+
+Receiver follow-up: [window allocation](native-window-allocation.md) distinguishes conditional bookkeeping reservation, reply success, numeric validity and surface creation. A GetWindowID-shaped call is not automatically read-only. No native adapter should borrow a stock ID/path or consider success a service-ownership proof.

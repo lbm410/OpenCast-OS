@@ -52,6 +52,10 @@
     {
       "id": "window",
       "resource": "../../docs/native-window-contract.md"
+    },
+    {
+      "id": "window-allocation",
+      "resource": "../../docs/native-window-allocation.md"
     }
   ],
   "opencast_evidence": [
@@ -94,3 +98,7 @@ Concrete prohibition-flag producers use update XML/completion records for ordina
 Fxui passes a framework-provided window identifier to EGL. Home has a distinct stock binding that must not be reused. Process readiness can precede rendering; callback-managed EGL cleanup does not prove callback quiescence or restored Home focus. A future adapter must distinguish window assignment, graphics readiness and acknowledged return.[^window]
 
 [^window]: First-window consumer, EGL callback wiring and partial-cleanup boundaries.
+
+The generic window-ID receiver can reserve bookkeeping records. Its supplied-path condition, reply success and numeric validity do not establish authenticated ownership; surface creation and reset follow separate paths. No automatic cleanup or physical Home restoration follows from the selected receiver code.[^window-allocation]
+
+[^window-allocation]: Independently reproduced receiver, pool and reset ranges; no IPC invocation.
