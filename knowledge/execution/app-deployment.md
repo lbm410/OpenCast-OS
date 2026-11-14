@@ -36,6 +36,6 @@ A coordinated comparison can now measure the lighter candidate and repeat the ex
 
 [^deploy]: Official workflow review and explicit availability limits.
 
-LG also historically documented Marmalade/Unity App Test uploads. Current account availability, valid build artifact and native entitlement remain unverified; a Web package is not an arbitrary ELF loader.[^native-issuer]
+LG also historically documented Marmalade/Unity App Test uploads. The current owner screenshot shows no App Type selector and only a Web App upload area; the historical native choices are not exposed in that form. Valid native build artifact and entitlement remain unverified; a Web package is not an arbitrary ELF loader.[^native-issuer]
 
 [^native-issuer]: Official historical non-Web workflow and current inspection limits.

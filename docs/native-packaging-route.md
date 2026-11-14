@@ -28,3 +28,9 @@ The owner's screenshots establish a working Web submission. They do not show a s
 ### Current account inspection attempt
 
 **Observed (local tooling):** the computer-use inventory returned no browser surfaces and reported that the browser access host was unavailable. No form was changed, no upload was made, and no conclusion about available account types follows. Current portal capability remains pending. Continue static research independently; combine any necessary owner form inspection with the next useful deployment session.
+
+### Current New App Test form: owner screenshot
+
+**CONFIRMED (owner screenshot, 2026-11-14):** the visible New App Test form shows App Title, a Web App file-upload area, App Icon and Developer CP Service, with no App Type selector. No Marmalade/Unity choice is exposed in this observed form. The owner need not search for a missing control or change the existing registration. This narrows historical issuer availability for the current UI; it does not establish all account/backend capabilities or prove native execution impossible. No form submission or native upload was performed. The CP checkbox is not evidence of the firmware's sample-support flag.
+
+**Next:** preserve the working Web route for the performance comparison. Treat native issuer availability as unestablished; further native work must identify an evidenced alternative entry contract rather than assume a hidden option exists.

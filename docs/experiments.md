@@ -247,3 +247,12 @@ The independent reproduction initially stopped at its frozen documentation hash 
 ### NATIVE-STATIC-003 follow-up: execution-policy producers
 
 Eight exact captures (2964bytes) establish XML prohibit and update-completion record fields as producers of the execution rejection bit. Concrete callers select lists2/3, not USB-test list4; they do not directly compare native app_type. Independent review matched741ARM words,159branches,14literals and8relocations. See native-execution-policy.md. No device setters were called; native permission, initial USB-test state and ultimate policy authority remain unproven.
+
+### ISSUER-001 current account-form observation
+
+- **Objective/hypothesis:** check whether the current New App Test form exposes the historically documented native-runtime choices.
+- **Environment/procedure:** owner opened New App Test on the Mac and supplied a screenshot; no form submission requested.
+- **Expected:** an application-type selector or evidence it is absent in this form.
+- **Observed:** no App Type selector; the upload area explicitly says Web App.
+- **Conclusion:** historical Marmalade/Unity choices are not exposed by the observed UI. This is not proof of every backend/account capability or a firmware-wide native ban.
+- **Risks/next step:** avoid treating Developer CP Service as a firmware flag or altering protected metadata. Preserve the Web baseline; research a concrete native entry contract independently.
