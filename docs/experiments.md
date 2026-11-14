@@ -407,3 +407,11 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** clone syscall120 with fork-style flags01200011, conditional child0/PID/error-1 returns, separate cleanup and an intentionally unread28-byte callback gap. Verified192words,37targets and overlap accounting.
 - **Conclusion/risks:** process-creation semantics are statically supported; unknown callbacks/helpers and live values prevent claiming universal completion, successful child execution or recovery.
 - **Next:** stop this scope and prioritize remaining admission/integration evidence; no firmware execution or TV action.
+
+## WINDOW-RESET-001 — queue acceptance versus release completion
+
+- **Objective/hypothesis:** determine whether the reset consumer establishes completion or schedules further work.
+- **Environment/procedure:** unchanged selected procmgr; five bounded windows, four PLT bindings, reviewed producer/reset captures and independent byte/branch/argument verification. No target execution or IPC.
+- **Expected/observed:** type-4 dispatch uses the same queue and numeric ID, ignores direct-reset status, and can indirectly enqueue a type-2 update with suppressed failure. Verified 535 new words / 108 targets, 235 reused words and four relocation bindings.
+- **Conclusion/risks:** enqueue acceptance and direct-reset return cannot certify resource release. No acknowledgment appears in the selected type-4 branch; this does not rule out notifications elsewhere or establish physical behavior.
+- **Next:** retain the disconnected ownership contract; separately scope a completion condition or provider investigation before any adapter binding. Physical testing remains owner-deferred.

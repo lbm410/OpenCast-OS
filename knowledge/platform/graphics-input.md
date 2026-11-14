@@ -56,6 +56,10 @@
     {
       "id": "window-allocation",
       "resource": "../../docs/native-window-allocation.md"
+    },
+    {
+      "id": "window-reset",
+      "resource": "../../docs/native-window-reset-completion.md"
     }
   ],
   "opencast_evidence": [
@@ -102,3 +106,7 @@ Fxui passes a framework-provided window identifier to EGL. Home has a distinct s
 The generic window-ID receiver can reserve bookkeeping records. Its supplied-path condition, reply success and numeric validity do not establish authenticated ownership; surface creation and reset follow separate paths. No automatic cleanup or physical Home restoration follows from the selected receiver code.[^window-allocation]
 
 [^window-allocation]: Independently reproduced receiver, pool and reset ranges; no IPC invocation.
+
+The type-4 reset consumer ignores the local reset's return. Conditional reset work can enqueue a separate type-2 update whose failure is also suppressed. Neither initial queue acceptance nor direct-reset return proves completed release; the selected branch supplies no acknowledgment, without ruling out other notifications elsewhere. A release adapter still needs a service-bound completion condition before clearing ownership or unregistering its parent.[^window-reset]
+
+[^window-reset]: Matched queue slot, type-4 dispatch, optional type-2 enqueue and scoped completion limits.
