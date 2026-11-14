@@ -23,7 +23,7 @@ ELF flags are 0x05000002: EABI5, with floating-point calling convention unspecif
 
 `rc.local` configures temporary files, network branches, conditional UBI and USB setup, and driver scripts `ins_drv.sh` and `ins_basic_mod.sh`. It extends LD_LIBRARY_PATH with vendor paths including `/mnt/addon/lib`, `/mnt/lg/res/lglib`, `/mnt/lg/local/lib`, and `/mnt/vendor`. In the `bootmode=auto` branch it changes into `/mnt/lg/lginit` and invokes `./lginit`.
 
-Independent Claude review correctly notes that this call is foreground and the inspected inittab contains no respawn entry. Do not assume a supervisor will restart a terminated lginit or UI. The actual PID1 binary and its behavior remain under investigation: an sbin/init regular file is listed separately from BusyBox. Also reconcile rcS's ext2 `/dev/ram` remount with the SquashFS root package; a vestigial line or an intervening RAM-root construction is possible, neither proven.
+Independent Claude review correctly notes that this call is foreground and the inspected inittab contains no respawn entry. Do not infer UI supervision from inittab alone: the subsequently inspected vendor service lists distinguish RELEASE and Home; see the service-supervision update below. The actual PID1 binary and its behavior remain under investigation: an sbin/init regular file is listed separately from BusyBox. Also reconcile rcS's ext2 `/dev/ram` remount with the SquashFS root package; a vestigial line or an intervening RAM-root construction is possible, neither proven.
 
 The alternate branch contains development services and login commands. Their presence in a shipped script does not mean those services are exposed on this TV. Do not activate that branch or modify boot arguments as a diagnostic shortcut. The earlier network survey did not establish privileged access.
 
@@ -57,3 +57,12 @@ PENDING: active boot mode/storage, true partition map and redundancy, kernel con
 - Conclusion: native userspace research can now target the shipped ARM ABI, while launcher separability and recovery remain unproven.
 - Risks: treating inactive vendor branches or filenames as runtime truth; avoided by evidence labels and no execution.
 - Next: inspect decoded lgap and lginit dependency/IPC clues and reconcile independent Claude review.
+
+
+## Service-supervision update
+
+[Selected service lists and procmgr analysis](service-supervision.md) now supply a concrete boundary: the normal list declares `/mnt/lg/lgapp/RELEASE` under `reboot`, and a separate `fxui .../home/Home.swf --service lg.service.normal.home2 --auid 11174` under `respawn`. The SWUE list declares a separate `/mnt/swue/SWUE` executable. The supplied comments define these policies for normal/abnormal termination, while bounded procmgr disassembly identifies additional conditions; do not equate closing Home with exiting procmgr or rebooting the TV. Actual active list selection remains unobserved.
+
+The Home service AUID string `11174`, interpreted as hexadecimal, equals decimal70004 in the selected Home manifest. This numerical match supports a common identifier mapping; argument parsing and universal identifier semantics still require tracing.
+
+Next static work targets appctrl/fxui registration, focus and lifecycle rather than replacing RELEASE. Original startup declarations and Home assets remain untouched on the TV.
