@@ -265,3 +265,20 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** four new tests and77existing reader/review/graph tests pass. The first explicit module invocation omitted the legacy tests fixture directory and failed one import; PYTHONPATH=.:tests resolved that runner issue without source changes. Standard discovery already handles it.
 - **Conclusion:** metadata is now reusable. Reporting flags does not establish W^X, entry reachability, loader validity or effective device permissions. No vendor/target program was executed.
 - **Risks/next step:** preserve the caller's independent artifact checks and resource limits; use this for the separately built native probe.
+
+## NATIVE-PROBE-BUILD-001 — first locally linked native probe
+
+- **Objective/hypothesis:** close the object-to-executable build gap with installed host tools and original minimal source, independently of native admission.
+- **Environment/procedure:** Apple Clang plus installed Rust-bundled LLD; reviewed ELF/ARM readers; assemble/link twice, inspect entry segments/instructions, compare further root and independent reviewer builds. No installation or target execution.
+- **Observed:** identical 648-byte ARM EABI5 executable, SHA-256 d351176fb1a1942fef5d5156b2bc0605c7b2e2be93c8751fd26a4067a9251d63. One RX image, non-executable stack declaration, no dynamic dependencies. Seven contract tests pass; independent byte/header review matches the two-syscall design.
+- **Conclusion:** local linking is demonstrated, not device compatibility, admission or native UI execution.
+- **Risks:** inherited stdout can block, signal or point to an unintended sink; bounded output does not imply bounded runtime. Host-tool output limit is checked after capture. See native-probe-build.md.
+- **Next:** establish a legitimate starter with known output/exit observation before any device experiment.
+
+## NATIVE-WINDOW-001 — framework identifier and EGL consumer
+
+- **Objective/hypothesis:** determine whether framework window ownership and graphics readiness are separate contracts.
+- **Environment/procedure:** existing selected fxui/libafopenapi; 19 bounded captures totaling 8,024 bytes; independent review against original ELF bytes.
+- **Observed:** framework window ID passes to EGL; stock Home has a separate binding; ready precedes rendering in inspected paths. Callback tables connect EGL initialization/termination, but external scheduling/quiescence and Home restoration remain unproven. Independent review matched 2,006 ARM words, 480 branches and 188 PLT annotations.
+- **Conclusion:** a future adapter needs distinct process-ready, graphics-ready, window ownership and return handling.
+- **Risks/next:** do not reuse Home identity or copy unchecked cleanup; trace the window allocator and receiver next. No device operation occurred.

@@ -28,6 +28,10 @@
     {
       "id": "linkage",
       "resource": "../../docs/native-linkage.md"
+    },
+    {
+      "id": "probe-build",
+      "resource": "../../docs/native-probe-build.md"
     }
   ],
   "opencast_evidence": [
@@ -58,3 +62,7 @@ The [kernel](/platform/kernel.md) constrains native execution, while [RELEASE de
 The fixed19-file dependency sample declares241DT_NEEDED edges and10interpreters over105names; nine names have inspected candidates and96remain listing-only in that sample. These are name matches, not symbol resolution or loader selection. libscf imports D-Bus calls without declaring their provider directly, so even complete declared dependencies would not establish a working link contract.[^linkage]
 
 [^linkage]: Bounded dependency graph, reviewed identity/budget handling and unresolved providers.
+
+An original minimal probe links locally to a 648-byte ARM EABI5 ET_EXEC with explicit entry, RX image and no dynamic dependencies, reproduced and independently inspected. This closes a build step only: it does not identify physical ISA support, supply an admitted starter or link the graphics/lifecycle client.[^probe-build]
+
+[^probe-build]: Existing-host-tool link, independent byte inspection and unresolved target execution.

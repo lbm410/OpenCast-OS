@@ -20,6 +20,10 @@
     {
       "id": "client",
       "resource": "../../docs/udap-client.md"
+    },
+    {
+      "id": "input-contract",
+      "resource": "../../docs/udap-control-plan.md"
     }
   ],
   "opencast_evidence": [
@@ -43,3 +47,7 @@ A future [Siri bridge](/product/siri.md) may consume individually validated acti
 A bounded inventory-only UDAP client now passes43synthetic/loopback tests, with explicit pairing coordination, private optional inventory output and callback cleanup. It has not paired with the TV. SmartText sending remains disabled.[^client]
 
 [^client]: Implemented network bounds, session lifecycle and physical-test limits.
+
+The inspected Connect SDK Netcast adapter explicitly rejects direct input enumeration/selection despite listing those methods in its generated API. Its input-picker path is different. This does not prove a native device-side route is absent, but it rules out claiming that adapter already provides direct HDMI selection.[^input-contract]
+
+[^input-contract]: Primary implementation cross-check at a fixed upstream commit.

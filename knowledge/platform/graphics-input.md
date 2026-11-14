@@ -48,6 +48,10 @@
     {
       "id": "policy",
       "resource": "../../docs/native-execution-policy.md"
+    },
+    {
+      "id": "window",
+      "resource": "../../docs/native-window-contract.md"
     }
   ],
   "opencast_evidence": [
@@ -86,3 +90,7 @@ Native type conversion and executable-path construction exist in appctrl, includ
 Concrete prohibition-flag producers use update XML/completion records for ordinary downloaded lists2/3. No direct native-type comparison or concrete USB-test list4 producer occurs in that slice; a clear flag still does not admit our ELF.[^policy]
 
 [^policy]: Bounded update-policy producer trace and unresolved upstream authority.
+
+Fxui passes a framework-provided window identifier to EGL. Home has a distinct stock binding that must not be reused. Process readiness can precede rendering; callback-managed EGL cleanup does not prove callback quiescence or restored Home focus. A future adapter must distinguish window assignment, graphics readiness and acknowledged return.[^window]
+
+[^window]: First-window consumer, EGL callback wiring and partial-cleanup boundaries.

@@ -1,6 +1,6 @@
 # UDAP control plan for a grouped owner session
 
-Prepared: 2026-11-14. Scope: documentation and existing local descriptor inspection only. No new TV request, pairing, key command, input change or owner prompt occurred. No control client has been implemented by this task.
+Prepared: 2026-11-14. Scope: documentation and existing local descriptor inspection only. No new TV request, pairing, key command, input change or owner prompt occurred. This original planning task did not implement a client. A later inventory-only client is now available and host-tested (udap-client.md); launch, SmartText and real pairing remain untested.
 
 ## Evidence and limits
 
@@ -105,3 +105,9 @@ PENDING: direct HDMI selection. This specification documents an External input k
 - **Failure handling:** stop the failing branch on 401/503, callback timeout, absent keyboard event, ambiguous app identity, password mode or UI mismatch. Continue independent host research. A successful HTTP request alone never establishes the visual outcome.
 - **Risks:** temporary viewing interruption, unintended text replacement, old-service instability and disclosure through callback logs. Mitigate with explicit field confirmation, one target, bounded requests/timeouts, no raw text/PIN logs and no automatic retry/navigation loops. No persistent/privileged operation is part of this plan.
 - **Next step:** implement and test a narrowly scoped controller with synthetic HTTP/XML/event fixtures before scheduling the grouped owner session. Keep API research and control authorization separate from firmware/native-launcher integration.
+
+## Direct input selection: implementation cross-check
+
+**CONFIRMED (primary source, 2026-11-14):** Connect SDK's generated NetcastTVService API lists external-input methods, but the [pinned Android implementation](https://github.com/ConnectSDK/Connect-SDK-Android-Core/blob/2f7ebbc7eb909321ff41b2c6bcdf6b0881427579/src/com/connectsdk/service/NetcastTVService.java#L1405) returns not-supported for input enumeration and direct selection (lines1446–1455). Its picker method instead looks up and launches Input List. Source blob90471146d805689b5ddb5da43376ea5146424d53 was inspected through the GitHub connector, without executing it. Interface documentation alone must not be presented as implemented HDMI switching. This is a limitation of that inspected adapter, not proof that every device-side control route is absent.
+
+**Experiment INPUT-CONTRACT-001:** compare the published interface with actual source for the desired HDMI capability. Expected an implemented command or an explicit unsupported result; observed the latter for direct selection. No TV request, pairing or input change occurred. Continue native TV-control contract research separately; never replace an unavailable per-port operation with blind arrow sequences.
