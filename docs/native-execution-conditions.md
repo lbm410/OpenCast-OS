@@ -97,3 +97,7 @@ Stop at the untraced execution-info descriptor producer, `_APPCTRL_GetLiveAppIte
 - **Conclusion:** type provenance is closed for this parser; native admission and effective account remain unproven.
 - **Risks:** treating parser conversion as permission, account text as UID, or one helper's lack of a type check as absence of restrictions.
 - **Next step:** reconcile provider evidence and trace the execution-info policy producer without creating a caller or changing device state.
+
+## Follow-up producer trace
+
+[Execution policy](native-execution-policy.md) now identifies XML `prohibit` and update-completion fields as concrete descriptor producers for lists2/3. Neither captured producer selects USB-test list4 or directly tests app_type. Upstream authority, other writers and the USB-test initial field remain unresolved. This narrows the prior producer gap without establishing native permission.

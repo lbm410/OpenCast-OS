@@ -4,7 +4,7 @@ Research date: 2026-11-14. Level 0 documentary research. No code has been execut
 
 ## Provisional technical conclusion
 
-The first architecture to investigate is a custom shell that preserves the manufacturer's audiovisual services. A separable launcher process has not yet been demonstrated on the 47LA620S-ZA. Obtaining a root shell, running an ELF, or drawing on the screen would not establish that separation or the preservation of HDMI, tuner, audio, and suspend behavior.
+The first architecture to investigate is a custom shell that preserves the manufacturer's audiovisual services. The selected official service list now establishes a separate fxui Home process statically; physical replacement/coexistence remains unproven (see service-supervision.md and native-execution-gates.md). Obtaining a root shell, running an ELF, or drawing on the screen would not establish that separation or the preservation of HDMI, tuner, audio, and suspend behavior.
 
 The next useful result is a static inventory of the official firmware: container, partitions, init, main application, libraries, and interprocess contracts. A reversible Hello World deployment provides rendering and remote-input evidence, but does not solve automatic startup.
 

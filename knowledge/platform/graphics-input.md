@@ -44,6 +44,10 @@
     {
       "id": "appinfo",
       "resource": "../../docs/appinfo-provenance.md"
+    },
+    {
+      "id": "policy",
+      "resource": "../../docs/native-execution-policy.md"
     }
   ],
   "opencast_evidence": [
@@ -78,3 +82,7 @@ Native type conversion and executable-path construction exist in appctrl, includ
 [^conditions]: Exact XML field provenance, account metadata and later execution conditions.
 
 [^appinfo]: Storage3-only lookup, imported sample-support gate and bounded producer-search limits.
+
+Concrete prohibition-flag producers use update XML/completion records for ordinary downloaded lists2/3. No direct native-type comparison or concrete USB-test list4 producer occurs in that slice; a clear flag still does not admit our ELF.[^policy]
+
+[^policy]: Bounded update-policy producer trace and unresolved upstream authority.

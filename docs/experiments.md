@@ -243,3 +243,7 @@ The next six captures (1532bytes), independently reproduced by root, restrict Ap
 - **Next:** use only the needed provider contracts after selecting a permitted entry route.
 
 The independent reproduction initially stopped at its frozen documentation hash after root's two wording corrections; substituting only the reviewed report hash in memory made all synthetic checks pass. Tool/test hashes were unchanged. The original ignored reproduction is preserved.
+
+### NATIVE-STATIC-003 follow-up: execution-policy producers
+
+Eight exact captures (2964bytes) establish XML prohibit and update-completion record fields as producers of the execution rejection bit. Concrete callers select lists2/3, not USB-test list4; they do not directly compare native app_type. Independent review matched741ARM words,159branches,14literals and8relocations. See native-execution-policy.md. No device setters were called; native permission, initial USB-test state and ultimate policy authority remain unproven.
