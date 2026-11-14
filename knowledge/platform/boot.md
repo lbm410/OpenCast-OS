@@ -32,6 +32,10 @@
     {
       "id": "static-entry",
       "resource": "../../docs/static-initializer-entry.md"
+    },
+    {
+      "id": "static-successor",
+      "resource": "../../docs/static-initializer-successor.md"
     }
   ],
   "opencast_evidence": [
@@ -66,3 +70,7 @@ Static bootloader tracing finds a conditional init=/sbin/init append only in the
 The static initializer entry supplies candidate0x82ac to a libc-style startup call. Its bounded prefix has a zero phase-pointer literal, unlike the dynamic initializer; APP_START is passed to an unnamed callee whose zero return branches to0x853c. Candidate extent, callee identity, successor behavior and actual unit startup remain unverified. Do not transfer dynamic initializer API names or recovery behavior by resemblance.[^static-entry]
 
 [^static-entry]: Independently reviewed entry and256-byte prefix, explicit literal values and branch successors; no target execution.
+
+The separately captured zero-return successor carries SWU_MODE=ON and LOCKUP_LEVEL=%d into unknown calls and stores pointers under a callee-save assumption. No initialization success, reexecution or recovery follows from those calls alone; remaining branch successors are untraced.[^static-successor]
+
+[^static-successor]: Independent128-byte successor reproduction and complete visible argument/branch review.

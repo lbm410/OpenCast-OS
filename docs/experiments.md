@@ -359,3 +359,11 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** zero static pointer literal causes fallthrough, unlike the dynamic nonzero pointer. APP_START reaches unknown callee0xbb78; its zero return branches to0x853c. Review verified64words,11targets and five literals without expanding scope.
 - **Conclusion/risks:** an artifact-level phase distinction is confirmed; API identity, active boot and recovery are not. Do not infer environment semantics from a string or borrow dynamic function names.
 - **Next:** separately bounded128-byte successor study; no TV action or target execution.
+
+## STATIC-ENTRY-003 — preparation-shaped zero-return path
+
+- **Objective/hypothesis:** inspect the reviewed zero-return successor for initialization/reexecution prerequisites.
+- **Environment/procedure:** same pinned static initializer,128-byte successor, six referenced words, three bounded argument strings; independent exact reproduction and argument/branch review.
+- **Expected/observed:** calls carry SWU_MODE=ON and LOCKUP_LEVEL=%d; two pointers are stored and a zero-return branch exits the slice. Verified32words,13targets and all six literals. Callees remain unnamed; reexecution is not shown.
+- **Conclusion/risks:** initialization preparation is a hypothesis, not enforced success. Unknown returns cannot be labeled success/failure; preserved registers assume normal callee-save behavior.
+- **Next:** separately justified successor continuation; no target execution or TV action.
