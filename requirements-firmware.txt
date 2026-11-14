@@ -1,0 +1,4 @@
+# Optional local static-analysis environment; never required on the television.
+cryptography==50.0.2
+cffi==2.1.1
+pycparser==3.12
