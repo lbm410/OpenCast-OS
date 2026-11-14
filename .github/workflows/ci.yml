@@ -1,0 +1,70 @@
+name: Host checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Python ${{ matrix.python }} / crypto ${{ matrix.crypto }} / Node 22
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python: '3.11'
+            crypto: false
+          - python: '3.13'
+            crypto: true
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+
+      - name: Create isolated Python environment
+        run: python -m venv .venv-ci
+
+      - name: Install optional pinned cryptography dependencies
+        if: matrix.crypto
+        run: |
+          .venv-ci/bin/python -m pip install --disable-pip-version-check --only-binary=:all: -r requirements-firmware.txt
+
+      - name: Run synthetic and loopback Python tests
+        run: .venv-ci/bin/python -m unittest discover -s tests -v
+
+      - name: Run JavaScript tests
+        run: node --test tests/test_*.cjs
+
+      - name: Compile and test the native lifecycle model on the host
+        run: |
+          mkdir -p artifacts/native-lifecycle
+          cc -std=c11 -O2 -Wall -Wextra -Werror prototypes/native/lifecycle.c prototypes/native/lifecycle_test.c -o artifacts/native-lifecycle/lifecycle_test
+          artifacts/native-lifecycle/lifecycle_test
+
+      - name: Validate the knowledge bundle
+        run: .venv-ci/bin/python -m tools.knowledge --bundle knowledge validate
+
+      - name: Check generated knowledge views
+        run: .venv-ci/bin/python -m tools.knowledge_view --check
