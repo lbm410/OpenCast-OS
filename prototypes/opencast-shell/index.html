@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenCast — Launcher Prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="shell">
+    <div id="header">
+      <div id="brand"><span class="brand-mark" aria-hidden="true"></span>OpenCast<span class="brand-sub">YOUR SCREEN, REIMAGINED</span></div>
+      <div id="environment"><span class="preview-badge">BROWSER PREVIEW</span><span id="clock" title="Browser clock">--:--</span></div>
+    </div>
+    <div id="tabs" role="navigation" aria-label="Main sections">
+      <button id="tab-home" class="tab active" type="button" aria-pressed="true">Home</button>
+      <button id="tab-apps" class="tab" type="button" aria-pressed="false">Apps</button>
+      <button id="tab-inputs" class="tab" type="button" aria-pressed="false">Inputs</button>
+      <button id="tab-media" class="tab" type="button" aria-pressed="false">Media</button>
+      <button id="tab-settings" class="tab" type="button" aria-pressed="false">Settings</button>
+    </div>
+    <div id="main">
+      <div id="panel-home" class="panel">
+        <div id="welcome">
+          <div class="kicker">A QUIETER KIND OF TV</div>
+          <h1>Make room<br>for what matters.</h1>
+          <p>Your apps, your inputs,<br>your own space.</p>
+          <div class="stage-note">An early OpenCast launcher.<br>TV integrations are still in development.</div>
+        </div>
+        <div class="home-grid tiles">
+          <button id="home-apps" class="tile tile-apps" type="button"><span class="tile-symbol" aria-hidden="true">AP</span><strong>All your apps</strong><span class="tile-detail">Explore the app space</span></button>
+          <button id="home-inputs" class="tile tile-inputs" type="button"><span class="tile-symbol" aria-hidden="true">HD</span><strong>Switch the scene</strong><span class="tile-detail">HDMI &amp; live TV</span></button>
+          <button id="home-media" class="tile tile-media" type="button"><span class="tile-symbol" aria-hidden="true">AV</span><strong>Your collection</strong><span class="tile-detail">Local &amp; network media</span></button>
+          <button id="home-settings" class="tile tile-settings" type="button"><span class="tile-symbol" aria-hidden="true">UI</span><strong>Make it yours</strong><span class="tile-detail">Color &amp; accessibility</span></button>
+        </div>
+      </div>
+      <div id="panel-apps" class="panel" style="display:none">
+        <div class="section-heading"><h2>Apps</h2><p>A place for compatible experiences.</p></div>
+        <div class="tiles full-grid">
+          <button id="apps-open" class="tile tile-apps" type="button"><span class="availability">INTEGRATION PENDING</span><strong>NetCast applications</strong><span class="tile-detail">Check native launch availability</span></button>
+          <button id="apps-info" class="tile tile-neutral" type="button"><span class="availability">ABOUT COMPATIBILITY</span><strong>Built for this screen</strong><span class="tile-detail">What this prototype can run</span></button>
+        </div>
+      </div>
+      <div id="panel-inputs" class="panel" style="display:none">
+        <div class="section-heading"><h2>Inputs</h2><p>TV controls appear here when a verified adapter is available.</p></div>
+        <div class="tiles full-grid">
+          <button id="input-hdmi1" class="tile tile-inputs" type="button"><span class="availability">NOT CONNECTED TO TV CONTROLS</span><strong>HDMI 1</strong><span class="tile-detail">Availability has not been detected</span></button>
+          <button id="input-hdmi2" class="tile tile-inputs" type="button"><span class="availability">NOT CONNECTED TO TV CONTROLS</span><strong>HDMI 2</strong><span class="tile-detail">Availability has not been detected</span></button>
+          <button id="input-hdmi3" class="tile tile-inputs" type="button"><span class="availability">NOT CONNECTED TO TV CONTROLS</span><strong>HDMI 3</strong><span class="tile-detail">Availability has not been detected</span></button>
+          <button id="input-tv" class="tile tile-neutral" type="button"><span class="availability">INTEGRATION PENDING</span><strong>Live TV</strong><span class="tile-detail">Native tuner controls unavailable</span></button>
+        </div>
+      </div>
+      <div id="panel-media" class="panel" style="display:none">
+        <div class="section-heading"><h2>Your collection</h2><p>Media stays in your home. Sources have not been scanned.</p></div>
+        <div class="tiles full-grid">
+          <button id="media-usb" class="tile tile-media" type="button"><span class="availability">INTEGRATION PENDING</span><strong>USB library</strong><span class="tile-detail">Native file access unavailable</span></button>
+          <button id="media-network" class="tile tile-neutral" type="button"><span class="availability">INTEGRATION PENDING</span><strong>Home network</strong><span class="tile-detail">DLNA browsing is not connected</span></button>
+        </div>
+      </div>
+      <div id="panel-settings" class="panel" style="display:none">
+        <div class="section-heading"><h2>Make it yours</h2><p>These settings affect this page only.</p></div>
+        <div class="tiles full-grid">
+          <button id="setting-accent" class="tile tile-settings" type="button"><span class="availability">APPEARANCE</span><strong>Accent color</strong><span id="accent-label" class="tile-detail">Mint</span></button>
+          <button id="setting-contrast" class="tile tile-neutral" type="button" aria-pressed="false"><span class="availability">ACCESSIBILITY</span><strong>High contrast</strong><span id="contrast-label" class="tile-detail">Off</span></button>
+          <button id="setting-storage" class="tile tile-neutral" type="button" aria-pressed="false"><span class="availability">BROWSER PREFERENCES</span><strong>Remember my choices</strong><span id="storage-label" class="tile-detail">Off · this visit only</span></button>
+          <button id="setting-about" class="tile tile-neutral" type="button"><span class="availability">PROJECT STATUS</span><strong>About OpenCast</strong><span class="tile-detail">A launcher under development</span></button>
+        </div>
+      </div>
+    </div>
+    <div id="message" role="status" aria-live="polite">Choose a section. Native TV controls are not connected.</div>
+    <div id="footer"><span>ARROWS · MOVE&nbsp;&nbsp;&nbsp; OK · SELECT</span><span id="input-hint">Pointer supported · browser Back / Home unchanged</span></div>
+  </div>
+  <script src="navigation.js"></script>
+  <script src="capabilities.js"></script>
+  <script src="shell.js"></script>
+</body>
+</html>
