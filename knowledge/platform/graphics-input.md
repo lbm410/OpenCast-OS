@@ -24,6 +24,10 @@
     {
       "id": "admission",
       "resource": "../../docs/native-admission.md"
+    },
+    {
+      "id": "execution",
+      "resource": "../../docs/native-execution-gates.md"
     }
   ],
   "opencast_evidence": [
@@ -48,3 +52,7 @@ The native entry study separates app metadata, process registration, graphics su
 
 [^lifecycle]: Matched native receiver and lifecycle call paths.
 [^admission]: Corrected dual process-table creation paths and unresolved bus policy.
+
+Native type conversion and executable-path construction exist in appctrl, including in its downloaded-type helper. This does not establish that the owner's USB package can obtain native admission: manifest provenance, storage class and the upstream acceptance gate must be traced. A compiled ARM object, a framework record and a running native process are three different achievements.[^execution]
+
+[^execution]: Four bounded type/path function traces and remaining native execution prerequisites.

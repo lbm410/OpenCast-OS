@@ -80,9 +80,10 @@ not describe its entire framework contract: imported symbols and initialization
 context can require providers beyond its own direct dependency list.
 
 [ARM ABI research](arm-abi.md) reports base calling-convention attributes in its
-selected sample. That report/parser is undergoing integration review; do not
-inherit its universal compatibility claims or generalize the sample to Chromium
-or every vendor library. CPU feature permission, actual instructions, procedure
+selected sample. The reader and its descriptor-ownership correction are reviewed
+and integrated; do not generalize the sample to every vendor library. The later
+[Chromium check](chromium-abi.md) finds a VFP-declaring loader beside base-PCS clients,
+not a demonstrated second coherent runtime. CPU feature permission, actual instructions, procedure
 calling convention and physical CPU identification are separate questions.
 
 ## Lifecycle contract to implement first on the host

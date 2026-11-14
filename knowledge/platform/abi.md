@@ -48,5 +48,5 @@ The [kernel](/platform/kernel.md) constrains native execution, while [RELEASE de
 
 [^boot]: Executable metadata and interpreter inventory.
 [^decoded]: Validated RELEASE ELF extent; historical flags-only ABI uncertainty.
-[^attributes]: Reviewed attribute parser, 79 synthetic tests and 18-file calling-convention evidence.
+[^attributes]: Reviewed attribute parser, 85 synthetic tests and 18-file calling-convention evidence.
 [^chromium]: Three exact selected files, explicit VFP-loader attribute and Chrome's different interpreter path.
