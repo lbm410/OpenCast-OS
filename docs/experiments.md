@@ -383,3 +383,11 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** both earlier alternatives converge at0x8580 if their calls return. A later unknown call receives /lg/lginit/lginit_app and zero; its result is overwritten before an unchecked repeating call. All10words/five targets verified.
 - **Conclusion/risks:** launch/reexecution hypothesis now has an exact argument/call anchor; API identity, success and physical recovery are still unknown. A visible loop does not imply successful launch or known wait semantics.
 - **Next:** stop slice expansion; propose a distinct callee-identity investigation with explicit evidence budget. No device or target execution.
+
+## STATIC-EXEC-001 — explicit execution syscall behind the pathname call
+
+- **Objective/hypothesis:** determine whether the initializer pathname call reaches an execution operation rather than an arbitrary pathname consumer.
+- **Environment/procedure:** selected static lginit,256-byte callee window and approved124-byte wrapper extension; bounded literal/technical-string reads, Linux v3.0 primary ABI comparison and independent reproduction.
+- **Expected/observed:** both selected routes reach SVC0 with r7=11 and filename/argv/envp arguments, matching ARM EABI execve. Verified95words/18targets; error normalization and the caller's saved-zero return are explicit.
+- **Conclusion/risks:** an execution attempt is established statically. Initial process-creation gate, complete vectors, live environment and success remain unproven; an ignored returned error is not recovery.
+- **Next:** separately scoped process-gate analysis, without executing firmware or modifying the TV.

@@ -36,6 +36,10 @@
     {
       "id": "static-successor",
       "resource": "../../docs/static-initializer-successor.md"
+    },
+    {
+      "id": "static-exec",
+      "resource": "../../docs/static-execution-callee.md"
     }
   ],
   "opencast_evidence": [
@@ -74,3 +78,7 @@ The static initializer entry supplies candidate0x82ac to a libc-style startup ca
 The separately captured zero-return successor carries SWU_MODE=ON and LOCKUP_LEVEL=%d into unknown calls and stores pointers under a callee-save assumption. No initialization success, reexecution or recovery follows from those calls alone; a separately reviewed40-byte tail rejoins both alternatives and passes /lg/lginit/lginit_app to an unknown callee, then loops over another call without checking returns. This anchors a launch hypothesis, not an identified execution API or successful boot.[^static-successor]
 
 [^static-successor]: Independent128-byte successor and40-byte tail reproduction, visible arguments, joins and unchecked loop.
+
+The subsequent callee trace reaches SVC0 with r7=11 and filename/argv/envp arguments, matching Linux ARM EABI execve. The initial process gate, complete argument/environment vectors and success are separate unknowns; a returned syscall error can still lead to a saved-zero outer return. This is static execution-attempt evidence, not a tested starter or recovery.[^static-exec]
+
+[^static-exec]: Independently reproduced380-byte call/wrapper analysis and primary Linux ABI comparison.
