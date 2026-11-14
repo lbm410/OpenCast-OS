@@ -172,6 +172,7 @@ def make_server(bind: str, port: int, allowed: str, output: Path,
             report["physical_tv_confirmed"] = False
             target = output / (stamp.strftime("probe-%Y%m%dT%H%M%S-%fZ") + ".json")
             temporary = None
+            storage_failed = False
             try:
                 payload = (json.dumps(report, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
                 with tempfile.NamedTemporaryFile(dir=output, prefix=".pending-", delete=False) as stream:
@@ -180,11 +181,14 @@ def make_server(bind: str, port: int, allowed: str, output: Path,
                 # Publish a complete file without overwriting a colliding report.
                 os.link(temporary, target)
             except (OSError, UnicodeError):
-                self.reply(500, b"Local report could not be stored")
-                return
+                storage_failed = True
             finally:
                 if temporary is not None:
                     temporary.unlink(missing_ok=True)
+            # A completed response must not race with temporary-file cleanup.
+            if storage_failed:
+                self.reply(500, b"Local report could not be stored")
+                return
             self.server.reports_saved += 1
             self.reply(201, b"Saved locally")
 

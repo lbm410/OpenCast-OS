@@ -50,6 +50,38 @@ class PersistenceReviewTests(unittest.TestCase):
             self.assertEqual(self.submit()[0], 500)
         self.assert_clean_failure_and_retry()
 
+    def test_failure_response_is_sent_only_after_temporary_cleanup(self):
+        # Observe the reply boundary in the handler thread, not a timing-based
+        # directory snapshot after the client happens to receive the response.
+        cleaned = threading.Event()
+        snapshots = []
+        original_unlink = Path.unlink
+        handler = self.server.RequestHandlerClass
+        original_reply = handler.reply
+        output = self.output
+
+        def tracked_unlink(path, *args, **kwargs):
+            result = original_unlink(path, *args, **kwargs)
+            if path.parent == output and path.name.startswith(".pending-"):
+                cleaned.set()
+            return result
+
+        def observed_reply(request, status, *args, **kwargs):
+            if status == 500:
+                snapshots.append((cleaned.is_set(), tuple(output.iterdir()),
+                                  request.server.reports_saved))
+            return original_reply(request, status, *args, **kwargs)
+
+        with patch.object(probe.os, "link", side_effect=OSError(errno.ENOSPC, "synthetic disk full")), \
+                patch.object(Path, "unlink", tracked_unlink), \
+                patch.object(handler, "reply", observed_reply):
+            self.assertEqual(self.submit()[0], 500)
+            # Keep patches alive until cleanup completes even on the old buggy
+            # implementation, which sends its failure response first.
+            self.assertTrue(cleaned.wait(2), "temporary cleanup did not complete")
+        self.assertEqual(snapshots, [(True, (), 0)])
+        self.assert_clean_failure_and_retry()
+
     def test_partial_temporary_write_is_cleaned_before_retry(self):
         original = probe.tempfile.NamedTemporaryFile
 

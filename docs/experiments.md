@@ -367,3 +367,11 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** calls carry SWU_MODE=ON and LOCKUP_LEVEL=%d; two pointers are stored and a zero-return branch exits the slice. Verified32words,13targets and all six literals. Callees remain unnamed; reexecution is not shown.
 - **Conclusion/risks:** initialization preparation is a hypothesis, not enforced success. Unknown returns cannot be labeled success/failure; preserved registers assume normal callee-save behavior.
 - **Next:** separately justified successor continuation; no target execution or TV action.
+
+## PROBE-PERSISTENCE-002 — cleanup before error acknowledgement
+
+- **Objective/hypothesis:** explain the hosted baseline failure that observed a pending report file after an HTTP500response.
+- **Environment/procedure:** synthetic loopback server, injected ENOSPC publication error, a handler reply-boundary observer and cleanup Event; no sleeps or model-driven retry. Compare original and minimally corrected code.
+- **Expected/observed:** the old implementation deterministically sends500before unlink; the new regression detects the pending file at that exact boundary. Recording the error and replying after finally fixes the ordering. All16focused tests and the373-test local suite with optional crypto pass.
+- **Conclusion/risks:** confirmed response-ordering race, not an assumed Python3.11 incompatibility. Cleanup failure itself, crash durability and external directory mutation remain outside this fix. No device/LAN action.
+- **Next:** run the corrected snapshot in both hosted matrix jobs; retain the earlier Linux lifecycle sanitizer pass separately.
