@@ -32,6 +32,10 @@
     {
       "id": "probe-build",
       "resource": "../../docs/native-probe-build.md"
+    },
+    {
+      "id": "lifecycle-arm",
+      "resource": "../../docs/native-lifecycle-arm-build.md"
     }
   ],
   "opencast_evidence": [
@@ -66,3 +70,7 @@ The fixed19-file dependency sample declares241DT_NEEDED edges and10interpreters 
 An original minimal probe links locally to a 648-byte ARM EABI5 ET_EXEC with explicit entry, RX image and no dynamic dependencies, reproduced and independently inspected. This closes a build step only: it does not identify physical ISA support, supply an admitted starter or link the graphics/lifecycle client.[^probe-build]
 
 [^probe-build]: Existing-host-tool link, independent byte inspection and unresolved target execution.
+
+The current window-ownership lifecycle core separately compiles to a reproducible3,344-byte ARM EABI5 relocatable object with no reported undefined symbols. It is not the648-byte executable probe, a linked graphics client or target execution. Compiler architecture/attribute permissions remain distinct from physical hardware and vendor ABI verification.[^lifecycle-arm]
+
+[^lifecycle-arm]: Current-source cross-compilation and independent object rebuild; no link, emulation or execution.

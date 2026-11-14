@@ -87,7 +87,7 @@ python3 -m tools.elf_inventory artifacts/native-lifecycle/lifecycle-arm.o
 /usr/bin/nm -u artifacts/native-lifecycle/lifecycle-arm.o
 ```
 
-**Not regenerated for the current window-ownership change.** The following result belongs to the earlier core; the command above is an optional reproduction recipe, not a claim of current execution.
+**The identity below belongs to the earlier core.** The current window-ownership source was subsequently compiled and independently rebuilt as a separate3,344-byte object; see [current ARM build](native-lifecycle-arm-build.md). Neither object was linked or executed. Preserve the different source/artifact identities.
 
 CONFIRMED (historical local): a 3,140-byte ARM32 little-endian EABI5 relocatable object, SHA-256 `9547a71d900776c76a35da8bbbebc642bc3bde5613b28dffd37d25dfda5a483d`, with no program headers, interpreter, dynamic dependencies or undefined symbols reported by the host tools. No target object was linked, executed or emulated. The compiler flags are inherited from the earlier bounded object experiment; they do not identify the TV CPU, validate a sysroot/libc/vendor ABI, or make this a launchable application. The native host test executable is separate from this ARM object.
 
@@ -110,5 +110,5 @@ CONFIRMED (historical local): a 3,140-byte ARM32 little-endian EABI5 relocatable
 - **Environment/procedure:** installed Apple clang, synthetic host adapters, strict warnings; test acquisition failures, each cleanup failure, ordered success, multiple failures, reentrancy, stale callbacks, timeouts and idempotent close.
 - **Expected/observed:** ten groups pass, all nine adapter failure stages covered; failed surface release retains window and registration, failed window release retains registration, and a positive return acknowledgment cannot produce `OC_RETURNED` after cleanup failure.
 - **Conclusion:** the disconnected host contract enforces these dependency rules. It does not prove a real lease, target ABI, admission, display or Home restoration.
-- **Risks:** atomic acquisition outcomes, external deadlines, callback lifetime and independent return semantics remain adapter obligations. No new finite-state explorer or ARM-object validation was run for this change; historical counts/hashes do not cover it.
+- **Risks:** atomic acquisition outcomes, external deadlines, callback lifetime and independent return semantics remain adapter obligations. No new finite-state explorer was run for this unit; historical counts/hashes do not cover it. The subsequent [current ARM build](native-lifecycle-arm-build.md) separately records object-only validation.
 - **Next:** independent code/scenario review passed; validate the separate Linux sanitizer job and adapt the bounded explorer only if it addresses a remaining question. No TV, IPC or vendor execution occurred. Current local test output and initial freeze hashes are retained under ignored `artifacts/native-window-lifecycle/`; independent review and sanitizer control evidence are under `artifacts/native-window-lifecycle-review/`.

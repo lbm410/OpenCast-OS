@@ -335,3 +335,19 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** r0 receives0x82ac before a libc-style startup call;64words, three literals, two BL destinations and stack layout were independently checked.
 - **Conclusion:** candidate main address is LIKELY; neither its body/extent nor startup-callee identity/library version or actual device boot was established.
 - **Risks/next:** avoid importing dynamic-lginit_app boundaries or behavior. Further tracing must use a separate explicit candidate-range budget. No target execution occurred.
+
+## NATIVE-WINDOW-LIFECYCLE-001 — explicit dependency-preserving ownership
+
+- **Objective/hypothesis:** keep a window lease distinct from registration/surface, retaining dependent parents when child release is unresolved.
+- **Environment/procedure:** original disconnected C core, strict-warning host builds,10test groups, independent6,144-scenario adapter and three mutation controls.
+- **Expected/observed:** failed surface release retains window+registration; failed window release retains registration; positive return acknowledgement cannot erase cleanup failure. Normal and adversarial tests pass. A trivial ASan/UBSan control also stalled locally, so local sanitizer validation is unavailable; Linux CI check is requested, not yet claimed.
+- **Conclusion/risks:** host contract is verified within stated assumptions, with no LG binding or physical restoration evidence. Atomic outcomes, callback lifetime, serialization and operation deadlines remain adapter obligations. Old128-state explorer is incompatible/historical.
+- **Next:** observe hosted sanitizer result; deferred CLAUDE-006 may adapt bounded exploration after the owner's quota deadline.
+
+## NATIVE-WINDOW-ARM-001 — current lifecycle object
+
+- **Objective/hypothesis:** verify the changed original core still compiles independently of vendor headers/runtime.
+- **Environment/procedure:** installed trusted Apple Clang with documented historical ARM flags; source/tool hashes before/after; reviewed ELF/attribute readers and llvm-nm; independent exact rebuild.
+- **Expected/observed:**3,344-byte ARM EABI5 ET_REL, SHA-256 d8e890eb9d4ad01e3080f18780882d2d4774a63007877d09c5320e89eb884972, identical independent output and no reported undefined symbols.
+- **Conclusion/risks:** compiler-target object build only; no linker, target execution, physical ISA or native admission proof. Keep this separate from the old3,140-byte object and minimal linked probe.
+- **Next:** complete the legitimate entry and platform adapter contracts before any device experiment.
