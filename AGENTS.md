@@ -33,6 +33,8 @@ Use the Python standard library for host diagnostics and conservative HTML/CSS/J
 
 Label evidence: CONFIRMED (documentary/local/device-reported/physically observed), LIKELY, HYPOTHESIS, RULED OUT or PENDING. Each experiment includes objective, hypothesis, environment, procedure, expected result, observed result, conclusion, risks and next step.
 
+For static control-flow claims, follow branch targets through rejoins/returns, trace actual call arguments, preserve numeric bases and pointer provenance, and separate attempted calls from enforced outcomes. Import absence is not behavioral absence. Apply the evidence review guidance in docs/static-disassembly.md before freezing a report; capture hashes do not validate its interpretation.
+
 Follow CLAUDE.md for collaboration. Assign disjoint files and review changes before integrating. Never simulate agent execution. The owner authorizes collaboration; do not send secrets or unnecessary private data to services.
 
 The owner explicitly authorizes Codex to coordinate Claude Code and scoped parallel agents. Use `collaboration/README.md` for the shared task/status/message protocol. File creation is not proof of delivery: require the recipient's acknowledgement. Codex owns integration and consolidates any necessary owner/TV interventions into high-value sessions. Agents must read new assigned messages between work units and respect existing file ownership.

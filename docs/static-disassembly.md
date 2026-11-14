@@ -43,6 +43,12 @@ Executable segments can contain literal pools and tables. The wrapper validates 
 
 This version deliberately adds no PLT annotations, demangled API contracts, call signatures or control-flow interpretation. The older scratch helper's relocation/PLT logic has not been copied. Symbol-boundary selection and named-call conclusions in existing reports still need their own evidence; this tool only makes the selected-address operation reproducible.
 
+### Evidence review before integration
+
+Account-path reviews exposed errors that hashes alone cannot detect. For each claimed rejection, continuation or state transition, follow the actual branch target through its rejoin or return; a branch away from adjacent instructions is not necessarily a failure exit. Record caller arguments at the call site after tracking intervening assignments. For comparisons, identify both operands and the source of the length, distinguishing prefix comparison from exact equality.
+
+Keep displayed decimal immediates distinct from hexadecimal offsets, identify which allocation/table a pointer belongs to, and count the full captured range separately from the intended function extent. Distinguish a call being attempted, its return being inspected, and its failure actually changing control flow. Missing named imports do not exclude equivalent implementations or indirect calls. These checks apply to report prose and annotations as well as the raw disassembly; independent byte verification alone does not validate the interpretation.
+
 ## Validation
 
 Run the public synthetic suite:
