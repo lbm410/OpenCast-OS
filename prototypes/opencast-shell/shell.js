@@ -17,11 +17,26 @@
     ];
     var current = 0, selected = [0, 0, 0, 0, 0], accent = "mint", contrast = false, remember = false;
     var preferenceKey = "opencast.shell.preferences.v1", clockTimer = null, paused = false;
-    function element(id) { return document.getElementById(id); }
+    var nodes = {}, textValues = {}, attributeValues = {}, renderedPage = -1;
+    function element(id) {
+        if (!nodes[id]) { nodes[id] = document.getElementById(id); }
+        return nodes[id];
+    }
     function text(id, value) {
+        if (textValues[id] === value) { return; }
         var node = element(id);
         if (typeof node.textContent !== "undefined") { node.textContent = value; }
         else { node.innerText = value; }
+        textValues[id] = value;
+    }
+    function pressed(id, value) {
+        if (attributeValues[id] === value) { return; }
+        element(id).setAttribute("aria-pressed", value);
+        attributeValues[id] = value;
+    }
+    function focus(id) {
+        var node = element(id);
+        if (document.activeElement !== node) { node.focus(); }
     }
     function message(value) { text("message", value); }
     function hint() {
@@ -39,18 +54,19 @@
         text("selection-hint", hint());
     }
     function choose(index, clearMessage) {
-        var i;
-        selected[current] = index;
-        for (i = 0; i < controls[current].length; i += 1) {
-            element(controls[current][i]).className = i === index ? "dock-item selected" : "dock-item";
+        var previous = selected[current];
+        if (previous !== index) {
+            element(controls[current][previous]).className = "dock-item";
+            element(controls[current][index]).className = "dock-item selected";
+            selected[current] = index;
+            details();
         }
-        details();
         if (clearMessage) { message(""); }
     }
     function appearance() {
         document.body.className = (accent === "amber" ? "amber " : "") + (contrast ? "high-contrast" : "");
-        element("setting-contrast").setAttribute("aria-pressed", contrast ? "true" : "false");
-        element("setting-storage").setAttribute("aria-pressed", remember ? "true" : "false");
+        pressed("setting-contrast", contrast ? "true" : "false");
+        pressed("setting-storage", remember ? "true" : "false");
         details();
     }
     function save() {
@@ -91,14 +107,25 @@
     }
     function show(index, focusContent) {
         var i;
-        current = index;
-        for (i = 0; i < pages.length; i += 1) {
-            element("panel-" + pages[i]).style.display = i === current ? "block" : "none";
-            element("tab-" + pages[i]).className = i === current ? "tab active" : "tab";
-            element("tab-" + pages[i]).setAttribute("aria-pressed", i === current ? "true" : "false");
+        if (renderedPage !== index) {
+            if (renderedPage < 0) {
+                /* Establish initial state once; later transitions touch only two sections. */
+                for (i = 0; i < pages.length; i += 1) { renderPage(i, i === index); }
+            } else {
+                renderPage(renderedPage, false);
+                renderPage(index, true);
+            }
+            current = index;
+            renderedPage = index;
+            details();
         }
-        choose(selected[current], true);
-        if (focusContent) { element(controls[current][selected[current]]).focus(); }
+        message("");
+        if (focusContent) { focus(controls[current][selected[current]]); }
+    }
+    function renderPage(index, active) {
+        element("panel-" + pages[index]).style.display = active ? "block" : "none";
+        element("tab-" + pages[index]).className = active ? "tab active" : "tab";
+        pressed("tab-" + pages[index], active ? "true" : "false");
     }
     function capability(name, target) { message(OpenCastShellCapabilities.invoke(name, target).message); }
     function activate(id) {
@@ -116,12 +143,12 @@
         else if (id === "setting-accent") { changeAppearance("accent"); }
         else if (id === "setting-contrast") { changeAppearance("contrast"); }
         else if (id === "setting-storage") { toggleStorage(); }
-        else if (id === "setting-about") { message("Launcher under development. Not installed on the TV; startup and native controls are not connected."); }
+        else if (id === "setting-about") { message("Launcher research app. Automatic startup and native controls are not connected."); }
     }
     var i, j;
     for (i = 0; i < pages.length; i += 1) {
         (function (index) {
-            element("tab-" + pages[index]).onclick = function () { if (!paused) { show(index, false); this.focus(); } };
+            element("tab-" + pages[index]).onclick = function () { if (!paused) { show(index, false); focus("tab-" + pages[index]); } };
         }(i));
         for (j = 0; j < controls[i].length; j += 1) {
             (function (page, index, id) {
@@ -155,10 +182,10 @@
         next = OpenCastShellNavigation.move(zone, index, code, controls[current].length, current, pages.length);
         if (!next) { return; }
         if (next.zone === "tabs") {
-            show(next.index, false); element("tab-" + pages[next.index]).focus();
+            show(next.index, false); focus("tab-" + pages[next.index]);
         } else {
             if (zone === "tabs") { show(index, false); next.index = selected[current]; }
-            choose(next.index, true); element(controls[current][next.index]).focus();
+            choose(next.index, true); focus(controls[current][next.index]);
         }
         if (event.preventDefault) { event.preventDefault(); }
         event.returnValue = false;

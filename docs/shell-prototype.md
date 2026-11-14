@@ -2,17 +2,17 @@
 
 Updated: 2026-11-14. Location: `prototypes/opencast-shell/`. Current visual revision: **landscape dock**.
 
-**CONFIRMED (local):** a working static launcher with five sections, horizontal remote-focus navigation, pointer operation and local appearance preferences. **PENDING:** physical-TV validation of this revision, native integration and reliable key delivery in that execution context. This is not an installed OS or verified autostart mechanism.
+**CONFIRMED (local):** a working static launcher with five sections, horizontal remote-focus navigation, pointer operation and local appearance preferences. **CONFIRMED (owner, APP-001):** the portal-packaged landscape dock renders on the physical TV and arrows/OK work; opening and movement are reported very slow. Native integration, quantified latency and successful-launch return remain pending. A lighter host candidate is now in development; it has not run on the TV. This is not an installed OS or verified autostart mechanism.
 
 ## Current design
 
 The owner's reference changed the visual direction from a feature-card home screen to a quiet television launcher. The current UI has a full-bleed warm rolling-hills landscape, a selected-item title and one-line action hint at upper left, browser clock/date at upper right, a discreet section bar including **TV / HDMI**, and a compact horizontal dock near the bottom. The central landscape stays open.
 
-The dock uses original semantic icons for Internet, Apps, Media, Live TV and Settings. It contains no commercial service logos or claims of installed streaming applications. The selected icon becomes slightly larger and brighter; keyboard focus adds a subtle fill and one-pixel inset highlight. Focus outlines are replaced by these visible treatments, not simply removed. Optional high contrast strengthens the treatment. Native-action failures appear as short contextual notices only after activation; long technical warnings and marketing copy are absent from the home view. Project branding and preview badges are absent from the television interface. Development status remains in repository documentation and the on-demand About view.
+The dock uses original semantic icons for Internet, Apps, Media, Live TV and Settings. It contains no commercial service logos or claims of installed streaming applications. In the current lightweight candidate, icon/SVG geometry stays fixed; selection changes color and keyboard focus adds an outline. The first physical baseline enlarged the selected icon and used shadows. Focus outlines are replaced by these visible treatments, not simply removed. Optional high contrast strengthens the treatment. Native-action failures appear as short contextual notices only after activation; long technical warnings and marketing copy are absent from the home view. Project branding and preview badges are absent from the television interface. Development status remains in repository documentation and the on-demand About view.
 
 The local background is `assets/landscape-v2.jpg`; the original `landscape.jpg` is retained but is no longer loaded by the active stylesheet. The integrator maintains image provenance in [visual direction](visual-direction.md). The new JPEG is 1280 × 720 and approximately 188 kB compressed; one decoded RGBA image occupies approximately 3.5 MiB before compositor/browser copies. Neither compressed size nor static CSS establishes real-TV memory or performance.
 
-There is no animation, moving landscape, live blur, `backdrop-filter`, framework runtime, external resource or per-frame work. The glass-like treatment uses static opacity and small shadows. The browser clock updates at most once per minute and suspends on page hide/unload. Real-device measurements must precede adding motion.
+There is no animation, moving landscape, live blur, `backdrop-filter`, framework runtime, external resource or per-frame work. The lightweight candidate removes shadows and the full-screen overlay; small dock/tab backgrounds retain static transparency. The browser clock updates at most once per minute and suspends on page hide/unload. Real-device measurements must precede adding motion.
 
 ## Files and boundaries
 
@@ -60,7 +60,7 @@ No credentials, personal text or device identifiers are retained. Origin changes
 
 ## Verification
 
-**CONFIRMED (local):** 15 Node tests pass, covering pure horizontal navigation, real event handlers, section memory, native activation, preserved system keys, missing codes, pointer focus behavior, hidden-control guards, disconnected capabilities, opt-in preferences, malformed stored records, storage errors and clock lifecycle.
+**CONFIRMED (local):** 19 Node tests pass, covering pure horizontal navigation, real event handlers, section memory, native activation, preserved system keys, missing codes, pointer focus behavior, hidden-control guards, disconnected capabilities, opt-in preferences, malformed stored records, storage errors and clock lifecycle.
 
 Installed desktop Chrome rendered the actual local artifact through a DevTools pipe without a TCP debugging endpoint or an HTTP server. Device metrics were explicitly set to 1276 × 603 and screenshots captured exactly that region. Home, Inputs and Settings were inspected. All three documents measured 1276 × 603, with the dock at y=415–558 and the footer ending at y=584. There was no page overflow. The current README preview is the unedited Home screenshot from that run.
 
@@ -80,7 +80,7 @@ node --test tests/test_shell_navigation.cjs
 - **Environment:** original TV/remote and a reviewed single-peer local asset route; no installation.
 - **Procedure:** coordinate one useful owner session, open the launcher, exercise sections and focus, observe SVG/landscape rendering, try one in-memory appearance control, and return through the normal browser exit path. Remember remains off unless explicitly chosen.
 - **Expected result:** readable icons/context, actual section changes, truthful unavailable-action notices and ordinary exit behavior.
-- **Observed result:** PENDING; this revision has not run on the TV.
+- **Observed result:** the packaged baseline renders on the TV and arrows/OK work, but the owner reports slow opening and movement. The lightweight candidate has not run on the TV.
 - **Conclusion:** desktop success justifies preparing the experiment, not declaring an OS replacement or completed physical milestone.
 - **Risks:** transient browser state, image/compositing resource use, browser-consumed remote input and optional browser-only preference writes. No firmware/system setting is modified.
 - **Return path:** native Back/Exit/Home remain unhandled; confirm the actual return during the coordinated session.

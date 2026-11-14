@@ -1,39 +1,39 @@
+/* Low-cost TV trial: fixed icon geometry, no full-screen overlay or shadows.
+   Actual-device latency and startup improvements remain to be measured. */
 html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
 body { color: #fff; background: #3e483b url("assets/landscape-v2.jpg") center center no-repeat; background-size: cover; font-family: Arial, sans-serif; }
-body:before { content: ""; position: fixed; left: 0; right: 0; top: 0; bottom: 0; background: rgba(10, 18, 18, 0.16); background: -webkit-linear-gradient(top, rgba(10, 18, 18, 0.34), rgba(10, 18, 18, 0.04) 58%, rgba(10, 18, 18, 0.37)); background: linear-gradient(to bottom, rgba(10, 18, 18, 0.34), rgba(10, 18, 18, 0.04) 58%, rgba(10, 18, 18, 0.37)); }
 #shell { position: relative; width: 100%; height: 100%; min-height: 520px; }
 button { font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 #tabs { position: absolute; top: 35px; left: 54px; white-space: nowrap; padding: 3px; border-radius: 24px; background: rgba(20, 30, 27, 0.13); }
 .tab { font-size: 13px; line-height: 18px; font-weight: normal; border: 0; border-radius: 20px; padding: 8px 14px; margin: 0; color: rgba(255,255,255,0.78); background: transparent; }
 .tab.active { background: rgba(255,255,255,0.13); color: #fff; }
-.tab:focus { outline: none; background: rgba(255,255,255,0.28); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35); color: #fff; }
-#time { position: absolute; top: 29px; right: 54px; text-align: right; text-shadow: 0 1px 8px rgba(0,0,0,0.18); }
+.tab:focus { outline: none; background: rgba(255,255,255,0.28); color: #fff; }
+#time { position: absolute; top: 29px; right: 54px; text-align: right; }
 #clock { font-size: 37px; line-height: 42px; font-weight: normal; letter-spacing: -1px; }
 #date { color: rgba(255,255,255,0.8); font-size: 12px; line-height: 20px; }
-#selection { position: absolute; top: 132px; left: 58px; width: 690px; text-shadow: 0 2px 16px rgba(0,0,0,0.2); }
+#selection { position: absolute; top: 132px; left: 58px; width: 690px; }
 #section-label { font-size: 10px; line-height: 18px; letter-spacing: 2.2px; color: rgba(255,255,255,0.72); }
 h1 { font-size: 53px; line-height: 1.1; margin: 8px 0 10px; font-weight: normal; letter-spacing: -1.6px; }
 #selection-hint { font-size: 16px; line-height: 24px; color: rgba(255,255,255,0.85); }
 #message { max-width: 620px; margin-top: 13px; min-height: 38px; font-size: 14px; line-height: 1.45; color: #fff; }
 #dock { position: absolute; left: 47px; right: 47px; bottom: 45px; height: 143px; }
 .dock-section { width: 100%; }
-.dock-row { display: inline-block; padding: 10px 12px 5px; border-radius: 22px; background: rgba(25,33,28,0.18); border: 1px solid rgba(255,255,255,0.10); box-shadow: 0 8px 28px rgba(7,12,9,0.08); white-space: nowrap; }
+.dock-row { display: inline-block; padding: 10px 12px 5px; border-radius: 22px; background: rgba(25,33,28,0.18); border: 1px solid rgba(255,255,255,0.10); white-space: nowrap; }
 .dock-item { display: inline-block; width: 119px; height: 117px; padding: 0; border: 0; margin: 0 1px; vertical-align: top; border-radius: 16px; background: transparent; color: rgba(255,255,255,0.82); text-align: center; }
-.icon-face { display: block; width: 72px; height: 72px; margin: 7px auto 10px; border-radius: 18px; background: rgba(246,250,245,0.09); box-shadow: inset 0 1px 0 rgba(255,255,255,0.11); }
-.icon-face svg { width: 44px; height: 44px; margin-top: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.icon-face { display: block; width: 84px; height: 84px; margin: 1px auto 4px; border-radius: 18px; background: #47534a; }
+.icon-face svg { width: 48px; height: 48px; margin-top: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .item-label { display: block; font-size: 12px; line-height: 18px; white-space: nowrap; }
 .dock-item.selected { color: #fff; }
-.dock-item.selected .icon-face { width: 84px; height: 84px; margin-top: 1px; margin-bottom: 4px; border-radius: 21px; background: rgba(246,250,245,0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 7px 18px rgba(6,13,8,0.11); }
-.dock-item.selected .icon-face svg { width: 48px; height: 48px; margin-top: 18px; }
+.dock-item.selected .icon-face { background: #66715e; }
 .dock-item:focus { outline: none; color: #fff; }
-.dock-item:focus .icon-face { background: rgba(246,250,245,0.34); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45), 0 8px 20px rgba(6,13,8,0.13); }
+.dock-item:focus .icon-face { background: #7d8b70; outline: 2px solid #edf2da; }
 #footer { position: absolute; bottom: 19px; left: 61px; color: rgba(255,255,255,0.62); font-size: 10px; line-height: 16px; }
 #footer span { padding: 0 8px; }
-body.amber .dock-item:focus .icon-face { background: rgba(255,226,181,0.38); box-shadow: inset 0 0 0 1px rgba(255,231,194,0.6), 0 8px 20px rgba(6,13,8,0.13); }
+body.amber .dock-item:focus .icon-face { background: #8b7958; outline: 2px solid #ffe7c2; }
 body.amber .tab:focus { background: rgba(255,226,181,0.3); }
-body.high-contrast:before { background: rgba(5,10,8,0.7); }
+body.high-contrast { background-image: none; background-color: #101810; }
 body.high-contrast .dock-row { background: rgba(8,16,12,0.75); }
-body.high-contrast .dock-item:focus .icon-face { background: #425e50; box-shadow: inset 0 0 0 2px #f1fff5; }
+body.high-contrast .dock-item:focus .icon-face { background: #425e50; outline: 3px solid #f1fff5; }
 body.high-contrast #selection-hint, body.high-contrast #section-label, body.high-contrast .tab, body.high-contrast #footer, body.high-contrast #date { color: #fff; }
 @media screen and (max-height: 550px) {
   #selection { top: 115px; }

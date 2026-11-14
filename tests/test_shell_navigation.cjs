@@ -10,15 +10,26 @@ const root = path.join(__dirname, '../prototypes/opencast-shell');
 function fixture(options = {}) {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const elements = {}, listeners = {}, lifecycle = {}, timers = new Map(), storage = new Map();
+  const mutations = [], focusCalls = [];
   let timerSequence = 0, writes = 0;
   if (options.saved) storage.set('opencast.shell.preferences.v1', options.saved);
   const document = { body: { className: '' }, activeElement: null,
     getElementById(id) { assert.ok(elements[id], `Element ${id} exists`); return elements[id]; } };
-  for (const match of html.matchAll(/id="([^"]+)"/g)) {
+  function tracked(object, property, value, id) {
+    Object.defineProperty(object, property, {
+      get() { return value; },
+      set(next) { mutations.push({id, property, value: next}); value = next; }
+    });
+  }
+  for (const match of html.matchAll(/<[^>]*\bid="([^"]+)"[^>]*>/g)) {
     const id = match[1];
-    elements[id] = { id, textContent: '', style: {}, attributes: {}, className: '',
-      setAttribute(key, value) { this.attributes[key] = value; },
-      focus() { document.activeElement = this; if (this.onfocus) this.onfocus(); } };
+    const node = { id, style: {}, attributes: {},
+      setAttribute(key, value) { mutations.push({id, property: key, value}); this.attributes[key] = value; },
+      focus() { focusCalls.push(id); document.activeElement = this; if (this.onfocus) this.onfocus(); } };
+    tracked(node, 'textContent', '', id);
+    tracked(node, 'className', (match[0].match(/class="([^"]*)"/) || [,''])[1], id);
+    tracked(node.style, 'display', /display:none/.test(match[0]) ? 'none' : '', id);
+    elements[id] = node;
   }
   if (!options.legacy) document.addEventListener = (name, fn) => { listeners[name] = fn; };
   const window = { JSON,
@@ -35,7 +46,8 @@ function fixture(options = {}) {
   for (const file of ['navigation.js', 'capabilities.js', 'shell.js']) {
     vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), sandbox);
   }
-  return { elements, document, window, storage, timers, lifecycle,
+  return { elements, document, window, storage, timers, lifecycle, mutations, focusCalls,
+    resetEffects() { mutations.length = 0; focusCalls.length = 0; },
     get writes() { return writes; },
     click(id) { const node = elements[id]; node.onclick.call(node); },
     key(id, code) {
@@ -88,6 +100,66 @@ test('live dock arrows update focus and the selected title, Up reaches the tabs'
   assert.equal(f.elements['panel-apps'].style.display, 'block');
   f.key('tab-apps', 40);
   assert.equal(f.document.activeElement.id, 'apps-browser');
+});
+
+test('one dock arrow writes only the old/new selection and changed title despite focus callback', () => {
+  const f = fixture();
+  f.resetEffects();
+  f.key('home-internet', 39);
+  assert.deepEqual(f.mutations, [
+    {id: 'home-internet', property: 'className', value: 'dock-item'},
+    {id: 'home-apps', property: 'className', value: 'dock-item selected'},
+    {id: 'selection-title', property: 'textContent', value: 'Your apps'}
+  ]);
+  assert.deepEqual(f.focusCalls, ['home-apps']);
+  f.resetEffects();
+  f.elements['home-apps'].onfocus();
+  assert.deepEqual(f.mutations, []);
+});
+
+test('clamped arrows do not repaint or refocus the existing selection', () => {
+  const f = fixture();
+  f.resetEffects();
+  assert.equal(f.key('home-internet', 37).defaultPrevented, true);
+  assert.equal(f.key('home-internet', 40).defaultPrevented, true);
+  assert.deepEqual(f.mutations, []);
+  assert.deepEqual(f.focusCalls, []);
+});
+
+test('section navigation updates only previous and next section once', () => {
+  const f = fixture();
+  f.key('home-internet', 38);
+  f.resetEffects();
+  f.key('tab-home', 39);
+  assert.deepEqual(f.mutations, [
+    {id: 'panel-home', property: 'display', value: 'none'},
+    {id: 'tab-home', property: 'className', value: 'tab'},
+    {id: 'tab-home', property: 'aria-pressed', value: 'false'},
+    {id: 'panel-apps', property: 'display', value: 'block'},
+    {id: 'tab-apps', property: 'className', value: 'tab active'},
+    {id: 'tab-apps', property: 'aria-pressed', value: 'true'},
+    {id: 'section-label', property: 'textContent', value: 'APPS'}
+  ]);
+  assert.deepEqual(f.focusCalls, ['tab-apps']);
+  f.resetEffects();
+  f.key('tab-apps', 40);
+  assert.deepEqual(f.mutations, []);
+  assert.deepEqual(f.focusCalls, ['apps-browser']);
+});
+
+test('pointer then keyboard selection remains coherent and clears a notice only once', () => {
+  const f = fixture();
+  f.elements['home-tv'].onmouseover();
+  f.click('home-tv');
+  assert.match(f.elements.message.textContent, /not connected/);
+  f.resetEffects();
+  f.key('home-internet', 39);
+  assert.equal(f.document.activeElement.id, 'home-apps');
+  assert.equal(f.elements['home-tv'].className, 'dock-item');
+  assert.equal(f.elements['home-apps'].className, 'dock-item selected');
+  assert.equal(f.elements['home-internet'].className, 'dock-item');
+  assert.equal(f.mutations.filter(item => item.id === 'message').length, 1);
+  assert.equal(f.mutations.filter(item => item.id === 'selection-title').length, 1);
 });
 
 test('Down opens the tab actually focused through native tab traversal', () => {
