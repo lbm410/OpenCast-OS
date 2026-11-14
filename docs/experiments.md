@@ -301,3 +301,13 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Conclusion:** repeatable target indexing is available; it does not establish runtime reachability or validate an account-policy interpretation. Full working-tree suite372Python tests passes with optional cryptography/no skips.
 - **Risks:** literal data can resemble instructions, alignment does not establish ARM state and filesystem/stdout are not hard real-time bounded. Output repeats these limits.
 - **Next:** use the index alongside independent argument/branch review for future bounded static reports. No vendor program, disassembler subprocess or TV operation was executed by this index.
+
+## ACCOUNT-001/002 — corrected account-to-credential flow
+
+- **Objective/hypothesis:** join account text to numeric fields and the child credential-call block without inferring runtime privileges.
+- **Environment/procedure:** selected procmgr; original bounded captures, two independent reviews, corrected reports/annotations and root integration. No credential database was read.
+- **Expected:** exact data provenance and branch/failure behavior, with unresolved identity/admission clearly separated.
+- **Observed:** failed account lookup can format a fallback and rejoin allocation; GetID uses passwd enumeration and requested-name prefix comparison. The writer supplies numeric fields; the child attempts GID then UID setters independently when nonzero and does not abort this block on their negative return. Initial report errors in branch rejoins, comparison operands, pointer/table provenance and decimal offsets were caught before publication. Raw captures remained unchanged.
+- **Conclusion:** the selected static writer chain is established. Mapping, attempted calls and live effective identity remain distinct; there is no native launch or privilege proof. Full details: process-account-contract.md and process-account-provenance.md.
+- **Risks:** unobserved database/state, prefix/input reachability, ignored resolver/setter failures and remaining allocation/launch prerequisites.
+- **Next:** native artifact issuer/admission and independently recoverable startup remain the integration questions; do not broaden credential searches or call private methods.

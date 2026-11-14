@@ -16,6 +16,14 @@
     {
       "id": "native-issuer",
       "resource": "../../docs/native-packaging-route.md"
+    },
+    {
+      "id": "account-flow",
+      "resource": "../../docs/process-account-contract.md"
+    },
+    {
+      "id": "account-writer",
+      "resource": "../../docs/process-account-provenance.md"
     }
   ],
   "opencast_evidence": [
@@ -39,3 +47,8 @@ A coordinated comparison can now measure the lighter candidate and repeat the ex
 LG also historically documented Marmalade/Unity App Test uploads. The current owner screenshot shows no App Type selector and only a Web App upload area; the historical native choices are not exposed in that form. Valid native build artifact and entitlement remain unverified; a Web package is not an arbitrary ELF loader.[^native-issuer]
 
 [^native-issuer]: Official historical non-Web workflow and current inspection limits.
+
+The selected process-manager path resolves its account-name buffer through passwd enumeration with a requested-name prefix comparison. Lookup failure can substitute another name; resolver failure leaves zero fields in a calloc'd record. If later launch prerequisites reach the child credential block, it attempts GID then UID setters independently for nonzero fields; failure diagnoses and continues. These are static vendor-record semantics, not observed effective identity or admission of our executable.[^account-flow][^account-writer]
+
+[^account-flow]: Independently reviewed fallback, credential ordering and per-component failure/skip behavior.
+[^account-writer]: Demonstrated name-to-field writer; prefix/enumeration and live-identity limits.

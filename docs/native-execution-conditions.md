@@ -101,3 +101,5 @@ Stop at the untraced execution-info descriptor producer, `_APPCTRL_GetLiveAppIte
 ## Follow-up producer trace
 
 [Execution policy](native-execution-policy.md) now identifies XML `prohibit` and update-completion fields as concrete descriptor producers for lists2/3. Neither captured producer selects USB-test list4 or directly tests app_type. Upstream authority, other writers and the USB-test initial field remain unresolved. This narrows the prior producer gap without establishing native permission.
+
+Follow-up: [account flow](process-account-contract.md) and [field provenance](process-account-provenance.md) now connect the selected name buffer, fallback, enumeration-based resolver and numeric setter attempts. They resolve this static edge without establishing effective credentials, filesystem execution permissions or admission of an OpenCast artifact.
