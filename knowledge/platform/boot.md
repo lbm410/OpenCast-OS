@@ -71,6 +71,6 @@ The static initializer entry supplies candidate0x82ac to a libc-style startup ca
 
 [^static-entry]: Independently reviewed entry and256-byte prefix, explicit literal values and branch successors; no target execution.
 
-The separately captured zero-return successor carries SWU_MODE=ON and LOCKUP_LEVEL=%d into unknown calls and stores pointers under a callee-save assumption. No initialization success, reexecution or recovery follows from those calls alone; remaining branch successors are untraced.[^static-successor]
+The separately captured zero-return successor carries SWU_MODE=ON and LOCKUP_LEVEL=%d into unknown calls and stores pointers under a callee-save assumption. No initialization success, reexecution or recovery follows from those calls alone; a separately reviewed40-byte tail rejoins both alternatives and passes /lg/lginit/lginit_app to an unknown callee, then loops over another call without checking returns. This anchors a launch hypothesis, not an identified execution API or successful boot.[^static-successor]
 
-[^static-successor]: Independent128-byte successor reproduction and complete visible argument/branch review.
+[^static-successor]: Independent128-byte successor and40-byte tail reproduction, visible arguments, joins and unchecked loop.

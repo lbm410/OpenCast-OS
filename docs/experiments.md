@@ -375,3 +375,11 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** the old implementation deterministically sends500before unlink; the new regression detects the pending file at that exact boundary. Recording the error and replying after finally fixes the ordering. All16focused tests and the373-test local suite with optional crypto pass.
 - **Conclusion/risks:** confirmed response-ordering race, not an assumed Python3.11 incompatibility. Cleanup failure itself, crash durability and external directory mutation remain outside this fix. No device/LAN action.
 - **Next:** run the corrected snapshot in both hosted matrix jobs; retain the earlier Linux lifecycle sanitizer pass separately.
+
+## STATIC-ENTRY-004 — pathname call and branch convergence
+
+- **Objective/hypothesis:** close the two demonstrated successors and test whether the inherited pathname pointer reaches a call.
+- **Environment/procedure:** same pinned ELF, a separately assigned40-byte tail, reused pointer and one bounded technical string; independent reproduction and branch/argument review.
+- **Expected/observed:** both earlier alternatives converge at0x8580 if their calls return. A later unknown call receives /lg/lginit/lginit_app and zero; its result is overwritten before an unchecked repeating call. All10words/five targets verified.
+- **Conclusion/risks:** launch/reexecution hypothesis now has an exact argument/call anchor; API identity, success and physical recovery are still unknown. A visible loop does not imply successful launch or known wait semantics.
+- **Next:** stop slice expansion; propose a distinct callee-identity investigation with explicit evidence budget. No device or target execution.
