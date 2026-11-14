@@ -163,7 +163,7 @@ reboot
 This provides a concrete alternative broadcast executable. The `procmgr`
 binary contains `PM_SVC_LIST` at file offset `0x622c0` and the SWUE-list path at
 `0x622cc`; the `lginit` selection analysis is separately discussed in
-[claude-boot-review.md](claude-boot-review.md). This report does not independently
+the independent boot review (not yet integrated for publication). This report does not independently
 retrace all `lginit` branches or establish that the mode is reachable on the TV.
 
 `SWUE` is a separate ARM32 little-endian EABI5 executable, with the same loader

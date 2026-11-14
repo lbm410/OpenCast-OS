@@ -2,7 +2,7 @@
 
 Date: 2026-11-14. Scope: local static analysis of the officially sourced 04.28.17 update. **CONFIRMED (local, firmware-static):** two compressed boot stages have been independently decoded with exact sizes, additive checksums and SHA-256 hashes matching the earlier scratch results. No firmware bytes, upstream decoder or scratch decoder were executed. No television, network or Git operation was performed for this experiment.
 
-This promotes the decoded byte/string findings in [Claude's revision 2 review](claude-boot-review.md) from unreviewed scratch leads to reproducible local evidence. It does **not** validate that report's inferred runtime branches. No installed replacement, running boot-console access, active command line or recovery capability follows from this result.
+This promotes the decoded byte/string findings from the independent scratch review from unreviewed scratch leads to reproducible local evidence. It does **not** validate that report's inferred runtime branches. No installed replacement, running boot-console access, active command line or recovery capability follows from this result.
 
 ## Provenance and source review
 
