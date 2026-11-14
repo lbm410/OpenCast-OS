@@ -86,3 +86,28 @@ See [epk-format-notes.md](epk-format-notes.md) for the full reproducible experim
 ### HW-001 layout follow-up, not yet served
 
 Review found that the baseline card width excluded padding/borders and could wrap the third card. The next on-disk CSS uses border-box sizing and a compact layout for the measured603px viewport. Baseline assets/hashes are retained locally. The completed physical session used the original snapshot. Its server is now stopped; the next layout needs a separately coordinated run and physical verification.
+
+## UI-002 — minimal landscape and dock redesign (host only)
+
+- **Objective:** revise the shell to match the owner's quieter landscape-led reference.
+- **Hypothesis:** a compact dock and discreet TV/HDMI selector improve visual clarity without continuous effects.
+- **Environment:** local desktop Chrome, viewport1276×603, static local assets; no TV connection or HTTP listener.
+- **Procedure:** replace large cards with a horizontal dock, generate an original warm hills background, render Home/Inputs/Settings and run the shell's actual-handler tests.
+- **Expected result:** readable focus, no overflow, truthful unavailable native actions and preserved system keys.
+- **Observed result:** inspected Home PNG is1276×603; agent measured no document overflow and rendered Inputs/Settings. Fifteen shell tests pass; the combined Node suite passes31 tests. New background is `prototypes/opencast-shell/assets/landscape-v2.jpg`; prompt/mode are in visual-direction.md.
+- **Conclusion:** the desktop redesign is ready for owner review. No physical rendering, navigation latency, memory use or native integration is established.
+- **Risks:** old-browser rendering and compositing cost remain unmeasured; background is static and no native control is invoked.
+- **Next step:** consolidate this UI check with a valuable future physical input/deployment experiment.
+
+
+## FW-004 — complete EPK2 signature coverage
+
+- **Objective:** close the41-segment verification gap without extracting more vendor content.
+- **Hypothesis:** every exact declared segment verifies against the supplied community public key.
+- **Environment:** existing offline macOS lab and preserved official EPK; optional pinned cryptography dependency.
+- **Procedure:** add bounded `--verify-all` mode, test signed synthetic fixtures and failure paths, run the full audit under the offline sandbox. See firmware-extraction.md for the command and report hash.
+- **Expected result:** all declared signatures verify and a one-bit in-memory mutation is rejected, or fail closed.
+- **Observed result:** header and118/118 segments verified; mutation rejected; input hash unchanged. Eleven firmware-lab tests passed. No additional packages extracted.
+- **Conclusion:** exact signature coverage is complete relative to the supplied key. Publisher trust chain and runtime enforcement remain unresolved.
+- **Risks:** interpreting key consistency as authority or boot compatibility; no device writes or target-code execution occurred.
+- **Next step:** continue service/boot analysis using preserved inputs; do not infer recovery from signature success.

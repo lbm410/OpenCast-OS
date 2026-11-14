@@ -4,7 +4,11 @@ Status: research architecture, 2026-11-14. No installable replacement OS or auto
 
 ## Current leading hypothesis
 
+Owner priority update, 2026-11-14: the PS5 covers commercial streaming applications. Current Netflix/YouTube app compatibility on the TV is not a release requirement. Prioritize measured responsiveness, reliable remote navigation, HDMI access, sound, essential settings and stable power/return behavior. This does not reduce the ambition to replace feasible legacy UI surfaces or establish PS5 app launching, CEC control or automatic input switching as working capabilities.
+
 Run an independently hosted OpenCast shell while retaining the original kernel, hardware drivers and essential vendor services. Use a verified application/runtime entry point first. Treat unattended launch at power-on as a distinct integration milestone requiring boot supervision and recovery evidence.
+
+The owner explicitly wants all feasible visible surfaces replaced: startup/home, settings, input selection, media navigation and on-screen overlays. Preserving hardware services does not mean accepting legacy menus as the final UX. Map each surface to its renderer, input owner and underlying service; where visual logic is inseparable, evaluate a deeper replacement boundary rather than silently narrowing the product goal. Full coverage is an objective, not a proven capability.
 
 The static firmware provides ARM32 EABI5 executables, a Linux3.0.13 kernel, a RELEASE executable linked to audiovisual/vendor components, a Home.swf application manifest, and browser/native service wrappers. The recovered input wrapper constructs messages for a named vendor service; this is a concrete investigation path for coexistence. It does not yet establish an accessible, supported or stable runtime contract.
 

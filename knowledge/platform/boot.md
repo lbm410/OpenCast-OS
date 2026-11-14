@@ -16,6 +16,10 @@
     {
       "id": "partition",
       "resource": "../../docs/partition-layout.md"
+    },
+    {
+      "id": "services",
+      "resource": "../../docs/service-supervision.md"
     }
   ],
   "opencast_evidence": [
@@ -27,11 +31,15 @@
 
 # Boot and init chain
 
-The shipped inittab invokes rcS, which reaches rc.local. Its bootmode=auto branch enters the lginit directory and runs lginit in the foreground. No respawn entry appears in the inspected inittab, so automatic restart after termination cannot be assumed.[^boot]
+The shipped inittab invokes rcS, which reaches rc.local. Its bootmode=auto branch enters the lginit directory and runs lginit in the foreground. No respawn entry appears in inittab; supervision is declared separately in vendor service lists.[^boot]
 
 A separate sbin/init binary contains INIT_VERSION=sysvinit-2.86, but its actual PID1 selection remains unverified. rcS's ext2 /dev/ram remount conflicts with the SquashFS root package unless another stage or vestigial code explains it. Development-service branches are static evidence, not enabled interfaces.[^partition]
+
+The normal service list gives RELEASE a reboot policy and runs Home.swf through separate fxui with respawn. A separate list starts SWUE. Actual list selection and full failure semantics remain unobserved.[^services]
 
 [Partition pairs](/platform/partitions.md) do not resolve boot selection. [RELEASE](/platform/release.md) and [graphics/input](/platform/graphics-input.md) require lifecycle analysis before separation. Automatic [shell startup](/product/shell.md) remains blocked by supervision and [recovery](/execution/recovery.md).
 
 [^boot]: Script call chain and foreground invocation.
 [^partition]: SysV-init candidate and unresolved RAM-root question.
+
+[^services]: Selected service lists and bounded procmgr analysis; static declarations only.

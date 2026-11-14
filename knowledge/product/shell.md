@@ -30,6 +30,8 @@
 
 OpenCast OS aims to replace the Smart TV experience, including direct startup when feasible. The leading architecture keeps original drivers and essential vendor services while hosting an independent shell. Native capabilities stay behind explicit adapters; unsupported operations must report unavailable rather than simulate success.[^architecture]
 
+The owner uses a PS5 for commercial streaming. Current Netflix/YouTube apps on the TV are not required; prioritize measured responsiveness, remote navigation, HDMI, audio, essential settings and reliability. Console/CEC control remains untested.[^architecture]
+
 A conservative local prototype has Home, Apps, Inputs, Media and Settings, directional/pointer navigation and optional appearance storage. Desktop checks passed, but this artifact has not been physically validated. Its HDMI/app cards do not control the TV. The baseline [browser test](/execution/browser.md) is a separate artifact.[^prototype]
 
 Integration depends on [graphics/input](/platform/graphics-input.md), [RELEASE coexistence](/platform/release.md) and a viable [app entry point](/execution/app-deployment.md). Automatic startup additionally depends on [boot supervision](/platform/boot.md) and [verified recovery](/execution/recovery.md).

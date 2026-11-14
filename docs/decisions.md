@@ -39,3 +39,7 @@ The owner's landscape/glass direction starts with a static local image and inexp
 ## D010 — Granular local history, publication separately authorized
 
 The owner explicitly requested local commits by coherent functionality/investigation. Keep tests and relevant documentation with each block, fetch/check before every commit, preserve exclusive owner attribution, and leave unfinished work out. This instruction does not authorize push or deployment.
+
+## D011 — Prioritize the TV experience; PS5 covers streaming
+
+The owner accepts using the PS5 for commercial streaming apps. Latest Netflix/YouTube versions on the original TV are not required for the intended outcome. Focus on actual-device responsiveness, navigation, HDMI, sound, essential settings and reliability while retaining the replacement-shell/startup goal. Defer commercial-app compatibility research unless it supports these priorities. PS5 availability is owner-reported; no console control, CEC, port selection or playback test is implied.
