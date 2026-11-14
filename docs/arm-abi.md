@@ -241,11 +241,13 @@ Bounds and refusals:
 - A malformed attributes section yields `status: "error"`, no decoded attributes and an
   `unavailable` summary; partial results from a rejected section are discarded.
 
-Validation: 79 synthetic tests in `tests/test_arm_attributes.py` (no firmware involved) cover
+Validation: 85 synthetic tests in `tests/test_arm_attributes.py` (no firmware involved) cover
 both byte orders, defaults, unknown and undefined tags, contradictions and notes, every length,
 string and total-budget bound, malformed ELF section tables, relocatable versus executable file
 types, symlink refusal and the command line. Nineteen of them are targeted regressions for the
-six issues found by the integration review of the first version.
+six issues found by the integration review of the first version. Six more cover descriptor
+ownership: a directory or named pipe is refused before the stream is created, and the opened
+descriptor is closed when the type check, `fstat` or `fdopen` fails as well as on success.
 
 ## Limits
 

@@ -422,7 +422,12 @@ def save_inventory(inventory: udap.Inventory, *, project_root: Path | None = Non
         candidate = ".pending-udap-" + secrets.token_hex(12)
         descriptor = os.open(candidate, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, dir_fd=directory)
         temporary = candidate
-        with os.fdopen(descriptor, "wb") as stream:
+        try:
+            stream = os.fdopen(descriptor, "wb")
+        except BaseException:
+            os.close(descriptor)
+            raise
+        with stream:
             os.fchmod(stream.fileno(), 0o600)
             stream.write(payload)
         os.link(temporary, filename, src_dir_fd=directory, dst_dir_fd=directory, follow_symlinks=False)

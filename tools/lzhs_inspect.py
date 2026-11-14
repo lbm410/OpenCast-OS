@@ -200,7 +200,12 @@ def read_bounded(path: Path, limit: int) -> bytes:
         descriptor = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
     finally:
         os.close(parent)
-    with os.fdopen(descriptor, "rb") as source:
+    try:
+        source = os.fdopen(descriptor, "rb")
+    except BaseException:
+        os.close(descriptor)
+        raise
+    with source:
         before = os.fstat(source.fileno())
         if not stat.S_ISREG(before.st_mode) or not 0 <= before.st_size <= limit:
             raise ValueError("Input must be a bounded regular file")
@@ -219,7 +224,12 @@ def write_exclusive(path: Path, data: bytes) -> None:
     try:
         descriptor = os.open(name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
                              0o600, dir_fd=parent)
-        with os.fdopen(descriptor, "wb") as destination:
+        try:
+            destination = os.fdopen(descriptor, "wb")
+        except BaseException:
+            os.close(descriptor)
+            raise
+        with destination:
             destination.write(data)
             destination.flush()
             os.fchmod(destination.fileno(), 0o444)

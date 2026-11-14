@@ -241,7 +241,12 @@ def load_bundle(root: Path) -> Bundle:
                     raise ValueError("Bundle Markdown file limit exceeded")
                 try:
                     file_fd = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=fd)
-                    with os.fdopen(file_fd, "rb") as stream:
+                    try:
+                        stream = os.fdopen(file_fd, "rb")
+                    except BaseException:
+                        os.close(file_fd)
+                        raise
+                    with stream:
                         before = os.fstat(stream.fileno())
                         if not stat.S_ISREG(before.st_mode) or before.st_size > MAX_FILE_BYTES:
                             raise ValueError("Markdown input is not a bounded regular file")

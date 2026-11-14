@@ -30,7 +30,12 @@ def build_source(kind: str) -> tuple[bytes, dict]:
         for filename in filenames:
             # Files come from the fixed project allowlist, never a directory walk.
             descriptor = os.open(root / filename, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
-            with os.fdopen(descriptor, "rb") as stream:
+            try:
+                stream = os.fdopen(descriptor, "rb")
+            except BaseException:
+                os.close(descriptor)
+                raise
+            with stream:
                 info = os.fstat(stream.fileno())
                 if not stat.S_ISREG(info.st_mode) or not 0 < info.st_size <= MAX_ASSET:
                     raise ValueError("Source asset must be a bounded regular file")

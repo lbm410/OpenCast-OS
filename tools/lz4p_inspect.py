@@ -220,7 +220,12 @@ def inspect_cramfs_release(data: bytes) -> dict:
 
 def decode_file(source: Path, destination: Path) -> dict:
     fd = os.open(source, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
-    with os.fdopen(fd, "rb") as stream:
+    try:
+        stream = os.fdopen(fd, "rb")
+    except BaseException:
+        os.close(fd)
+        raise
+    with stream:
         before = os.fstat(stream.fileno())
         if not stat.S_ISREG(before.st_mode) or not 32 <= before.st_size <= MAX_INPUT:
             raise ValueError("Input must be a bounded regular file")
@@ -236,7 +241,12 @@ def decode_file(source: Path, destination: Path) -> dict:
     try:
         fd = os.open(destination.name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
                      0o600, dir_fd=parent_fd)
-        with os.fdopen(fd, "wb") as stream:
+        try:
+            stream = os.fdopen(fd, "wb")
+        except BaseException:
+            os.close(fd)
+            raise
+        with stream:
             stream.write(decoded)
             stream.flush()
             os.fchmod(stream.fileno(), 0o444)

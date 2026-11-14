@@ -38,7 +38,12 @@ def fail(code: str, message: str) -> None:
 def _read_local(path: Path) -> bytes:
     try:
         descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
-        with os.fdopen(descriptor, "rb") as stream:
+        try:
+            stream = os.fdopen(descriptor, "rb")
+        except BaseException:
+            os.close(descriptor)
+            raise
+        with stream:
             before = os.fstat(stream.fileno())
             if not stat.S_ISREG(before.st_mode) or not 0 < before.st_size <= MAX_ZIP:
                 fail("zip_file_bounds", "Input must be a regular ZIP file of at most 10 MiB.")

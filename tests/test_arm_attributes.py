@@ -1,6 +1,7 @@
 """Synthetic tests for the bounded ARM build-attributes reader. No firmware is used or executed."""
 
 import contextlib
+import hashlib
 import io
 import json
 import os
@@ -10,6 +11,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 from tools import arm_attributes as aa
 
@@ -590,6 +592,78 @@ class FileAndCliTests(unittest.TestCase):
             aa.inspect_file(link)
         with self.assertRaises((OSError, ValueError)):
             aa.inspect_file(self.root)
+
+    def opened_descriptors(self):
+        """Record every descriptor the reader obtains from os.open, without changing behaviour."""
+        seen, real_open = [], os.open
+
+        def recording_open(*args, **kwargs):
+            descriptor = real_open(*args, **kwargs)
+            seen.append(descriptor)
+            return descriptor
+
+        return seen, mock.patch.object(aa.os, "open", side_effect=recording_open)
+
+    def assert_closed(self, descriptors):
+        self.assertEqual(len(descriptors), 1)
+        with self.assertRaises(OSError):
+            os.fstat(descriptors[0])
+
+    def test_directory_is_refused_before_fdopen_and_descriptor_is_closed(self):
+        seen, patched = self.opened_descriptors()
+        with patched, mock.patch.object(aa.os, "fdopen", wraps=os.fdopen) as fdopen:
+            with self.assertRaisesRegex(ValueError, "Only regular files"):
+                aa.inspect_file(self.root)
+        fdopen.assert_not_called()
+        self.assert_closed(seen)
+
+    @unittest.skipUnless(hasattr(os, "mkfifo"), "named pipes are unavailable")
+    def test_named_pipe_is_refused_and_descriptor_is_closed(self):
+        pipe = self.root / "pipe"
+        os.mkfifo(pipe)
+        seen, patched = self.opened_descriptors()
+        with patched, self.assertRaisesRegex(ValueError, "Only regular files"):
+            aa.inspect_file(pipe)
+        self.assert_closed(seen)
+
+    def test_descriptor_is_closed_when_fdopen_fails(self):
+        path = self.write("sample.elf", make_elf(section(*SOFTFP)))
+        seen, patched = self.opened_descriptors()
+        with patched, mock.patch.object(aa.os, "fdopen", side_effect=OSError("simulated")):
+            with self.assertRaisesRegex(OSError, "simulated"):
+                aa.inspect_file(path)
+        self.assert_closed(seen)
+
+    def test_descriptor_is_closed_when_fstat_fails(self):
+        path = self.write("sample.elf", make_elf(section(*SOFTFP)))
+        seen, patched = self.opened_descriptors()
+        with patched, mock.patch.object(aa.os, "fstat", side_effect=OSError("simulated")):
+            with self.assertRaisesRegex(OSError, "simulated"):
+                aa.inspect_file(path)
+        self.assert_closed(seen)
+
+    def test_valid_file_path_is_unchanged_and_closes_its_descriptor(self):
+        blob = make_elf(section(*SOFTFP))
+        path = self.write("sample.elf", blob)
+        seen, patched = self.opened_descriptors()
+        with patched:
+            report = aa.inspect_file(path)
+        self.assert_closed(seen)
+        expected = aa.inspect_stream(io.BytesIO(blob), len(blob))
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(report["bytes"], len(blob))
+        self.assertEqual(report["sha256"], hashlib.sha256(blob).hexdigest())
+        self.assertEqual(report["summary"], expected["summary"])
+
+    def test_cli_reports_directory_argument_without_leaking(self):
+        seen, patched = self.opened_descriptors()
+        output = self.root / "dir.json"
+        with patched:
+            self.assertEqual(aa.main([str(self.root), "--output", str(output)]), 2)
+        self.assert_closed(seen)
+        entry = json.loads(output.read_text(encoding="utf-8"))["files"][0]
+        self.assertEqual(entry["status"], "error")
+        self.assertIn("Only regular files", entry["error"])
 
     def test_cli_writes_new_output_and_refuses_overwrite(self):
         path = self.write("sample.elf", make_elf(section(*SOFTFP)))

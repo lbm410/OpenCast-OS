@@ -800,9 +800,20 @@ def inspect_stream(stream, size: int) -> dict:
     return report
 
 
-def inspect_file(path: Path) -> dict:
+def _open_regular(path: Path):
+    """Open a regular file read-only; the descriptor is closed here unless fdopen takes it over."""
     descriptor = os.open(path, os.O_RDONLY | os.O_NONBLOCK | getattr(os, "O_NOFOLLOW", 0))
-    with os.fdopen(descriptor, "rb") as stream:
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            raise ValueError("Only regular files are supported")
+        return os.fdopen(descriptor, "rb")
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
+def inspect_file(path: Path) -> dict:
+    with _open_regular(path) as stream:
         before = os.fstat(stream.fileno())
         if not stat.S_ISREG(before.st_mode):
             raise ValueError("Only regular files are supported")
