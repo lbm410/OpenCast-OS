@@ -399,3 +399,11 @@ Eight exact captures (2964bytes) establish XML prohibit and update-completion re
 - **Expected/observed:** wrapper status1 gates output copying independently of support value; matching handler normalizes a three-global-word predicate. All133words/20targets verified. Sender outcomes are unchecked. A/C storage is file-backed and B zero-fill-only; no field values were read.
 - **Conclusion/risks:** static policy shape is now explicit; active dispatch, live values/writers, metadata integrity and native admission remain unknown. ELF initialization and table adjacency are not physical-state proof.
 - **Next:** separately scope policy producers or dispatch only if needed; no owner action, IPC or TV test now.
+
+## STATIC-PROCESS-001 — clone-backed gate and conditional returns
+
+- **Objective/hypothesis:** identify the earlier unexplained zero/nonzero process gate before the execve-attempt path.
+- **Environment/procedure:** same selected static initializer; initial256-byte window and two demonstrated successors within an explicit768-byte unique budget; primary Linux ARM syscall/flag/return references and independent reproduction.
+- **Expected/observed:** clone syscall120 with fork-style flags01200011, conditional child0/PID/error-1 returns, separate cleanup and an intentionally unread28-byte callback gap. Verified192words,37targets and overlap accounting.
+- **Conclusion/risks:** process-creation semantics are statically supported; unknown callbacks/helpers and live values prevent claiming universal completion, successful child execution or recovery.
+- **Next:** stop this scope and prioritize remaining admission/integration evidence; no firmware execution or TV action.

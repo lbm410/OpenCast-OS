@@ -40,6 +40,10 @@
     {
       "id": "static-exec",
       "resource": "../../docs/static-execution-callee.md"
+    },
+    {
+      "id": "static-process",
+      "resource": "../../docs/static-process-gate.md"
     }
   ],
   "opencast_evidence": [
@@ -79,6 +83,10 @@ The separately captured zero-return successor carries SWU_MODE=ON and LOCKUP_LEV
 
 [^static-successor]: Independent128-byte successor and40-byte tail reproduction, visible arguments, joins and unchecked loop.
 
-The subsequent callee trace reaches SVC0 with r7=11 and filename/argv/envp arguments, matching Linux ARM EABI execve. The initial process gate, complete argument/environment vectors and success are separate unknowns; a returned syscall error can still lead to a saved-zero outer return. This is static execution-attempt evidence, not a tested starter or recovery.[^static-exec]
+The subsequent callee trace reaches SVC0 with r7=11 and filename/argv/envp arguments, matching Linux ARM EABI execve. Complete argument/environment vectors and success remain unverified; a returned syscall error can still lead to a saved-zero outer return. This is static execution-attempt evidence, not a tested starter or recovery.[^static-exec]
 
 [^static-exec]: Independently reproduced380-byte call/wrapper analysis and primary Linux ABI comparison.
+
+The initial process gate subsequently resolves to ARM EABI clone120 with fork-style flags. The shown paths preserve child0/PID/error-1 returns if cleanup completes; callbacks, outside helpers and an unread child-callback gap prevent a universal completion claim. This connects static process creation to the execve-attempt path without proving live boot or recovery.[^static-process]
+
+[^static-process]: Independently reviewed768-byte unique capture and primary syscall/flag/return contract.
