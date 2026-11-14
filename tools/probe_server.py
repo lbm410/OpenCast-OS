@@ -1,4 +1,4 @@
-"""Serve only the device probe, restricted to loopback or one confirmed LAN peer."""
+"""Serve explicitly allowed probe/shell assets to one confirmed LAN peer."""
 
 from __future__ import annotations
 
@@ -20,6 +20,14 @@ ASSETS = {"/": ("index.html", "text/html"), "/index.html": ("index.html", "text/
           "/style.css": ("style.css", "text/css"),
           "/navigation.js": ("navigation.js", "application/javascript"),
           "/probe.js": ("probe.js", "application/javascript")}
+SHELL_ROOT = ROOT.parent / "opencast-shell"
+SHELL_ASSETS = {"/shell/": ("index.html", "text/html"),
+                "/shell/index.html": ("index.html", "text/html"),
+                "/shell/style.css": ("style.css", "text/css"),
+                "/shell/navigation.js": ("navigation.js", "application/javascript"),
+                "/shell/capabilities.js": ("capabilities.js", "application/javascript"),
+                "/shell/shell.js": ("shell.js", "application/javascript"),
+                "/shell/assets/landscape-v2.jpg": ("assets/landscape-v2.jpg", "image/jpeg")}
 NUMBER_FIELDS = ("viewportWidth", "viewportHeight", "loadMs", "keyEvents", "lastKey",
                  "interactions", "maxHandlerMs")
 FEATURE_FIELDS = ("canvas2d", "requestAnimationFrame", "json", "xhr", "netCastBack", "netCastExit")
@@ -93,7 +101,8 @@ def validate_report(data: bytes) -> dict:
     return report
 
 
-def make_server(bind: str, port: int, allowed: str, output: Path) -> HTTPServer:
+def make_server(bind: str, port: int, allowed: str, output: Path,
+                include_shell: bool = False) -> HTTPServer:
     bind_ip, peer_ip = ipaddress.IPv4Address(bind), ipaddress.IPv4Address(allowed)
     if bind_ip.is_loopback:
         if not peer_ip.is_loopback:
@@ -104,6 +113,11 @@ def make_server(bind: str, port: int, allowed: str, output: Path) -> HTTPServer:
             raise ValueError("Use a private LAN address and a confirmed private peer")
     # Snapshot an explicit asset allowlist. No directory browsing or arbitrary paths.
     assets = {path: ((ROOT / filename).read_bytes(), mime) for path, (filename, mime) in ASSETS.items()}
+    if include_shell:
+        assets.update({path: ((SHELL_ROOT / filename).read_bytes(), mime)
+                       for path, (filename, mime) in SHELL_ASSETS.items()})
+    if any(len(data) > 1024 * 1024 for data, _ in assets.values()):
+        raise ValueError("Static asset exceeds 1 MiB limit")
     output.mkdir(parents=True, exist_ok=True)
 
     class Handler(BaseHTTPRequestHandler):
@@ -116,7 +130,7 @@ def make_server(bind: str, port: int, allowed: str, output: Path) -> HTTPServer:
 
         def reply(self, status, body=b"", mime="text/plain"):
             self.send_response(status)
-            self.send_header("Content-Type", mime + "; charset=utf-8")
+            self.send_header("Content-Type", mime if mime.startswith("image/") else mime + "; charset=utf-8")
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
             self.send_header("Connection", "close")
@@ -199,11 +213,15 @@ def main() -> int:
     parser.add_argument("--allow", default="127.0.0.1", help="Only this peer may connect")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--output", type=Path, default=Path("artifacts/probe"))
+    parser.add_argument("--include-shell", action="store_true",
+                        help="Also expose the fixed launcher allowlist at /shell/; no native TV actions")
     args = parser.parse_args()
     try:
-        with make_server(args.bind, args.port, args.allow, args.output) as server:
+        with make_server(args.bind, args.port, args.allow, args.output, args.include_shell) as server:
             print("Probe: http://%s:%s/ | allowed peer: %s | Ctrl-C to stop" %
                   (*server.server_address, args.allow), flush=True)
+            if args.include_shell:
+                print("Launcher preview: /shell/ | native TV actions remain unavailable", flush=True)
             server.serve_forever()
     except KeyboardInterrupt:
         return 0

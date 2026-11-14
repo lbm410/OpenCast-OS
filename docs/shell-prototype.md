@@ -85,3 +85,10 @@ node --test tests/test_shell_navigation.cjs
 - **Risks:** transient browser state, image/compositing resource use, browser-consumed remote input and optional browser-only preference writes. No firmware/system setting is modified.
 - **Return path:** native Back/Exit/Home remain unhandled; confirm the actual return during the coordinated session.
 - **Next step:** review host exposure and combine this check with meaningful input/deployment work. Continue native input/graphics/boot research independently.
+
+
+## Prepared single-peer deployment route
+
+The host probe server now supports an explicit `--include-shell` option. It keeps the original probe at `/` and snapshots only seven allowlisted launcher routes under `/shell/`, including the current JPEG. Repository files, old images and directory listings are not served. The default server does not expose the shell. A loopback integration test checks every asset and denied paths; no LAN server or TV test was started for this change.
+
+For a coordinated session, use freshly confirmed private bind/peer addresses with `python3 -m tools.probe_server --bind MAC_IP --allow TV_IP --include-shell`. The launcher URL ends in `/shell/` (trailing slash required). This only makes the prepared reversible test available; it is not native installation or proof of input compatibility. Stop the server with Ctrl-C after the session. The shell does not send probe reports or perform native TV actions.

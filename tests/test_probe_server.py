@@ -112,6 +112,7 @@ class ServerTests(unittest.TestCase):
         self.assertIn(b"Hello, OpenCast.", data)
         for path in ("/../../AGENTS.md", "/.git/config", "/firmware/", "/%2e%2e/README.md"):
             self.assertEqual(self.request("GET", path)[0], 404)
+        self.assertEqual(self.request("GET", "/shell/")[0], 404)
 
     def test_report_roundtrip_is_not_physical_confirmation(self):
         status, _ = self.request("POST", "/report", json.dumps(sample_report()))
@@ -134,6 +135,39 @@ class ServerTests(unittest.TestCase):
 
     def test_other_peers_fail_before_request_processing(self):
         self.assertFalse(self.server.verify_request(None, ("192.168.1.99", 1000)))
+
+
+class ShellRouteTests(unittest.TestCase):
+    def test_opt_in_serves_complete_shell_and_only_current_allowlist(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with probe.make_server("127.0.0.1", 0, "127.0.0.1", Path(directory),
+                                   include_shell=True) as server:
+                thread = threading.Thread(target=server.serve_forever, daemon=True)
+                thread.start()
+                try:
+                    for path, (filename, mime) in probe.SHELL_ASSETS.items():
+                        connection = http.client.HTTPConnection(*server.server_address, timeout=2)
+                        try:
+                            connection.request("GET", path)
+                            response = connection.getresponse()
+                            self.assertEqual(response.status, 200)
+                            self.assertEqual(response.read(), (probe.SHELL_ROOT / filename).read_bytes())
+                            self.assertTrue(response.getheader("Content-Type").startswith(mime))
+                        finally:
+                            connection.close()
+                    for path in ("/shell/../README.md", "/shell/assets/landscape.jpg", "/shell/assets/",
+                                 "/shell/%2e%2e/.git/config", "/shell/../../firmware/lab/input.epk"):
+                        connection = http.client.HTTPConnection(*server.server_address, timeout=2)
+                        try:
+                            connection.request("GET", path)
+                            response = connection.getresponse()
+                            self.assertEqual(response.status, 404)
+                            response.read()
+                        finally:
+                            connection.close()
+                finally:
+                    server.shutdown()
+                    thread.join(timeout=2)
 
 
 if __name__ == "__main__":
